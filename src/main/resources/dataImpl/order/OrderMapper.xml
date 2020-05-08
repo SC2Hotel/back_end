@@ -16,6 +16,11 @@
         select * from OrderList where id=#{orderid}
     </select>
    <!--取消订单的数据库操作-->
+    <update id="annulOrder">
+        update orderlist
+        SET orderState = '已撤销'
+        WHERE id = #{orderid}
+    </update>
 
 
 

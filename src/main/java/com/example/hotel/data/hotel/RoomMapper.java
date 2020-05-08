@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface RoomMapper {
 
-    int updateRoomInfo(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType,@Param("curNum") Integer curNum);
+    int updateRoomInfo(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType,@Param("rooms") Integer rooms);
 
     int insertRoom(HotelRoom hotelRoom);
 

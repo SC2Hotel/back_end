@@ -39,4 +39,11 @@ public interface OrderService {
      */
     ResponseVO annulOrder(int orderid);
 
+    /**
+     * 查看酒店的所有订单
+     * @param hotelId
+     * @return
+     */
+    List<Order> getHotelOrders(Integer hotelId);
+
 }

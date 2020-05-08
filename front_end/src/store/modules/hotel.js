@@ -14,7 +14,7 @@ import {
 const hotel = {
     state: {
         hotelList: [
-            
+
         ],
         hotelListParams: {
             pageNo: 0,
@@ -71,35 +71,36 @@ const hotel = {
 
     actions: {
         getHotelList: async({commit, state}) => {
-            const res = await getHotelsAPI()
-            if(res){
-                commit('set_hotelList', res)
-                commit('set_hotelListLoading', false)
-            }
-        },
-        getHotelById: async({commit, state}) => {
-            const res = await getHotelByIdAPI({
-                hotelId: state.currentHotelId
-            })
-            if(res){
-                commit('set_currentHotelInfo', res)
-            }
-        },
-        addOrder: async({ state, commit }, data) => {
-            const res = await reserveHotelAPI(data)
-            console.log(res)
-            if(res){
-                message.success('预定成功')
-                commit('set_orderModalVisible', false)
-            }
-        },
-        getOrderMatchCoupons: async({ state, commit }, data) => {
-            const res = await orderMatchCouponsAPI(data)
-            if(res){
-                commit('set_orderMatchCouponList', res)
-            }
-        }
+        commit('set_hotelListLoading', true)
+const res = await getHotelsAPI()
+if(res){
+    commit('set_hotelList', res)
+    commit('set_hotelListLoading', false)
+}
+},
+getHotelById: async({commit, state}) => {
+    const res = await getHotelByIdAPI({
+        hotelId: state.currentHotelId
+    })
+    if(res){
+        commit('set_currentHotelInfo', res)
     }
+},
+addOrder: async({ state, commit }, data) => {
+    const res = await reserveHotelAPI(data)
+    console.log(res)
+    if(res){
+        message.success('预定成功')
+        commit('set_orderModalVisible', false)
+    }
+},
+getOrderMatchCoupons: async({ state, commit }, data) => {
+    const res = await orderMatchCouponsAPI(data)
+    if(res){
+        commit('set_orderMatchCouponList', res)
+    }
+}
+}
 }
 
 export default hotel

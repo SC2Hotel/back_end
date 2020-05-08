@@ -47,12 +47,6 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType);
 
-    /**
-     * 查看酒店的所有订单
-     * @param hotelId
-     * @return
-     */
-    List<Order> getHotelOrders(Integer hotelId);
 
 
 }

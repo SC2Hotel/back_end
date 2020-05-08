@@ -39,5 +39,9 @@ public class OrderController {
         return orderService.annulOrder(orderid);
     }
 
+    @GetMapping("/{hotelId}/allOrders")
+    public ResponseVO retrieveHotelOrders(@PathVariable Integer hotelId) {
+        return ResponseVO.buildSuccess(orderService.getHotelOrders(hotelId));
+    }
 
 }

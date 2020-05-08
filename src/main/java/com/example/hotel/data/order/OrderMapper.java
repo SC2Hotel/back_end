@@ -1,7 +1,6 @@
 package com.example.hotel.data.order;
 
 import com.example.hotel.po.Order;
-import com.example.hotel.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,6 +21,12 @@ public interface OrderMapper {
 
     List<Order> getUserOrders(@Param("userid") int userid);
 
+    /**
+     * return value is the line which match the orderId
+     * also means that if value == 1 equals success else fault
+     * @param orderid
+     * @return line which match the orderId
+     */
     int annulOrder(@Param("orderid") int orderid);
 
     Order getOrderById(@Param("orderid") int orderid);

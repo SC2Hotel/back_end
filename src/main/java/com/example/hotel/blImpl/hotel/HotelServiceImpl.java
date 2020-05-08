@@ -34,9 +34,6 @@ public class HotelServiceImpl implements HotelService {
     private AccountService accountService;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
     private RoomService roomService;
 
     @Override
@@ -90,14 +87,5 @@ public class HotelServiceImpl implements HotelService {
 
         return hotelVO;
     }
-    
-    /**
-     * @param hotelId
-     * @return
-     */
-    @Override
-    public List<Order> getHotelOrders(Integer hotelId) {
-        List<Order> orders = orderService.getAllOrders();
-        return orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
-    }
+
 }
