@@ -1,5 +1,6 @@
 package com.example.hotel.bl.order;
 
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
@@ -46,4 +47,18 @@ public interface OrderService {
      */
     List<Order> getHotelOrders(Integer hotelId);
 
+    /**
+     * 获取用户预定过的所有酒店
+     * @param userId
+     * @return
+     */
+    ResponseVO getBookedHotels(int userId);
+
+    /**
+     * 获取用户在某个酒店的所有订单
+     * @param userId
+     * @param hotelId
+     * @return
+     */
+    ResponseVO getAllUsersOrdersInAHotel(int userId, int hotelId);
 }

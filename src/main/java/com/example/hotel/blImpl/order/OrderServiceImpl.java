@@ -4,6 +4,7 @@ import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.OrderVO;
@@ -106,6 +107,18 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getHotelOrders(Integer hotelId) {
         List<Order> orders = this.getAllOrders();
         return orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseVO getBookedHotels(int userId){
+        //TODO
+        return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public ResponseVO getAllUsersOrdersInAHotel(int userId, int hotelId){
+        //TODO
+        return ResponseVO.buildSuccess();
     }
 
 }
