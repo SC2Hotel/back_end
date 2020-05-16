@@ -59,4 +59,10 @@ public class AccountServiceImpl implements AccountService {
         }
         return ResponseVO.buildSuccess(true);
     }
+
+    @Override
+    public ResponseVO registerSenior(int id){
+        //TODO
+        return ResponseVO.buildSuccess();
+    }
 }

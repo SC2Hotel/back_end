@@ -1,7 +1,5 @@
 package com.example.hotel.po;
 
-import java.util.Date;
-
 /**
  * @Author: chenyizong
  * @Date: 2020-02-29

@@ -8,7 +8,8 @@ public enum UserType {
     Client("1"),
     HotelManager("2"),
     Manager("3"),
-    SeniorClient("4");
+    commonSeniorClient("4"),
+    companySeniorClient("5");
     private String value;
 
     UserType(String value) {

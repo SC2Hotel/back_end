@@ -4,7 +4,7 @@ import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
-import com.example.hotel.po.Hotel;
+import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.OrderVO;
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
             Date date = new Date(System.currentTimeMillis());
             String curdate = sf.format(date);
             orderVO.setCreateDate(curdate);
-            orderVO.setOrderState("已预订");
+            orderVO.setOrderState(OrderState.Booked.toString());
             User user = accountService.getUserInfo(orderVO.getUserId());
             orderVO.setClientName(user.getUserName());
             orderVO.setPhoneNumber(user.getPhoneNumber());
@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
         {
             return ResponseVO.buildFailure("ERROR ORDER ID");
         }
-        if(order.getOrderState().equals("已失效"))
+        if(order.getOrderState().equals(OrderState.Booked.toString()))
         {
             return ResponseVO.buildFailure("Order status error");
         }

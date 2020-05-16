@@ -40,5 +40,10 @@ public interface AccountService {
      */
     ResponseVO updateUserInfo(int id, String password,String username,String phonenumber);
 
-
+    /**
+     * 注册成为高级客户
+     * @param id
+     * @return
+     */
+    ResponseVO registerSenior(int id);
 }
