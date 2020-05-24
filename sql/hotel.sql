@@ -112,8 +112,11 @@ CREATE TABLE `OrderList` (
 -- Dumping data for table `OrderList`
 --
 
+BEGIN;
 /*!40000 ALTER TABLE `OrderList` DISABLE KEYS */;
+INSERT INTO `OrderList` VALUES (1,4,3,"桂圆酒店","2020-06-03","2020-06-04","Family",1,1,0,"2020-05-24",399.0,"qin","15521232123","已预订");
 /*!40000 ALTER TABLE `OrderList` ENABLE KEYS */;
+COMMIT;
 
 --
 -- Table structure for table `Room`
