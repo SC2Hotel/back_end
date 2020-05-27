@@ -156,7 +156,7 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
-  `password` varchar(11) NOT NULL,
+  `password` varchar(24) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `phonenumber` varchar(255) DEFAULT NULL,
   `credit` double(255,0) DEFAULT NULL,
@@ -171,7 +171,8 @@ CREATE TABLE `User` (
 
 BEGIN;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client'),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client'),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager');
+INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',100,'Client'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager');
+# INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client'),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client'),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 COMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

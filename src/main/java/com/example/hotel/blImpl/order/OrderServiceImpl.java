@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
         int roomNum = order.getRoomNum();
         String roomType = order.getRoomType();
         hotelService.updateRoomInfo(hotelId, roomType, -roomNum);
-
+// todo 如果撤销的订单距离最晚订单执行时间不足6 个小时，撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
         int res = orderMapper.annulOrder(orderId);
         if(res==1)
         {
