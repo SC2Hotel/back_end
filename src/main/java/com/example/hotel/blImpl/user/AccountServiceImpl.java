@@ -67,4 +67,9 @@ public class AccountServiceImpl implements AccountService {
         //TODO
         return ResponseVO.buildSuccess();
     }
+
+    @Override
+    public int updateUserCredit(Integer userId, Double creditToMinus) {
+        return accountMapper.updateUserCredit(userId,creditToMinus);
+    }
 }

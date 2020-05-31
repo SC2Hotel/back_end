@@ -7,6 +7,7 @@ import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
+import com.example.hotel.util.DateTimeUtil;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final static String RESERVE_ERROR = "预订失败";
     private final static String ROOMNUM_LACK = "预订房间数量剩余不足";
+    private final static String LATEST_CHECK_IN_TIME = "22:00:00";
     @Autowired
     OrderMapper orderMapper;
     @Autowired
@@ -78,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
         {
             return ResponseVO.buildFailure("ERROR ORDER ID");
         }
-        if(order.getOrderState().equals(OrderState.Booked.toString()))
+        if(!order.getOrderState().equals(OrderState.Booked.toString()))
         {
             return ResponseVO.buildFailure("Order status error");
         }
@@ -86,11 +89,21 @@ public class OrderServiceImpl implements OrderService {
         int roomNum = order.getRoomNum();
         String roomType = order.getRoomType();
         hotelService.updateRoomInfo(hotelId, roomType, -roomNum);
-// todo 如果撤销的订单距离最晚订单执行时间不足6 个小时，撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
+
         int res = orderMapper.annulOrder(orderId);
         if(res==1)
         {
-            return ResponseVO.buildSuccess(true);
+            String checkInDate = order.getCheckInDate(); // CheckIn日期
+            // 最晚订单执行时间设定为 CheckIn日期的 LATEST_CHECK_IN_TIME
+            LocalDateTime latestCheckInDateTime = DateTimeUtil.dateTimeStr2LocalDateTime(checkInDate,LATEST_CHECK_IN_TIME);
+            LocalDateTime curDateTime = LocalDateTime.now();
+            if(curDateTime.plusHours(6).compareTo(latestCheckInDateTime) > 0 ){ // 如果距离最晚订单执行时间不足 6 个小时,当前时间+6h > 最晚订单执行时间
+                // 撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
+                Double creditToMinus = order.getPrice()/2;
+                int row = accountService.updateUserCredit(order.getUserId(),creditToMinus);
+                return ResponseVO.buildSuccess(row);
+            }
+            return ResponseVO.buildSuccess(0);
         }
         else
         {

@@ -46,4 +46,6 @@ public interface AccountService {
      * @return
      */
     ResponseVO registerSenior(int id);
+
+    int updateUserCredit(Integer userId, Double creditToMinus);
 }
