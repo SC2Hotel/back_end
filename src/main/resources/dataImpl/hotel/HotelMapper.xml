@@ -14,7 +14,9 @@
         select * from Hotel where id=#{id}
     </select>
 
-
+    <select id="selectHotelByBizAndAdd" resultMap="Hotel">
+        select * from Hotel where bizRegion=#{bizRegion} and address like CONCAT('%',#{address},'%')
+    </select>
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
         <result column="address" property="address"></result>
