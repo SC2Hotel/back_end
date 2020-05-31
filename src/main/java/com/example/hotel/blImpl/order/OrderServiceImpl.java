@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final static String RESERVE_ERROR = "预订失败";
     private final static String ROOMNUM_LACK = "预订房间数量剩余不足";
-    private final static String LATEST_CHECK_IN_TIME = "22:00:00";
+
     @Autowired
     OrderMapper orderMapper;
     @Autowired
@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
         {
             String checkInDate = order.getCheckInDate(); // CheckIn日期
             // 最晚订单执行时间设定为 CheckIn日期的 LATEST_CHECK_IN_TIME
-            LocalDateTime latestCheckInDateTime = DateTimeUtil.dateTimeStr2LocalDateTime(checkInDate,LATEST_CHECK_IN_TIME);
+            LocalDateTime latestCheckInDateTime = DateTimeUtil.dateTimeStr2LocalDateTime(checkInDate,DateTimeUtil.LATEST_CHECK_IN_TIME);
             LocalDateTime curDateTime = LocalDateTime.now();
             if(curDateTime.plusHours(6).compareTo(latestCheckInDateTime) > 0 ){ // 如果距离最晚订单执行时间不足 6 个小时,当前时间+6h > 最晚订单执行时间
                 // 撤销的同时扣除信用值，信用值为订单的（总价值*1/2）

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
  * @date 2020-05-31
  */
 public class DateTimeUtil {
+    public final static String LATEST_CHECK_IN_TIME = "22:00:00";
     /**
      *
      * @param date "yyyy-MM-dd"格式字符串
