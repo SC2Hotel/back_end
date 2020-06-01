@@ -9,6 +9,7 @@ import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.example.hotel.enums.OrderState.Booked;
+import static com.example.hotel.enums.OrderState.execute;
 
 /**
  * @Author: chenyizong
@@ -45,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
             Date date = new Date(System.currentTimeMillis());
             String curdate = sf.format(date);
             orderVO.setCreateDate(curdate);
-            orderVO.setOrderState(OrderState.Booked.toString());
+            orderVO.setOrderState(Booked.toString());
             User user = accountService.getUserInfo(orderVO.getUserId());
             orderVO.setClientName(user.getUserName());
             orderVO.setPhoneNumber(user.getPhoneNumber());
@@ -78,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
         {
             return ResponseVO.buildFailure("ERROR ORDER ID");
         }
-        if(order.getOrderState().equals(OrderState.Booked.toString()))
+        if(!order.getOrderState().equals(Booked.toString()))
         {
             return ResponseVO.buildFailure("Order status error");
         }
@@ -119,6 +123,29 @@ public class OrderServiceImpl implements OrderService {
     public ResponseVO getAllUsersOrdersInAHotel(int userId, int hotelId){
         //TODO
         return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public ResponseVO executeOrder(int orderId, int userId){
+        Order order;
+        try {
+            order = orderMapper.getOrderById(orderId);
+        }catch (Exception e){
+            return ResponseVO.buildFailure("订单不存在");
+        }
+
+        if (!order.getOrderState().equals(Booked.toString())){
+            return ResponseVO.buildFailure("无效订单");
+        }
+
+        double credit = order.getPrice() * 0.02;
+
+        if(!accountService.updateUserCredit(userId, credit)){
+            return ResponseVO.buildFailure("修改用户信用值失败");
+        }
+
+        return ResponseVO.buildSuccess(true);
+
     }
 
 }

@@ -65,4 +65,15 @@ public class AccountServiceImpl implements AccountService {
         //TODO
         return ResponseVO.buildSuccess();
     }
+
+    @Override
+    public boolean updateUserCredit(int id, double credit){
+        try{
+            accountMapper.updateUserCredit(id, credit);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }

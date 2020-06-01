@@ -61,4 +61,13 @@ public interface OrderService {
      * @return
      */
     ResponseVO getAllUsersOrdersInAHotel(int userId, int hotelId);
+
+    /**
+      * @description: 执行订单，并且增加用户的信用值
+      * @param: orderId userId
+      * @return: ResponseVO
+      * @author: pkun
+      * @date: 2020/6/1
+      */
+    ResponseVO executeOrder(int orderId, int userId);
 }
