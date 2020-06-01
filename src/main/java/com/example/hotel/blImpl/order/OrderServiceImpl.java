@@ -152,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
 
         double credit = order.getPrice() * 0.02;
 
-        if(accountService.updateUserCredit(userId, credit)==0){
+        if(accountService.updateUserCredit(userId, -credit)==0){
             return ResponseVO.buildFailure("修改用户信用值失败");
         }
 
