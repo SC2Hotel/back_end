@@ -1,5 +1,6 @@
 package com.example.hotel.bl.hotel;
 
+import com.example.hotel.enums.BizRegion;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
@@ -47,6 +48,17 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType);
 
+    /**
+     * 根据商圈和地址查找酒店
+     * @param bizRegion 商圈
+     * @param address 地址
+     * @return
+     */
+    List<HotelVO> retrieveHotelsByBizAndAdd(String bizRegion, String address);
 
-
+    /**
+     * 查找所有商区
+     * @return
+     */
+    List<BizRegion> retrieveAllBizRegions();
 }

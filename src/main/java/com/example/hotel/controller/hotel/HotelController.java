@@ -42,4 +42,13 @@ public class HotelController {
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails(hotelId));
     }
 
+    @GetMapping("/search/{bizRegion}")
+    public ResponseVO retrieveHotelsByBizAndAdd(@PathVariable String bizRegion,@RequestParam String address){
+        return ResponseVO.buildSuccess(hotelService.retrieveHotelsByBizAndAdd(bizRegion,address));
+    }
+
+    @GetMapping("/bizRegions")
+    public ResponseVO retrieveAllBizRegions(){
+        return ResponseVO.buildSuccess(hotelService.retrieveAllBizRegions());
+    }
 }

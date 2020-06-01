@@ -12,7 +12,7 @@ public enum OrderState {
      * exception -> 订单发生异常，时间在超过最晚订单执行时间后还没有办理入住
      * invalid -> 订单正常结束
      */
-    Booked("已预定"),
+    Booked("已预订"),
     Withdrawn("已撤销"),
     exception("异常"),
     execute("已执行");

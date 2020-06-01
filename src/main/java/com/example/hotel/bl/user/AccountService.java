@@ -46,13 +46,6 @@ public interface AccountService {
      * @return
      */
     ResponseVO registerSenior(int id);
-    
-    /**
-      * @description: 更新用户的信用值，将用户的credit加上参数中的credit
-      * @param: userId，credit
-      * @return: boolean
-      * @author: pkun
-      * @date: 2020/6/1
-      */
-    boolean updateUserCredit(int id, double credit);
+
+    int updateUserCredit(Integer userId, Double creditToMinus);
 }

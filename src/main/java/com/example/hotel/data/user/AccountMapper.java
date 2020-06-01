@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 
 @Mapper
@@ -38,6 +37,12 @@ public interface AccountMapper {
      */
      int updateAccount(@Param("id") int id, @Param("password") String password,@Param("userName") String username, @Param("phoneNumber") String phonenumber);
 
-     int updateUserCredit(int id, double credit);
 
+    /**
+     * 更新 减少用户的信用值
+     * @param id 用户id
+     * @param creditToMinus 需要减少的信用值
+     * @return
+     */
+    int updateUserCredit(@Param("id") Integer id,@Param("creditToMinus") Double creditToMinus);
 }

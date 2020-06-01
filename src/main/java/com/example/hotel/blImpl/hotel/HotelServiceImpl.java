@@ -21,6 +21,8 @@ import com.example.hotel.vo.RoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +64,19 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public int getRoomCurNum(Integer hotelId, String roomType) {
         return roomService.getRoomCurNum(hotelId,roomType);
+    }
+
+    @Override
+    public List<HotelVO> retrieveHotelsByBizAndAdd(String bizRegion, String address) {
+        return hotelMapper.selectHotelByBizAndAdd(bizRegion,address);
+    }
+
+    @Override
+    public List<BizRegion> retrieveAllBizRegions() {
+        BizRegion[] regions = BizRegion.values();
+        List<BizRegion> bizRegions = new ArrayList<>();
+        Collections.addAll(bizRegions, regions);
+        return bizRegions;
     }
 
     @Override

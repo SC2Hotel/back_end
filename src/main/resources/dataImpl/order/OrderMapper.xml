@@ -22,6 +22,12 @@
         WHERE id = #{orderid}
     </update>
 
+    <!--设置订单状态异常的数据库操作-->
+    <update id="exceptionOrder">
+        update orderlist
+        SET orderState = '异常'
+        WHERE id = #{orderid}
+    </update>
 
 
     <resultMap id="Order" type="com.example.hotel.po.Order">

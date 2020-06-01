@@ -7,20 +7,20 @@ import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
+import com.example.hotel.util.DateTimeUtil;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.hotel.enums.OrderState.Booked;
-import static com.example.hotel.enums.OrderState.execute;
 
 /**
  * @Author: chenyizong
@@ -30,6 +30,7 @@ import static com.example.hotel.enums.OrderState.execute;
 public class OrderServiceImpl implements OrderService {
     private final static String RESERVE_ERROR = "预订失败";
     private final static String ROOMNUM_LACK = "预订房间数量剩余不足";
+
     @Autowired
     OrderMapper orderMapper;
     @Autowired
@@ -49,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
             Date date = new Date(System.currentTimeMillis());
             String curdate = sf.format(date);
             orderVO.setCreateDate(curdate);
-            orderVO.setOrderState(Booked.toString());
+            orderVO.setOrderState(OrderState.Booked.toString());
             User user = accountService.getUserInfo(orderVO.getUserId());
             orderVO.setClientName(user.getUserName());
             orderVO.setPhoneNumber(user.getPhoneNumber());
@@ -82,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         {
             return ResponseVO.buildFailure("ERROR ORDER ID");
         }
-        if(!order.getOrderState().equals(Booked.toString()))
+        if(!order.getOrderState().equals(OrderState.Booked.toString()))
         {
             return ResponseVO.buildFailure("Order status error");
         }
@@ -94,7 +95,17 @@ public class OrderServiceImpl implements OrderService {
         int res = orderMapper.annulOrder(orderId);
         if(res==1)
         {
-            return ResponseVO.buildSuccess(true);
+            String checkInDate = order.getCheckInDate(); // CheckIn日期
+            // 最晚订单执行时间设定为 CheckIn日期的 LATEST_CHECK_IN_TIME
+            LocalDateTime latestCheckInDateTime = DateTimeUtil.dateTimeStr2LocalDateTime(checkInDate,DateTimeUtil.LATEST_CHECK_IN_TIME);
+            LocalDateTime curDateTime = LocalDateTime.now();
+            if(curDateTime.plusHours(6).compareTo(latestCheckInDateTime) > 0 ){ // 如果距离最晚订单执行时间不足 6 个小时,当前时间+6h > 最晚订单执行时间
+                // 撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
+                Double creditToMinus = order.getPrice()/2;
+                int row = accountService.updateUserCredit(order.getUserId(),creditToMinus);
+                return ResponseVO.buildSuccess(row);
+            }
+            return ResponseVO.buildSuccess(0);
         }
         else
         {
@@ -125,6 +136,7 @@ public class OrderServiceImpl implements OrderService {
         return ResponseVO.buildSuccess();
     }
 
+
     @Override
     public ResponseVO executeOrder(int orderId, int userId){
         Order order;
@@ -140,12 +152,11 @@ public class OrderServiceImpl implements OrderService {
 
         double credit = order.getPrice() * 0.02;
 
-        if(!accountService.updateUserCredit(userId, credit)){
+        if(accountService.updateUserCredit(userId, credit)==0){
             return ResponseVO.buildFailure("修改用户信用值失败");
         }
 
         return ResponseVO.buildSuccess(true);
-
     }
 
 }

@@ -17,7 +17,7 @@
     </update>
 
     <update id="updateUserCredit">
-        update User set credit=credit+#{credit}
+        update User set credit=credit-#{creditToMinus}
         where id=#{id}
     </update>
 

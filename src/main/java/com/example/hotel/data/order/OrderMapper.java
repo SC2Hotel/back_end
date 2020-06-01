@@ -31,4 +31,10 @@ public interface OrderMapper {
 
     Order getOrderById(@Param("orderid") int orderid);
 
+    /**
+     * 将订单状态设置为异常
+     * @param orderid
+     * @return
+     */
+    int exceptionOrder(int orderid);
 }

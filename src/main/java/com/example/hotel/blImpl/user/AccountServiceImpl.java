@@ -3,6 +3,7 @@ package com.example.hotel.blImpl.user;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.po.User;
+import com.example.hotel.util.MD5Encryption;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserVO;
@@ -22,6 +23,7 @@ public class AccountServiceImpl implements AccountService {
     public ResponseVO registerAccount(UserVO userVO) {
         User user = new User();
         BeanUtils.copyProperties(userVO,user);
+        user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
             accountMapper.createNewAccount(user);
         } catch (Exception e) {
@@ -34,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public User login(UserForm userForm) {
         User user = accountMapper.getAccountByName(userForm.getEmail());
-        if (null == user || !user.getPassword().equals(userForm.getPassword())) {
+        if (null == user || !user.getPassword().equals(MD5Encryption.encrypt(userForm.getPassword()))) {
             return null;
         }
         return user;
@@ -52,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO updateUserInfo(int id, String password, String username, String phonenumber) {
         try {
-            accountMapper.updateAccount(id, password, username, phonenumber);
+            accountMapper.updateAccount(id, MD5Encryption.encrypt(password), username, phonenumber);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseVO.buildFailure(UPDATE_ERROR);
@@ -67,13 +69,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean updateUserCredit(int id, double credit){
-        try{
-            accountMapper.updateUserCredit(id, credit);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public int updateUserCredit(Integer userId, Double creditToMinus) {
+        return accountMapper.updateUserCredit(userId,creditToMinus);
     }
-
 }
