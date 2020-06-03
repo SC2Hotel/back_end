@@ -59,4 +59,33 @@ public class OrderController {
         return orderService.executeOrder(orderId, userId);
     }
 
+    @GetMapping("/{hotelId}/getAllExceptionOrder")
+    public ResponseVO getHotelAllExceptionOrder(@PathVariable int hotelId){
+        try{
+            return ResponseVO.buildSuccess(orderService.getHotelExceptionOrder(hotelId));
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{orderId}/delayCheckIn")
+    public ResponseVO delayCheckIn(@PathVariable int orderId){
+        try{
+            orderService.executeExceptionOrder(orderId);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{orderId}/checkOut")
+    public ResponseVO checkOut(@PathVariable int orderId){
+        try{
+            orderService.checkOutOrder(orderId);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
 }

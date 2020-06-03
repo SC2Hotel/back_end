@@ -19,6 +19,7 @@ import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
+import com.example.hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,6 +103,16 @@ public class HotelServiceImpl implements HotelService {
         hotelVO.setRooms(roomVOS);
 
         return hotelVO;
+    }
+
+    @Override
+    public ResponseVO updateHotelInfor(updateHotelVO updateHotelVO){
+        try{
+            hotelMapper.updateHotelInfor(updateHotelVO);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
     }
 
     @Override

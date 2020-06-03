@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.example.hotel.enums.OrderState.Booked;
+import static com.example.hotel.enums.OrderState.*;
 
 /**
  * @Author: chenyizong
@@ -163,13 +163,56 @@ public class OrderServiceImpl implements OrderService {
             return ResponseVO.buildFailure("无效订单");
         }
 
-        double credit = order.getPrice() * 0.02;
+        orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
+        double credit = order.getPrice();
 
         if(accountService.updateUserCredit(userId, -credit)==0){
             return ResponseVO.buildFailure("修改用户信用值失败");
         }
 
         return ResponseVO.buildSuccess(true);
+    }
+
+    @Override
+    public List<Order> getHotelExceptionOrder(int hotelId){
+        return this.getHotelOrders(hotelId).stream().filter(order -> order.getOrderState().equals(exception.toString())).collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseVO executeExceptionOrder(int orderId){
+        Order order;
+        try{
+            order = orderMapper.getOrderById(orderId);
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+
+        if(DateTimeUtil.compare(order.getCheckInDate(), "00:00:00", LocalDateTime.now(), DateTimeUtil.LATEST_DELAY_CHECK_IN, 0) > 0){
+            try{
+                orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
+                accountService.updateUserCredit(order.getUserId(), -order.getPrice());
+            }catch (Exception e){
+                return ResponseVO.buildFailure(e.getMessage());
+            }
+            return ResponseVO.buildSuccess();
+        }
+        else{
+            try{
+                hotelService.updateRoomInfo(order.getHotelId(), order.getRoomType(), -order.getRoomNum());
+            }catch (Exception e){
+                return ResponseVO.buildFailure(e.getMessage());
+            }
+            return ResponseVO.buildSuccess("超过最长延迟入住时间");
+        }
+
+    }
+
+    @Override
+    public void checkOutOrder(int orderId){
+        Order order;
+        order = orderMapper.getOrderById(orderId);
+        hotelService.updateRoomInfo(order.getHotelId(), order.getRoomType(), -order.getRoomNum());
+        orderMapper.checkOutOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
     }
 
 }

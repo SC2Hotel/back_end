@@ -15,17 +15,41 @@
     <select id="getOrderById" resultMap="Order">
         select * from OrderList where id=#{orderid}
     </select>
+    
+    <select id="getPrice">
+        select price from OrderList where id=#{orderId}
+    </select>
+    
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
-        update orderlist
+        update Orderlist
         SET orderState = '已撤销'
         WHERE id = #{orderid}
     </update>
 
     <!--设置订单状态异常的数据库操作-->
     <update id="exceptionOrder">
-        update orderlist
+        update Orderlist
         SET orderState = '异常'
+        WHERE id = #{orderid}
+    </update>
+
+    <update id="executeOrder">
+        update Orderlist
+        SET orderState = '已执行', checkInDate = #{checkInDate}
+        WHERE id = #{orderId}
+    </update>
+
+    <update id="checkOutOrder">
+        update Orderlist
+        SET checkOutDate = #{checkOutDate}
+        WHERE id = #{orderId}
+    </update>
+
+
+    <update id="setOrderState">
+        update Orderlist
+        SET orderState = #{state}
         WHERE id = #{orderid}
     </update>
 

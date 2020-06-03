@@ -3,6 +3,7 @@ package com.example.hotel.data.hotel;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.updateHotelVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,8 @@ public interface HotelMapper {
     HotelVO selectById(@Param("id") Integer id);
 
     List<HotelVO> selectHotelByBizAndAdd(String bizRegion, String address);
+
+    int updateHotelInfor(updateHotelVO updateHotelVO);
 
     List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
 }
