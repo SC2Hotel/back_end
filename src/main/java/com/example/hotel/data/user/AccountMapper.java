@@ -1,6 +1,7 @@
 package com.example.hotel.data.user;
 
 import com.example.hotel.po.User;
+import com.example.hotel.po.Vip;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -45,4 +46,13 @@ public interface AccountMapper {
      * @return
      */
     int updateUserCredit(@Param("id") Integer id,@Param("creditToMinus") Double creditToMinus);
+
+    /**
+     * 根据用户id获取会员信息
+     * @param id 用户id
+     * @return
+     */
+    Vip getVipById(int id);
+
+    int createNewVip(Vip vip);
 }

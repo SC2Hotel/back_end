@@ -114,7 +114,7 @@ CREATE TABLE `OrderList` (
 
 BEGIN;
 /*!40000 ALTER TABLE `OrderList` DISABLE KEYS */;
-INSERT INTO `OrderList` VALUES (1,4,3,"桂圆酒店","2020-06-03","2020-06-04","Family",1,1,0,"2020-05-24",399.0,"qin","15521232123","已预订");
+INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
 /*!40000 ALTER TABLE `OrderList` ENABLE KEYS */;
 COMMIT;
 
@@ -187,3 +187,10 @@ COMMIT;
 
 -- Dump completed on 2020-04-12 10:08:42
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `Vip` (
+    user_id int primary key,
+    type int COMMENT '类型 1 表示普通会员 2 表示企业会员',
+    message varchar(30) COMMENT '会员登记信息 普通会员登记生日 yyyy-MM-dd 企业会员登记企业名'
+);
+INSERT INTO Vip VALUES (4,1,'2000-01-01');

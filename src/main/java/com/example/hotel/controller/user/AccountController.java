@@ -49,7 +49,7 @@ public class AccountController {
     }
 
     @PostMapping("/{id}/registerSenior")
-    public ResponseVO registerSenior(@PathVariable int id){
-        return accountService.registerSenior(id);
+    public ResponseVO registerSenior(@PathVariable int id,@RequestParam int type,@RequestParam String message){
+        return accountService.registerSenior(id,type,message);
     }
 }

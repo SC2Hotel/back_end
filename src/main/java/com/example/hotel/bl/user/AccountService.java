@@ -41,11 +41,13 @@ public interface AccountService {
     ResponseVO updateUserInfo(int id, String password,String username,String phonenumber);
 
     /**
-     * 注册成为高级客户
-     * @param id
+     * 注册会员
+     * @param id 用户id
+     * @param type 1 表示普通会员 ； 2表示企业会员
+     * @param message 普通会员 登记生日 'yyyy-MM-hh'格式字符串 ； 企业会员 登记企业名
      * @return
      */
-    ResponseVO registerSenior(int id);
+    ResponseVO registerSenior(int id,int type,String message);
 
     int updateUserCredit(Integer userId, Double creditToMinus);
 }

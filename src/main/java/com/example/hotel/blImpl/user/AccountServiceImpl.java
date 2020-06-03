@@ -3,6 +3,7 @@ package com.example.hotel.blImpl.user;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.po.User;
+import com.example.hotel.po.Vip;
 import com.example.hotel.util.MD5Encryption;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.ResponseVO;
@@ -63,9 +64,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseVO registerSenior(int id){
-        //TODO
-        return ResponseVO.buildSuccess();
+    public ResponseVO registerSenior(int id,int type,String message){
+        if(type!=1&&type!=2){
+            return ResponseVO.buildFailure("参数错误，type为 0 或 1");
+        }
+        Vip vip = accountMapper.getVipById(id);
+        if(vip!=null){
+            if(vip.getType()==1){
+                return ResponseVO.buildFailure("已经是普通会员");
+            }else if(vip.getType()==2){
+                return ResponseVO.buildFailure("已经企业会员");
+            }else {
+                return ResponseVO.buildFailure("error");
+            }
+        }
+        Vip vipPO = new Vip();
+        vipPO.setUserId(id);
+        vipPO.setType(type);
+        vipPO.setMessage(message);
+        return ResponseVO.buildSuccess(accountMapper.createNewVip(vipPO));
     }
 
     @Override
