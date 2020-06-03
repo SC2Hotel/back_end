@@ -5,9 +5,11 @@ import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.DateTimeUtil;
+import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.BeanUtils;
@@ -16,8 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.hotel.enums.OrderState.Booked;
@@ -126,14 +127,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseVO getBookedHotels(int userId){
-        //TODO
-        return ResponseVO.buildSuccess();
+        List<Order> orders = this.getAllOrders();
+        List<HotelVO> hotels = new LinkedList<>();
+        Set<Integer> hotelIds = new HashSet<>();
+        try{
+            for(Order order : orders){
+                if(!hotelIds.contains(order.getHotelId())){
+                    hotelIds.add(order.getHotelId());
+                    hotels.add(hotelService.retrieveHotelDetails(order.getHotelId()));
+                }
+            }
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+        return ResponseVO.buildSuccess(hotels);
     }
 
     @Override
     public ResponseVO getAllUsersOrdersInAHotel(int userId, int hotelId){
-        //TODO
-        return ResponseVO.buildSuccess();
+        List<Order> orders = this.getUserOrders(userId);
+        return ResponseVO.buildSuccess(orders.stream().filter(order -> order.getHotelId()==hotelId).collect(Collectors.toList()));
     }
 
 
@@ -152,7 +165,7 @@ public class OrderServiceImpl implements OrderService {
 
         double credit = order.getPrice() * 0.02;
 
-        if(accountService.updateUserCredit(userId, credit)==0){
+        if(accountService.updateUserCredit(userId, -credit)==0){
             return ResponseVO.buildFailure("修改用户信用值失败");
         }
 

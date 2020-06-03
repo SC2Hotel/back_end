@@ -54,4 +54,9 @@ public class OrderController {
         return orderService.getAllUsersOrdersInAHotel(userId, hotelId);
     }
 
+    @PostMapping("/{userId}/{orderId}/executeOrder")
+    public ResponseVO executeOrder(@PathVariable int userId, @PathVariable int orderId){
+        return orderService.executeOrder(orderId, userId);
+    }
+
 }
