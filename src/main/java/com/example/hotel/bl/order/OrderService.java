@@ -2,6 +2,7 @@ package com.example.hotel.bl.order;
 
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
+import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
 
@@ -34,7 +35,7 @@ public interface OrderService {
     List<Order> getUserOrders(int userid);
 
     /**
-     * 撤销订单
+     * 用户撤销订单
      * @param orderid
      * @return
      */
@@ -70,4 +71,32 @@ public interface OrderService {
       * @date: 2020/6/1
       */
     ResponseVO executeOrder(int orderId, int userId);
+
+    /**
+      * @description: 酒店管理人员可以获得该酒店所有异常订单
+      * @param: hotelId
+      * @return: List Order
+      * @author: pkun
+      * @date: 2020/6/3
+      */
+    List<Order> getHotelExceptionOrder(int hotelId);
+
+    /**
+      * @description: 延时入住功能，酒店管理人员可以撤销异常订单改为已执行，并且回复信用值
+      * @param: orderId
+      * @return: ResponseVO
+      * @author: pkun
+      * @date: 2020/6/3
+      */
+    ResponseVO executeExceptionOrder(int orderId);
+
+    /**
+      * @description: 退房，会更新订单的退房时间
+      * @param: orderId
+      * @return: void
+      * @author: pkun
+      * @date: 2020/6/3
+      */
+    void checkOutOrder(int orderId);
+
 }

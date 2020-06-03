@@ -6,6 +6,8 @@ import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.ResponseVO;
+import com.example.hotel.vo.updateHotelVO;
 
 import java.util.List;
 
@@ -61,4 +63,11 @@ public interface HotelService {
      * @return
      */
     List<BizRegion> retrieveAllBizRegions();
+
+    /**
+     * 更新酒店的信息
+     * @return
+     */
+    ResponseVO updateHotelInfor(updateHotelVO updateHotelVO);
+
 }

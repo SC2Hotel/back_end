@@ -30,5 +30,15 @@
 
     </resultMap>
 
+    <update id="updateHotelInfor" parameterType="com.example.hotel.vo.updateHotelVO">
+        update Hotel
+        <trim prefix="set" suffixOverrides=",">
+            <if test="address!=null">address=#{address}</if>
+            <if test="bizRegion!=null">bizRegion=#{bizRegion}</if>
+            <if test="hotelStar!=null">hotelStar=#{hotelStar}</if>
+            <if test="description!=null">description=#{description}</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
 
 </mapper>

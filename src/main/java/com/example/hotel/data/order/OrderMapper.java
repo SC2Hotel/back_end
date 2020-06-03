@@ -22,6 +22,12 @@ public interface OrderMapper {
     List<Order> getUserOrders(@Param("userid") int userid);
 
     /**
+     * 获得订单的价格
+     * @param orderId
+     * @return
+     */
+    int getPrice(int orderId);
+    /**
      * return value is the line which match the orderId
      * also means that if value == 1 equals success else fault
      * @param orderid
@@ -37,4 +43,21 @@ public interface OrderMapper {
      * @return
      */
     int exceptionOrder(int orderid);
+
+    /**
+     * 将订单状态设置为执行
+     * @param orderId checkInDate
+     * @return
+     */
+    int executeOrder(int orderId, String checkInDate);
+
+    int checkOutOrder(int orderId, String checkOutDate);
+
+    /**
+     * 设置订单状态
+     * @param orderId
+     * @param state
+     * @return
+     */
+    int setOrderState(int orderId, String state);
 }
