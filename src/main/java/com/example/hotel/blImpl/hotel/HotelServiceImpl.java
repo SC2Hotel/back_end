@@ -16,6 +16,7 @@ import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
+import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,11 @@ public class HotelServiceImpl implements HotelService {
         hotelVO.setRooms(roomVOS);
 
         return hotelVO;
+    }
+
+    @Override
+    public List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO) {
+        return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 
 }

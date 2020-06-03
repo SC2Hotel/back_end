@@ -4,6 +4,7 @@ import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.hotel.RoomService;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.ServiceException;
+import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,10 @@ public class HotelController {
     @GetMapping("/bizRegions")
     public ResponseVO retrieveAllBizRegions(){
         return ResponseVO.buildSuccess(hotelService.retrieveAllBizRegions());
+    }
+
+    @GetMapping("/search")
+    public ResponseVO retrieveHotelsByHotelAndRoomVO(@RequestBody HotelAndRoomVO hotelAndRoomVO){
+        return ResponseVO.buildSuccess(hotelService.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO));
     }
 }

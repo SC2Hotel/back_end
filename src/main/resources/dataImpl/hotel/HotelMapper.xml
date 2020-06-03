@@ -17,6 +17,22 @@
     <select id="selectHotelByBizAndAdd" resultMap="Hotel">
         select * from Hotel where bizRegion=#{bizRegion} and address like CONCAT('%',#{address},'%')
     </select>
+
+    <select id="retrieveHotelsByHotelAndRoomVO" resultMap="Hotel">
+        select * from hotel where id in (
+            select distinct hotel_id
+            from room where roomType=#{roomType}
+                and price between #{loPrice} and #{hiPrice}
+                and hotel_id in (
+                    select id from hotel
+                    where bizRegion=#{bizRegion}
+                    and address like concat('%',#{address},'%')
+                    and hotelName like concat('%',#{name},'%')
+                    and rate>=#{rate}
+                    and hotelStar=#{hotelStar}
+                    )
+            )
+    </select>
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
         <result column="address" property="address"></result>

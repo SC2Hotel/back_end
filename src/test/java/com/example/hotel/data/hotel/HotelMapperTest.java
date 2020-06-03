@@ -3,6 +3,7 @@ package com.example.hotel.data.hotel;
 import com.example.hotel.enums.BizRegion;
 import com.example.hotel.enums.HotelStar;
 import com.example.hotel.po.Hotel;
+import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,6 +56,21 @@ public class HotelMapperTest {
     @Test
     public void selectById() {
         HotelVO hotelVO = hotelMapper.selectById(1);
-        Assert.assertEquals("汉庭酒店",hotelVO.getName());
+        Assert.assertEquals("汉庭酒店", hotelVO.getName());
+    }
+
+    @Test
+    public void retrieveHotelsByHotelAndRoomVO() {
+        HotelAndRoomVO hotelAndRoomVO = new HotelAndRoomVO();
+        hotelAndRoomVO.setBizRegion("XiDan");
+        hotelAndRoomVO.setAddress("北京");
+        hotelAndRoomVO.setRoomType("BigBed");
+        hotelAndRoomVO.setLoPrice(100.0);
+        hotelAndRoomVO.setHiPrice(300.0);
+        hotelAndRoomVO.setName("汉");
+        hotelAndRoomVO.setHotelStar("Four");
+        hotelAndRoomVO.setRate(4.7);
+        List<HotelVO> hotelVOS = hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
+        Assert.assertTrue(hotelVOS.size() >= 1);
     }
 }

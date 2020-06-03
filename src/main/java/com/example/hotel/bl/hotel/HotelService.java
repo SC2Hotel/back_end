@@ -5,6 +5,7 @@ import com.example.hotel.po.HotelRoom;
 import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
+import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 
 import java.util.List;
@@ -61,4 +62,11 @@ public interface HotelService {
      * @return
      */
     List<BizRegion> retrieveAllBizRegions();
+
+    /**
+     * 搜索酒店信息
+     * @param hotelAndRoomVO 要搜索的酒店信息
+     * @return
+     */
+    List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
 }
