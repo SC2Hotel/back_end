@@ -17,4 +17,14 @@ public interface AdminMapper {
     int addManager(User user);
 
     List<User> getAllManagers();
+
+    User getAccountById(int userId);
+
+    User getHotelManager(int hotelId);
+
+    List<User> retrieveUserByName(String userName);
+
+    List<User> retrieveUserByEmail(String email);
+
+    int updateUserInfo(User user);
 }

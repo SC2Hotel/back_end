@@ -1,6 +1,7 @@
 package com.example.hotel.bl.admin;
 
 import com.example.hotel.po.User;
+import com.example.hotel.vo.DisplayUserVO;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
 
@@ -25,5 +26,31 @@ public interface AdminService {
      */
     List<User> getAllManagers();
 
+    /**
+      * @description: 获得一个酒店的管理人员信息
+      * @param: int hotelId
+      * @return: User
+      * @author: pkun
+      * @date: 2020/6/4
+      */
+    User getHotelManager(int hotelId);
+
+    /**
+      * @description: 根据用户的名字或者邮箱来查找用户信息
+      * @param: type = 1 邮箱 type = 0 名字
+      * @return: User
+      * @author: pkun
+      * @date: 2020/6/4
+      */
+    List<User> getUserByNameOrEmail(Integer type, String information);
+
+    /**
+      * @description: 更改用户信息
+      * @param: User
+      * @return: 1 成功 0 失败
+      * @author: pkun
+      * @date: 2020/6/4
+      */
+    int updateUserInformation(User user);
 
 }

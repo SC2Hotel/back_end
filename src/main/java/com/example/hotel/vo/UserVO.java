@@ -12,7 +12,7 @@ public class UserVO {
     private String password;
     private String userName;
     private String phoneNumber;
-    private double credit;
+    private Double credit;
     private UserType userType;
 
     public Integer getId() {

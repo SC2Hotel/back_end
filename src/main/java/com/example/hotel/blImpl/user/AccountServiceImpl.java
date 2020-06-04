@@ -26,6 +26,7 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(userVO,user);
         user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
+            //TODO createNewAccount不会触发账号已存在，需要检查邮箱是否重复
             accountMapper.createNewAccount(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
