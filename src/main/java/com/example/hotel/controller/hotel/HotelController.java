@@ -60,8 +60,8 @@ public class HotelController {
     }
 
     @PostMapping("/update")
-    public ResponseVO updateHotelInfor(@RequestBody updateHotelVO updateHotelVO){
-        return hotelService.updateHotelInfor(updateHotelVO);
+    public ResponseVO updateHotelInfo(@RequestBody updateHotelVO updateHotelVO){
+        return hotelService.updateHotelInfo(updateHotelVO);
     }
 
 }

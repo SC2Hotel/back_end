@@ -16,10 +16,6 @@
         select * from OrderList where id=#{orderid}
     </select>
     
-    <select id="getPrice">
-        select price from OrderList where id=#{orderId}
-    </select>
-    
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
         update Orderlist

@@ -26,7 +26,7 @@
     </select>
 
     <insert id="createNewVip" parameterType="com.example.hotel.po.Vip">
-        insert into Vip values (#{id},#{type},#{message})
+        insert into Vip values (#{userId},#{type},#{message})
     </insert>
 
     <resultMap id="User" type="com.example.hotel.po.User">

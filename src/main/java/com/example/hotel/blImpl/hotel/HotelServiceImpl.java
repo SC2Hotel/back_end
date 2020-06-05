@@ -70,7 +70,27 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByBizAndAdd(String bizRegion, String address) {
-        return hotelMapper.selectHotelByBizAndAdd(bizRegion,address);
+
+        return hotelMapper.selectHotelByBizAndAdd(stringToBizRegion(bizRegion),address);
+    }
+
+    private BizRegion stringToBizRegion(String bizRegion){
+        switch (bizRegion){
+            case "西单":
+                return BizRegion.XiDan;
+            case "王府井":
+                return BizRegion.WangFuJing;
+            case "新街口":
+                return BizRegion.XinJieKou;
+            case "夫子庙":
+                return BizRegion.FuZiMiao;
+            case "珠江新城":
+                return BizRegion.ZhuJiangXinCheng;
+            case "北京路":
+                return BizRegion.BeiJingLu;
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -106,9 +126,9 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public ResponseVO updateHotelInfor(updateHotelVO updateHotelVO){
+    public ResponseVO updateHotelInfo(updateHotelVO updateHotelVO){
         try{
-            hotelMapper.updateHotelInfor(updateHotelVO);
+            hotelMapper.updateHotelInfo(updateHotelVO);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());

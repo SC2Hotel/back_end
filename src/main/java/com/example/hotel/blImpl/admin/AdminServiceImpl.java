@@ -68,10 +68,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int updateUserInformation(User user){
-        if(user.getEmail()!=null&&this.getUserByNameOrEmail(1, user.getEmail())!=null){
-            return 0;
+        return this.updateUserInfoHelper(user);
+    }
+
+    public int updateUserInfoHelper(User user){
+        if(user.getPassword()!=null){
+            return adminMapper.updateUserInfo(user)&adminMapper.updateHelper(user.getPassword(), user.getId());
         }
-        return adminMapper.updateUserInfo(user);
+        else return adminMapper.updateUserInfo(user);
     }
 
 }

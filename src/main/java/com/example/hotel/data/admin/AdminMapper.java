@@ -27,4 +27,6 @@ public interface AdminMapper {
     List<User> retrieveUserByEmail(String email);
 
     int updateUserInfo(User user);
+
+    int updateHelper(String password, int userId);
 }

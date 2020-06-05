@@ -71,6 +71,7 @@ public class AccountServiceImpl implements AccountService {
         }
         Vip vip = accountMapper.getVipById(id);
         if(vip!=null){
+            //TODO 改成枚举值，我把枚举值的value修改成了Integer
             if(vip.getType()==1){
                 return ResponseVO.buildFailure("已经是普通会员");
             }else if(vip.getType()==2){

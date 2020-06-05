@@ -25,17 +25,20 @@
         select * from User WHERE email = #{email}
     </select>
 
-    <update id="updateUserInfo" parameterType="User">
+    <update id="updateUserInfo" parameterType="com.example.hotel.po.User">
         update User
-        <trim suffix="set" prefixOverrides=",">
-            <if test="email!=null">email=#{email}</if>
-            <if test="password!=null">"password"=#{password}</if>
-            <if test="username!=null">username=#{username}</if>
-            <if test="phonenumber!=null">phonenumber=#{phoneNumber}</if>
-            <if test="credit!=null">credit=#{credit}</if>
-            <if test="usertype!=null">usertype=#{userType}</if>
-        </trim>
+        <set>
+            <if test="email!=null">email=#{email},</if>
+            <if test="userName!=null">username=#{userName},</if>
+            <if test="phoneNumber!=null">phonenumber=#{phoneNumber},</if>
+            <if test="credit!=null">credit=#{credit},</if>
+            <if test="userType!=null">usertype=#{userType}</if>
+        </set>
         WHERE id=#{id}
+    </update>
+
+    <update id="updateHelper">
+        update User SET password=#{password} where id = #{userId}
     </update>
 
     <resultMap id="User" type="com.example.hotel.po.User">

@@ -1,6 +1,7 @@
 package com.example.hotel.data.user;
 
 import com.example.hotel.po.User;
+import com.example.hotel.po.Vip;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.example.hotel.enums.UserType.HotelManager;
+import static com.example.hotel.enums.UserType.commonSeniorClient;
 import static org.junit.Assert.*;
 
 /**
@@ -30,6 +33,9 @@ public class AccountMapperTest {
         user.setUserName("Test");
         user.setEmail("*"+System.currentTimeMillis()/1000+"@qq.com");
         user.setPassword("123456");
+        user.setPhoneNumber("123123123");
+        user.setCredit(10000);
+        user.setUserType(HotelManager);
         int row = accountMapper.createNewAccount(user);
         Assert.assertEquals(1,row);
     }
@@ -50,5 +56,29 @@ public class AccountMapperTest {
     public void updateAccount() {
         int row = accountMapper.updateAccount(6,"123456","管理员","12345678910");
         Assert.assertEquals(1,row);
+    }
+
+    @Test
+    public void updateUserCredit(){
+        accountMapper.updateUserCredit(5, 50.0);
+        User user = accountMapper.getAccountById(5);
+        Assert.assertTrue(user.getCredit()==50.0);
+        accountMapper.updateUserCredit(5, -50.0);
+    }
+
+    @Test
+    public void getVipById(){
+        Vip vip = accountMapper.getVipById(4);
+        Assert.assertNotNull(vip);
+    }
+
+    @Test
+    public void createNewVip(){
+        Vip vip = new Vip();
+        vip.setType(commonSeniorClient.getValue());
+        vip.setUserId(13);
+        vip.setMessage("测试");
+        int res = accountMapper.createNewVip(vip);
+        Assert.assertTrue(res==1);
     }
 }

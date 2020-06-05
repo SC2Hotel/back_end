@@ -76,6 +76,6 @@ public interface HotelService {
      * 更新酒店的信息
      * @return
      */
-    ResponseVO updateHotelInfor(updateHotelVO updateHotelVO);
+    ResponseVO updateHotelInfo(updateHotelVO updateHotelVO);
 
 }

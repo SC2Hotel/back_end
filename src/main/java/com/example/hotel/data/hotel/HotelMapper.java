@@ -1,5 +1,6 @@
 package com.example.hotel.data.hotel;
 
+import com.example.hotel.enums.BizRegion;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
@@ -20,9 +21,9 @@ public interface HotelMapper {
 
     HotelVO selectById(@Param("id") Integer id);
 
-    List<HotelVO> selectHotelByBizAndAdd(String bizRegion, String address);
+    List<HotelVO> selectHotelByBizAndAdd(BizRegion bizRegion, String address);
 
-    int updateHotelInfor(updateHotelVO updateHotelVO);
+    int updateHotelInfo(updateHotelVO updateHotelVO);
 
     List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
 }

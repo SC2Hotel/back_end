@@ -5,6 +5,7 @@ import com.example.hotel.enums.HotelStar;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.updateHotelVO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,16 +62,43 @@ public class HotelMapperTest {
 
     @Test
     public void retrieveHotelsByHotelAndRoomVO() {
+        //3	桂圆酒店	欢迎您入住	南京市栖霞区珠江路268号	XiDan	Four	1829553719	4.8	6
+        //9	399	10	10	3	Family
         HotelAndRoomVO hotelAndRoomVO = new HotelAndRoomVO();
         hotelAndRoomVO.setBizRegion("XiDan");
-        hotelAndRoomVO.setAddress("北京");
-        hotelAndRoomVO.setRoomType("BigBed");
+        hotelAndRoomVO.setAddress("南京");
+        hotelAndRoomVO.setRoomType("Family");
         hotelAndRoomVO.setLoPrice(100.0);
-        hotelAndRoomVO.setHiPrice(300.0);
-        hotelAndRoomVO.setName("汉");
+        hotelAndRoomVO.setHiPrice(400.0);
+        hotelAndRoomVO.setName("圆");
         hotelAndRoomVO.setHotelStar("Four");
         hotelAndRoomVO.setRate(4.7);
         List<HotelVO> hotelVOS = hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
         Assert.assertTrue(hotelVOS.size() >= 1);
+    }
+
+    @Test
+    public void selectHotelByBizAndAdd(){
+        List<HotelVO> hotelVOS = hotelMapper.selectHotelByBizAndAdd(BizRegion.XiDan, "lichun");
+        Assert.assertEquals(1, hotelVOS.size());
+        Assert.assertEquals(hotelVOS.get(0).getName(), "lichun");
+    }
+
+    @Test
+    public void updateHotelInfo(){
+        updateHotelVO updateHotelVO = new updateHotelVO();
+        updateHotelVO.setId(4);
+        updateHotelVO.setDescription("测试更新");
+
+        hotelMapper.updateHotelInfo(updateHotelVO);
+
+        HotelVO hotelVO = hotelMapper.selectById(4);
+
+        Assert.assertEquals(hotelVO.getDescription(), "测试更新");
+
+        updateHotelVO.setDescription("复原");
+
+        hotelMapper.updateHotelInfo(updateHotelVO);
+
     }
 }

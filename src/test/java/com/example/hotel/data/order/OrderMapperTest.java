@@ -1,6 +1,7 @@
 package com.example.hotel.data.order;
 
 import com.example.hotel.po.Order;
+import com.example.hotel.util.DateTimeUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.example.hotel.enums.OrderState.*;
 import static org.junit.Assert.*;
 
 /**
@@ -69,5 +72,27 @@ public class OrderMapperTest {
         Order order = orderMapper.getOrderById(1);
         Assert.assertNotNull(order);
     }
+    
+    @Test
+    public void exceptionOrder(){
+        orderMapper.exceptionOrder(1);
+        Order order = orderMapper.getOrderById(1);
+        Assert.assertEquals(order.getOrderState(), exception.toString());
+    }
+
+    @Test
+    public void executeOrder(){
+        orderMapper.executeOrder(1, LocalDateTime.now().toString().substring(0, 10));
+        Order order = orderMapper.getOrderById(1);
+        Assert.assertEquals(order.getOrderState(), execute.toString());
+    }
+
+    @Test
+    public void checkOutOrder(){
+        orderMapper.checkOutOrder(1, LocalDateTime.now().toString().substring(0, 10));
+        Order order = orderMapper.getOrderById(1);
+        Assert.assertEquals(order.getCheckOutDate(), LocalDateTime.now().toString().substring(0, 10));
+    }
+
 
 }
