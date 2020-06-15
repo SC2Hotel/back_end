@@ -7,7 +7,7 @@ import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
-import com.example.hotel.vo.updateHotelVO;
+import com.example.hotel.vo.UpdateHotelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,7 +60,7 @@ public class HotelController {
     }
 
     @PostMapping("/update")
-    public ResponseVO updateHotelInfo(@RequestBody updateHotelVO updateHotelVO){
+    public ResponseVO updateHotelInfo(@RequestBody UpdateHotelVO updateHotelVO){
         return hotelService.updateHotelInfo(updateHotelVO);
     }
 

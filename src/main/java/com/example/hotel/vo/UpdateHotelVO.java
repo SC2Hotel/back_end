@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2020/6/3 18:04
  */
 @Data
-public class updateHotelVO {
+public class UpdateHotelVO {
 
     private Integer id;
     private String address;
