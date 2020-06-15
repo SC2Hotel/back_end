@@ -59,7 +59,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public int getRoomCurNum(Integer hotelId, String roomType) {
+    public Integer getRoomCurNum(Integer hotelId, String roomType) {
         return roomService.getRoomCurNum(hotelId,roomType);
     }
 
@@ -139,6 +139,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO) {
+        // todo 将枚举字符串转换为对应的枚举值
         return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 

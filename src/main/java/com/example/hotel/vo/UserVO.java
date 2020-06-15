@@ -6,6 +6,7 @@ import com.example.hotel.enums.UserType;
  * @author fjj
  * @date 2019/4/11 3:22 PM
  */
+
 public class UserVO {
     private Integer id;
     private String email;
@@ -43,7 +44,7 @@ public class UserVO {
         return credit;
     }
 
-    public void setCredit(double credit) {
+    public void setCredit(Double credit) {
         this.credit = credit;
     }
 
