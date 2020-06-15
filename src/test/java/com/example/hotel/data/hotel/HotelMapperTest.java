@@ -5,7 +5,7 @@ import com.example.hotel.enums.HotelStar;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
-import com.example.hotel.vo.updateHotelVO;
+import com.example.hotel.vo.UpdateHotelVO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * @author qin
@@ -86,7 +84,7 @@ public class HotelMapperTest {
 
     @Test
     public void updateHotelInfo(){
-        updateHotelVO updateHotelVO = new updateHotelVO();
+        UpdateHotelVO updateHotelVO = new UpdateHotelVO();
         updateHotelVO.setId(4);
         updateHotelVO.setDescription("测试更新");
 

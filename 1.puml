@@ -1,0 +1,74 @@
+@startuml
+
+package pkg{
+    folder RESTAPI{
+    }
+    package controller{
+        folder adminController as ac
+        folder couponController as cc
+        folder hotelController as hc
+        folder orderController as oc
+        folder userController as uc
+    }
+    package service{
+        folder adminService as As
+        folder couponService as cs
+        folder hotelService as hs
+        folder roomService as rs
+        folder orderService as os
+        folder userService as us
+    }
+    package CouponStrategy{
+        folder Strategy
+    }
+    package data{
+        folder adminMapper as am
+        folder couponMapper as cm
+        folder hotelMapper as hm
+        folder roomMapper as rm
+        folder orderMapper as om
+        folder userMapper as um
+        folder Mybatis as m
+    }
+    folder po
+    folder vo
+}
+RESTAPI ~~down~~> controller
+
+controller ~down~> po
+service ~down~> po
+data ~down~> po
+
+uc ~down~> us
+oc ~down~> os
+hc ~down~> hs
+hc ~down~> rs
+cc ~down~> cs
+ac ~down~> As
+
+us ~down~> um
+os ~down~> om
+os ~down~> us
+os ~down~> hs
+hs ~down~> hm
+hs ~down~> rs
+hs ~down~> us
+cs ~down~> cm
+rs ~down~> rm
+cs ~left~> CouponStrategy
+As ~down~> am
+As ~down~> hm
+
+rm ~down~> m
+cm ~down~> m
+am ~down~> m
+hm ~down~> m
+um ~down~> m
+om ~down~> m
+
+
+controller ~down~> vo
+service ~down~> vo
+data ~down~> vo
+
+@enduml
