@@ -59,7 +59,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public int getRoomCurNum(Integer hotelId, String roomType) {
+    public Integer getRoomCurNum(Integer hotelId, String roomType) {
         return roomService.getRoomCurNum(hotelId,roomType);
     }
 
@@ -69,23 +69,30 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.selectHotelByBizAndAdd(stringToBizRegion(bizRegion),address);
     }
 
-    private BizRegion stringToBizRegion(String bizRegion){
-        switch (bizRegion){
-            case "西单":
-                return BizRegion.XiDan;
-            case "王府井":
-                return BizRegion.WangFuJing;
-            case "新街口":
-                return BizRegion.XinJieKou;
-            case "夫子庙":
-                return BizRegion.FuZiMiao;
-            case "珠江新城":
-                return BizRegion.ZhuJiangXinCheng;
-            case "北京路":
-                return BizRegion.BeiJingLu;
-            default:
-                return null;
+    private BizRegion stringToBizRegion(String bizRegionStr){
+        List<BizRegion> bizRegions = retrieveAllBizRegions();
+        for(BizRegion bizRegion:bizRegions){
+            if(bizRegionStr.equals(bizRegion.toString())){
+                return bizRegion;
+            }
         }
+        return null;
+//        switch (bizRegion){
+//            case "西单":
+//                return BizRegion.XiDan;
+//            case "王府井":
+//                return BizRegion.WangFuJing;
+//            case "新街口":
+//                return BizRegion.XinJieKou;
+//            case "夫子庙":
+//                return BizRegion.FuZiMiao;
+//            case "珠江新城":
+//                return BizRegion.ZhuJiangXinCheng;
+//            case "北京路":
+//                return BizRegion.BeiJingLu;
+//            default:
+//                return null;
+//        }
     }
 
     @Override
@@ -132,6 +139,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO) {
+        // todo 将枚举字符串转换为对应的枚举值
         return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 

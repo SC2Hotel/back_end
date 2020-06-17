@@ -23,6 +23,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO registerAccount(UserVO userVO) {
         User user = new User();
+        user.setCredit(100.0); // 初值设置为100
         BeanUtils.copyProperties(userVO,user);
         user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
@@ -70,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO registerSenior(int id,int type,String message){
         if(type!=1&&type!=2){
-            return ResponseVO.buildFailure("参数错误，type为 0 或 1");
+            return ResponseVO.buildFailure("参数错误，type为 1 或 2");
         }
         Vip vip = accountMapper.getVipById(id);
         if(vip!=null){

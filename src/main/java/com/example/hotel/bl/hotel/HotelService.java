@@ -46,7 +46,7 @@ public interface HotelService {
      * @param roomType
      * @return
      */
-    int getRoomCurNum(Integer hotelId,String roomType);
+    Integer getRoomCurNum(Integer hotelId,String roomType);
 
     /**
      * 根据商圈和地址查找酒店

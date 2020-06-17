@@ -33,5 +33,5 @@ public interface RoomService {
      * @param roomType
      * @return
      */
-    int getRoomCurNum(Integer hotelId, String roomType);
+    Integer getRoomCurNum(Integer hotelId, String roomType);
 }
