@@ -1,0 +1,21 @@
+@startuml
+adminController -> adminService : addManager(UserForm userForm)
+activate adminController
+activate adminService
+adminService -> UserPO : createUser()
+activate UserPO
+UserPO -> adminService
+deactivate UserPO
+adminService -> adminMapper :  addManager(User user)
+activate adminMapper
+adminMapper -> DataBase : addManager(User user)
+activate DataBase
+DataBase -> adminMapper
+deactivate DataBase
+adminMapper -> adminService
+deactivate adminMapper
+adminService -> adminController:
+deactivate adminService
+deactivate adminController
+
+@enduml

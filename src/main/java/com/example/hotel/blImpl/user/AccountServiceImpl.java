@@ -26,7 +26,10 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(userVO,user);
         user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
-            //TODO createNewAccount不会触发账号已存在，需要检查邮箱是否重复
+            User user1 = accountMapper.getAccountByName(userVO.getEmail());
+            if(user1!=null){
+                return ResponseVO.buildFailure(ACCOUNT_EXIST);
+            }
             accountMapper.createNewAccount(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -71,7 +74,6 @@ public class AccountServiceImpl implements AccountService {
         }
         Vip vip = accountMapper.getVipById(id);
         if(vip!=null){
-            //TODO 改成枚举值，我把枚举值的value修改成了Integer
             if(vip.getType()==1){
                 return ResponseVO.buildFailure("已经是普通会员");
             }else if(vip.getType()==2){

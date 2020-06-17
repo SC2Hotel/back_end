@@ -11,6 +11,11 @@ spring:
      cache: false
   jackson:
     time-zone: GMT+8
+  redis:
+    host: 106.15.248.13
+    timeout: 1000
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml
+
+

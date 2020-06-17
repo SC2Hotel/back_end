@@ -7,6 +7,7 @@ import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.enums.UserType;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.User;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.DisplayUserVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
@@ -28,6 +29,8 @@ public class AdminServiceImpl implements AdminService {
     AdminMapper adminMapper;
     @Autowired
     HotelMapper hotelMapper;
+    @Autowired
+    RedisUtil redisUtil;
     @Override
     public ResponseVO addManager(UserForm userForm) {
         User user = new User();
@@ -59,7 +62,14 @@ public class AdminServiceImpl implements AdminService {
         //type = 1 邮箱 type = 0 名字
         List<User> users;
         if(type==1){
-            users = adminMapper.retrieveUserByEmail(information);
+            if(redisUtil.hasKey(information)){
+                users = (List<User>)redisUtil.get(information);
+                System.out.println("query from redis");
+            }
+            else{
+                users = adminMapper.retrieveUserByEmail(information);
+                System.out.println("query from mysql");
+            }
         }else{
             users = adminMapper.retrieveUserByName(information);
         }
