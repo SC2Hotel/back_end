@@ -16,15 +16,15 @@ public class RedisUtil {
     RedisTemplate redisTemplate;
 
 
-    public boolean hasKey(String key){
+    public boolean hasKey(Integer key){
         return redisTemplate.hasKey(key);
     }
 
-    public Object get(String key){
+    public Object get(Integer key){
         return redisTemplate.opsForValue().get(key);
     }
 
-    public boolean set(final String key, Object value){
+    public boolean set(final Integer key, Object value){
         boolean result = false;
         try{
             redisTemplate.opsForValue().set(key,value);

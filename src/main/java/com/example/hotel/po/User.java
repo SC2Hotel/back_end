@@ -36,11 +36,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public double getCredit() {
+    public Double getCredit() {
         return credit;
     }
 
-    public void setCredit(double credit) {
+    public void setCredit(Double credit) {
         this.credit = credit;
     }
 

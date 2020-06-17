@@ -34,7 +34,7 @@ public class AccountMapperTest {
         user.setEmail("*"+System.currentTimeMillis()/1000+"@qq.com");
         user.setPassword("123456");
         user.setPhoneNumber("123123123");
-        user.setCredit(10000);
+        user.setCredit(10000.0);
         user.setUserType(HotelManager);
         int row = accountMapper.createNewAccount(user);
         Assert.assertEquals(1,row);

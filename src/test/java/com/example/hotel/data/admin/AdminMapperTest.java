@@ -76,7 +76,7 @@ public class AdminMapperTest {
     public void Test07updateUserInfo(){
         User user = new User();
         user.setId(15);
-        user.setCredit(1);
+        user.setCredit(1.0);
         user.setUserType(UserType.HotelManager);
         user.setPassword("1234567");
         adminMapper.updateUserInfo(user);
@@ -84,7 +84,7 @@ public class AdminMapperTest {
         User test = adminMapper.getAccountById(15);
         Assert.assertEquals(test.getUserType(), user.getUserType());
         Assert.assertEquals(test.getPassword(), user.getPassword());
-        user.setCredit(0);
+        user.setCredit(0.0);
         user.setPassword("123456");
         user.setUserType(UserType.Client);
         adminMapper.updateUserInfo(user);

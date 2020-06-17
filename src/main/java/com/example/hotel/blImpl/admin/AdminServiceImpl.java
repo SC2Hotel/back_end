@@ -54,7 +54,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User getHotelManager(int hotelId){
-        return adminMapper.getHotelManager(hotelId);
+        if(redisUtil.hasKey(hotelId)){
+            System.out.println("query from redis");
+            return (User)redisUtil.get(hotelId);
+        }
+        User user = adminMapper.getHotelManager(hotelId);
+        System.out.println("query from mysql");
+        redisUtil.set(hotelId, user);
+        return user;
     }
 
     @Override
@@ -62,14 +69,8 @@ public class AdminServiceImpl implements AdminService {
         //type = 1 邮箱 type = 0 名字
         List<User> users;
         if(type==1){
-            if(redisUtil.hasKey(information)){
-                users = (List<User>)redisUtil.get(information);
-                System.out.println("query from redis");
-            }
-            else{
-                users = adminMapper.retrieveUserByEmail(information);
-                System.out.println("query from mysql");
-            }
+            users = adminMapper.retrieveUserByEmail(information);
+            System.out.println("query from mysql");
         }else{
             users = adminMapper.retrieveUserByName(information);
         }

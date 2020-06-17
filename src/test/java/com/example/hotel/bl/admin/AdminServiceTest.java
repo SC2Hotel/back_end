@@ -64,7 +64,7 @@ public class AdminServiceTest {
     @Test
     public void updateUserInformation() {
         User user = adminService.getHotelManager(3);
-        user.setCredit(500);
+        user.setCredit(500.0);
         int row = adminService.updateUserInformation(user);
         assertEquals(1, row);
     }
