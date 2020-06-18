@@ -5,13 +5,14 @@ import Login from '../views/login.vue'
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/login',
-    name: 'login',
+    path: '/',
+    name: 'root',
     component: Login
   },
   {
-    path: '/',
-    redirect: '/NJUSE'
+    path: '/login',
+    name: 'login',
+    component: Login
   },
   {
     path: '/NJUSE',

@@ -6,6 +6,7 @@ const getters = {
   userOrderList: state => state.user.userOrderList,
   hotelListLoading: state => state.hotel.hotelListLoading,
   hotelList: state => state.hotel.hotelList,
+  bizRegions: state => state.hotel.bizRegions,
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,

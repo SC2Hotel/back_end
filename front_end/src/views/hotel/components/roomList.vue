@@ -29,14 +29,14 @@ const columns = [
       key: 'roomType',
     },
     {
-      title: '床型',
-      dataIndex: 'bedType',
-      key: 'bedType',
+      title: '今日已定房间数',
+      dataIndex: 'curNum',
+      key: 'curNum',
     },
     {
-      title: '早餐',
-      dataIndex: 'breakfast',
-      key: 'breakfast',
+      title: '总房间数',
+      dataIndex: 'total',
+      key: 'total',
     },
     {
       title: '入住人数',

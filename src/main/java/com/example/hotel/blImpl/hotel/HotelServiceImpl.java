@@ -70,7 +70,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByBizAndAdd(String bizRegion, String address) {
-
         return hotelMapper.selectHotelByBizAndAdd(stringToBizRegion(bizRegion),address);
     }
 
@@ -103,7 +102,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotels() {
-
         return hotelMapper.selectAllHotel();
     }
 

@@ -17,4 +17,5 @@ public class HotelAndRoomVO {
     private Double hiPrice;
     private String hotelStar;   // 酒店星级
     private Double rate;        // 酒店最低评分
+
 }
