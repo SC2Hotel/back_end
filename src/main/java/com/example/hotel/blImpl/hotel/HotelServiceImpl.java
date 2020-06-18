@@ -80,22 +80,6 @@ public class HotelServiceImpl implements HotelService {
             }
         }
         return null;
-//        switch (bizRegion){
-//            case "西单":
-//                return BizRegion.XiDan;
-//            case "王府井":
-//                return BizRegion.WangFuJing;
-//            case "新街口":
-//                return BizRegion.XinJieKou;
-//            case "夫子庙":
-//                return BizRegion.FuZiMiao;
-//            case "珠江新城":
-//                return BizRegion.ZhuJiangXinCheng;
-//            case "北京路":
-//                return BizRegion.BeiJingLu;
-//            default:
-//                return null;
-//        }
     }
 
     @Override
