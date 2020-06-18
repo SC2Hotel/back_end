@@ -63,7 +63,6 @@ public class AdminServiceImpl implements AdminService {
         List<User> users;
         if(type==1){
             users = adminMapper.retrieveUserByEmail(information);
-            System.out.println("query from mysql");
         }else{
             users = adminMapper.retrieveUserByName(information);
         }

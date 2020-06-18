@@ -4,17 +4,23 @@ import com.example.hotel.bl.coupon.CouponService;
 import com.example.hotel.bl.coupon.CouponMatchStrategy;
 import com.example.hotel.data.coupon.CouponMapper;
 import com.example.hotel.po.Coupon;
+import com.example.hotel.util.DateTimeUtil;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelTargetMoneyCouponVO;
 import com.example.hotel.vo.OrderVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.hotel.util.DateTimeUtil.TWO_HOURS_IN_SECOND;
+
 
 @Service
+@Slf4j
 public class CouponServiceImpl implements CouponService {
 
 
@@ -22,9 +28,11 @@ public class CouponServiceImpl implements CouponService {
 
     private final  TimeCouponStrategyImpl timeCouponStrategy;
     private final CouponMapper couponMapper;
-
+    @Autowired
+    RedisUtil redisUtil;
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
 
+    private static final String keyNamePrefix = "hotel:coupon:";
     @Autowired
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
                              TimeCouponStrategyImpl timeCouponStrategy,
@@ -58,8 +66,16 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
-        List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
-        return hotelCoupons;
+        if( redisUtil.hasKey(keyNamePrefix + hotelId)){
+//            log.info("get from redis key="+keyNamePrefix+hotelId);
+            return (List<Coupon>) redisUtil.get(keyNamePrefix + hotelId);
+        }else {
+//            log.info("get from mysql "+ keyNamePrefix +hotelId);
+            List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
+            redisUtil.set(keyNamePrefix + hotelId,hotelCoupons);
+            redisUtil.expire(keyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND); // 设置2小时过期
+            return hotelCoupons;
+        }
     }
 
     @Override
