@@ -3,8 +3,10 @@ package com.example.hotel.data.admin;
 import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdminMapperTest {
     @Autowired
     AdminMapper adminMapper;
@@ -73,7 +76,7 @@ public class AdminMapperTest {
     public void Test07updateUserInfo(){
         User user = new User();
         user.setId(15);
-        user.setCredit(1);
+        user.setCredit(1.0);
         user.setUserType(UserType.HotelManager);
         user.setPassword("1234567");
         adminMapper.updateUserInfo(user);
@@ -81,7 +84,7 @@ public class AdminMapperTest {
         User test = adminMapper.getAccountById(15);
         Assert.assertEquals(test.getUserType(), user.getUserType());
         Assert.assertEquals(test.getPassword(), user.getPassword());
-        user.setCredit(0);
+        user.setCredit(0.0);
         user.setPassword("123456");
         user.setUserType(UserType.Client);
         adminMapper.updateUserInfo(user);

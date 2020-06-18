@@ -46,7 +46,7 @@
 
     </resultMap>
 
-    <update id="updateHotelInfo" parameterType="com.example.hotel.vo.updateHotelVO">
+    <update id="updateHotelInfo" parameterType="com.example.hotel.vo.UpdateHotelVO">
         update Hotel
         <set>
             <if test="address!=null">address=#{address},</if>

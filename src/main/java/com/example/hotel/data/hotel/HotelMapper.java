@@ -4,7 +4,7 @@ import com.example.hotel.enums.BizRegion;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
-import com.example.hotel.vo.updateHotelVO;
+import com.example.hotel.vo.UpdateHotelVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,7 +23,7 @@ public interface HotelMapper {
 
     List<HotelVO> selectHotelByBizAndAdd(BizRegion bizRegion, String address);
 
-    int updateHotelInfo(updateHotelVO updateHotelVO);
+    int updateHotelInfo(UpdateHotelVO updateHotelVO);
 
     List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
 }

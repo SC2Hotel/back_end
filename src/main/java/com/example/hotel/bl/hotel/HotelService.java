@@ -1,14 +1,11 @@
 package com.example.hotel.bl.hotel;
 
 import com.example.hotel.enums.BizRegion;
-import com.example.hotel.po.HotelRoom;
-import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
-import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
-import com.example.hotel.vo.updateHotelVO;
+import com.example.hotel.vo.UpdateHotelVO;
 
 import java.util.List;
 
@@ -49,7 +46,7 @@ public interface HotelService {
      * @param roomType
      * @return
      */
-    int getRoomCurNum(Integer hotelId,String roomType);
+    Integer getRoomCurNum(Integer hotelId,String roomType);
 
     /**
      * 根据商圈和地址查找酒店
@@ -63,7 +60,7 @@ public interface HotelService {
      * 查找所有商区
      * @return
      */
-    List<BizRegion> retrieveAllBizRegions();
+    List<String> retrieveAllBizRegions();
 
     /**
      * 搜索酒店信息
@@ -76,6 +73,6 @@ public interface HotelService {
      * 更新酒店的信息
      * @return
      */
-    ResponseVO updateHotelInfo(updateHotelVO updateHotelVO);
+    ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO);
 
 }

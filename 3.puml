@@ -1,0 +1,21 @@
+@startuml
+couponController -> couponService : addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO)
+activate couponController
+activate couponService
+couponService -> HotelTargetMoneyCouponVO : createCoupon()
+activate HotelTargetMoneyCouponVO
+HotelTargetMoneyCouponVO -> couponService
+deactivate HotelTargetMoneyCouponVO
+couponService -> couponMapper :  addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO)
+activate couponMapper
+couponMapper -> DataBase : addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO)
+activate DataBase
+DataBase -> couponMapper
+deactivate DataBase
+couponMapper -> couponService
+deactivate couponMapper
+couponService -> couponController
+deactivate couponService
+deactivate couponController
+
+@enduml

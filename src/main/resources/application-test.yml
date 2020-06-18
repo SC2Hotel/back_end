@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:Hotel;MODE=MySQL
+    username: Allen
+    password: qweasd
+    driver-class-name: org.h2.Driver
+    initialization-mode: ALWAYS
+    schema: classpath:hotel.sql
+  h2:
+    console:
+      enabled: true
+  thymeleaf:
+     cache: false
+  jackson:
+    time-zone: GMT+8
+
+mybatis:
+  mapper-locations: classpath:dataImpl/*/*Mapper.xml

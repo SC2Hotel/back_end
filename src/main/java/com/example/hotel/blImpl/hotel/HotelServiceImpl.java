@@ -2,20 +2,16 @@ package com.example.hotel.blImpl.hotel;
 
 import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.hotel.RoomService;
-import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.hotel.HotelMapper;
-import com.example.hotel.data.hotel.RoomMapper;
-import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.enums.BizRegion;
 import com.example.hotel.enums.HotelStar;
 import com.example.hotel.enums.UserType;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.HotelRoom;
-import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.util.ServiceException;
-import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
@@ -23,9 +19,7 @@ import com.example.hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +33,8 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private RoomService roomService;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
@@ -64,7 +60,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public int getRoomCurNum(Integer hotelId, String roomType) {
+    public Integer getRoomCurNum(Integer hotelId, String roomType) {
         return roomService.getRoomCurNum(hotelId,roomType);
     }
 
@@ -73,31 +69,27 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.selectHotelByBizAndAdd(stringToBizRegion(bizRegion),address);
     }
 
-    private BizRegion stringToBizRegion(String bizRegion){
-        switch (bizRegion){
-            case "西单":
-                return BizRegion.XiDan;
-            case "王府井":
-                return BizRegion.WangFuJing;
-            case "新街口":
-                return BizRegion.XinJieKou;
-            case "夫子庙":
-                return BizRegion.FuZiMiao;
-            case "珠江新城":
-                return BizRegion.ZhuJiangXinCheng;
-            case "北京路":
-                return BizRegion.BeiJingLu;
-            default:
-                return null;
+    private BizRegion stringToBizRegion(String bizRegionStr){
+        List<BizRegion> bizRegions = retrieveAllBizRegionsOri();
+        for(BizRegion bizRegion:bizRegions){
+            if(bizRegionStr.equals(bizRegion.toString())){
+                return bizRegion;
+            }
         }
+        return null;
+    }
+
+    private List<BizRegion> retrieveAllBizRegionsOri() {
+        BizRegion[] regions = BizRegion.values();
+        List<BizRegion> bizRegions = new ArrayList<>();
+        Collections.addAll(bizRegions,regions);
+        return bizRegions;
     }
 
     @Override
-    public List<BizRegion> retrieveAllBizRegions() {
+    public List<String> retrieveAllBizRegions() {
         BizRegion[] regions = BizRegion.values();
-        List<BizRegion> bizRegions = new ArrayList<>();
-        Collections.addAll(bizRegions, regions);
-        return bizRegions;
+        return Arrays.stream(regions).map((x)->x.toString()).collect(Collectors.toList());
     }
 
     @Override
@@ -107,8 +99,24 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HotelVO retrieveHotelDetails(Integer hotelId) {
-        HotelVO hotelVO = hotelMapper.selectById(hotelId);
-        List<HotelRoom> rooms = roomService.retrieveHotelRoomInfo(hotelId);
+        HotelVO hotelVO;
+        if(redisUtil.hasKey(hotelId+"Hotel")){
+            hotelVO = (HotelVO)redisUtil.get(hotelId+"Hotel");
+        }
+        else{
+            hotelVO = hotelMapper.selectById(hotelId);
+            redisUtil.set(hotelId+"Hotel", hotelVO);
+        }
+
+        List<HotelRoom> rooms;
+        if(redisUtil.hasKey(hotelId+"Room")){
+            rooms = (List<HotelRoom>)redisUtil.get(hotelId+"Room");
+        }
+        else{
+            rooms = roomService.retrieveHotelRoomInfo(hotelId);
+            redisUtil.set(hotelId+"Room", rooms);
+        }
+
         List<RoomVO> roomVOS = rooms.stream().map(r -> {
             RoomVO roomVO = new RoomVO();
             roomVO.setId(r.getId());
@@ -124,7 +132,10 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public ResponseVO updateHotelInfo(updateHotelVO updateHotelVO){
+    public ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO){
+        if(redisUtil.hasKey(updateHotelVO.getId()+"Hotel")){
+            redisUtil.delete(updateHotelVO.getId()+"Hotel");
+        }
         try{
             hotelMapper.updateHotelInfo(updateHotelVO);
             return ResponseVO.buildSuccess();
@@ -135,6 +146,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO) {
+        // todo 将枚举字符串转换为对应的枚举值
         return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 
