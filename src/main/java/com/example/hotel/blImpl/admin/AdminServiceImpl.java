@@ -54,14 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User getHotelManager(int hotelId){
-        if(redisUtil.hasKey(hotelId)){
-            System.out.println("query from redis");
-            return (User)redisUtil.get(hotelId);
-        }
-        User user = adminMapper.getHotelManager(hotelId);
-        System.out.println("query from mysql");
-        redisUtil.set(hotelId, user);
-        return user;
+        return adminMapper.getHotelManager(hotelId);
     }
 
     @Override

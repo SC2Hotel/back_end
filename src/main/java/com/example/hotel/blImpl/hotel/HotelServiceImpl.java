@@ -10,6 +10,7 @@ import com.example.hotel.enums.UserType;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.po.User;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;
@@ -34,6 +35,8 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private RoomService roomService;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
@@ -111,8 +114,24 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HotelVO retrieveHotelDetails(Integer hotelId) {
-        HotelVO hotelVO = hotelMapper.selectById(hotelId);
-        List<HotelRoom> rooms = roomService.retrieveHotelRoomInfo(hotelId);
+        HotelVO hotelVO;
+        if(redisUtil.hasKey(hotelId+"Hotel")){
+            hotelVO = (HotelVO)redisUtil.get(hotelId+"Hotel");
+        }
+        else{
+            hotelVO = hotelMapper.selectById(hotelId);
+            redisUtil.set(hotelId+"Hotel", hotelVO);
+        }
+
+        List<HotelRoom> rooms;
+        if(redisUtil.hasKey(hotelId+"Room")){
+            rooms = (List<HotelRoom>)redisUtil.get(hotelId+"Room");
+        }
+        else{
+            rooms = roomService.retrieveHotelRoomInfo(hotelId);
+            redisUtil.set(hotelId+"Room", rooms);
+        }
+
         List<RoomVO> roomVOS = rooms.stream().map(r -> {
             RoomVO roomVO = new RoomVO();
             roomVO.setId(r.getId());
@@ -129,6 +148,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO){
+        if(redisUtil.hasKey(updateHotelVO.getId()+"Hotel")){
+            redisUtil.delete(updateHotelVO.getId()+"Hotel");
+        }
         try{
             hotelMapper.updateHotelInfo(updateHotelVO);
             return ResponseVO.buildSuccess();

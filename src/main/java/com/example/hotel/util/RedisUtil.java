@@ -15,7 +15,9 @@ public class RedisUtil {
     @Autowired
     RedisTemplate redisTemplate;
 
-
+    /**
+     * 这三个方法是针对<Integer, Object>
+     */
     public boolean hasKey(Integer key){
         return redisTemplate.hasKey(key);
     }
@@ -34,6 +36,32 @@ public class RedisUtil {
         }
 
         return result;
+    }
+    /**
+     * 这三个方法是针对<String, Object>
+     */
+
+    public boolean hasKey(String key){
+        return redisTemplate.hasKey(key);
+    }
+
+    public Object get(String key){
+        return redisTemplate.opsForValue().get(key);
+    }
+
+    public boolean set(final String key, Object value){
+        boolean result = false;
+        try{
+            redisTemplate.opsForValue().set(key, value);
+            result = true;
+        }catch (Exception e){
+            e.printStackTrace();;
+        }
+        return result;
+    }
+
+    public boolean delete(String key){
+        return redisTemplate.delete(key);
     }
 
 }
