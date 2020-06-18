@@ -19,9 +19,7 @@ import com.example.hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +71,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     private BizRegion stringToBizRegion(String bizRegionStr){
-        List<BizRegion> bizRegions = retrieveAllBizRegions();
+        List<BizRegion> bizRegions = retrieveAllBizRegionsOri();
         for(BizRegion bizRegion:bizRegions){
             if(bizRegionStr.equals(bizRegion.toString())){
                 return bizRegion;
@@ -82,12 +80,17 @@ public class HotelServiceImpl implements HotelService {
         return null;
     }
 
-    @Override
-    public List<BizRegion> retrieveAllBizRegions() {
+    private List<BizRegion> retrieveAllBizRegionsOri() {
         BizRegion[] regions = BizRegion.values();
         List<BizRegion> bizRegions = new ArrayList<>();
-        Collections.addAll(bizRegions, regions);
+        Collections.addAll(bizRegions,regions);
         return bizRegions;
+    }
+
+    @Override
+    public List<String> retrieveAllBizRegions() {
+        BizRegion[] regions = BizRegion.values();
+        return Arrays.stream(regions).map((x)->x.toString()).collect(Collectors.toList());
     }
 
     @Override

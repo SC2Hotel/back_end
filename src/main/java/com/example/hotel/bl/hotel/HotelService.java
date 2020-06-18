@@ -60,7 +60,7 @@ public interface HotelService {
      * 查找所有商区
      * @return
      */
-    List<BizRegion> retrieveAllBizRegions();
+    List<String> retrieveAllBizRegions();
 
     /**
      * 搜索酒店信息
