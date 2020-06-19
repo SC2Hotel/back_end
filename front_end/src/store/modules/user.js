@@ -19,10 +19,8 @@ const getDefaultState = () => {
     return {
         userId: '',
         userInfo: {
-
         },
         userOrderList: [
-
         ],
         currentOrder: {},
         orderDetailModalVisible:false
@@ -56,10 +54,7 @@ const user = {
             }
         },
         set_currentOrder: function (state, data) {
-            state.currentOrder = {
-                ...state.currentOrder,
-                ...data,
-            }
+            state.currentOrder = data
         },
         set_userOrderList: (state, data) => {
             state.userOrderList = data

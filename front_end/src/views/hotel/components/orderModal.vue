@@ -186,7 +186,6 @@
                 'userId',
                 'orderMatchCouponList'
             ]),
-
         },
         beforeCreate() {
             this.form = this.$form.createForm(this, {name: 'orderModal'});
