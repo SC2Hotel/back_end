@@ -23,7 +23,9 @@ const getDefaultState = () => {
         },
         userOrderList: [
 
-        ]
+        ],
+        currentOrder: {},
+        orderDetailModalVisible:false
     }
 }
 
@@ -53,9 +55,18 @@ const user = {
                 ...data
             }
         },
+        set_currentOrder: function (state, data) {
+            state.currentOrder = {
+                ...state.currentOrder,
+                ...data,
+            }
+        },
         set_userOrderList: (state, data) => {
             state.userOrderList = data
-        }
+        },
+        set_orderDetailModalVisible: function (state, data) {
+            state.orderDetailModalVisible = data
+        },
     },
 
     actions: {

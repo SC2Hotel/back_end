@@ -226,6 +226,7 @@
             },
             handleSubmit(e) {
                 e.preventDefault();
+                var mydate = new Date()
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data = {
@@ -238,7 +239,7 @@
                             roomNum: this.form.getFieldValue('roomNum'),
                             peopleNum: this.form.getFieldValue('peopleNum'),
                             haveChild: this.form.getFieldValue('haveChild'),
-                            createDate: '',
+                            // createDate: mydate.toLocaleString(),
                             price: this.checkedList.length > 0 ? this.finalPrice : this.totalPrice
                         }
                         this.addOrder(data)

@@ -29,7 +29,7 @@ const columns = [
       key: 'roomType',
     },
     {
-      title: '今日已定房间数',
+      title: '今日剩余房间数',
       dataIndex: 'curNum',
       key: 'curNum',
     },
