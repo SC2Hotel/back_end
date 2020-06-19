@@ -143,7 +143,7 @@ const user = {
                 resolve()
             })
         },
-        addComment: async ({state,dispatch},comment)=>{
+        addComment: async ({state,commit},comment)=>{
             const res = await addCommentAPI(comment)
             console.log(res)
             if (res){
@@ -151,6 +151,7 @@ const user = {
             }else {
                 message.error("评价失败")
             }
+            commit('set_orderRateModalVisible',false)
         }
     }
 }

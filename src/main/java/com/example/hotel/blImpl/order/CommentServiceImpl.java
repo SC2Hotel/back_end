@@ -31,6 +31,6 @@ public class CommentServiceImpl implements CommentService {
         }else {
             return ResponseVO.buildFailure("已评价");
         }
-        return ResponseVO.buildSuccess();
+        return ResponseVO.buildSuccess(true);
     }
 }
