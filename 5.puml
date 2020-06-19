@@ -1,0 +1,20 @@
+@startuml
+orderController -> orderService : addOrder(OrderVO orderVO)
+activate orderController
+activate orderService
+orderService -> OrderVO : createOrder()
+activate OrderVO
+OrderVO -> orderService
+deactivate OrderVO
+orderService -> orderMapper :  addOrder(OrderVO orderVO)
+activate orderMapper
+orderMapper -> DataBase : addOrder(OrderVO orderVO)
+activate DataBase
+DataBase -> orderMapper
+deactivate DataBase
+orderMapper -> orderService
+deactivate orderMapper
+orderService -> orderController:
+deactivate orderService
+deactivate orderController
+@enduml
