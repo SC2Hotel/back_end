@@ -19,11 +19,11 @@ const getDefaultState = () => {
     return {
         userId: '',
         userInfo: {
-
         },
         userOrderList: [
-
-        ]
+        ],
+        currentOrder: {},
+        orderDetailModalVisible:false
     }
 }
 
@@ -35,7 +35,6 @@ const user = {
             state.token = '',
             state.userId = '',
             state.userInfo = {
-                
             },
             state.userOrderList = []
         },
@@ -54,9 +53,15 @@ const user = {
                 ...data
             }
         },
+        set_currentOrder: function (state, data) {
+            state.currentOrder = data
+        },
         set_userOrderList: (state, data) => {
             state.userOrderList = data
-        }
+        },
+        set_orderDetailModalVisible: function (state, data) {
+            state.orderDetailModalVisible = data
+        },
     },
 
     actions: {

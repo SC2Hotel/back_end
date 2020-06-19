@@ -3,7 +3,7 @@
         <a-layout>
             <a-layout-content style="min-width: 800px">
                     <a-input-group compact style="margin-bottom: 50px">
-                        <a-select default-value="商圈" @change="onChange">
+                        <a-select default-value="西单" @change="onChange" >
                             <a-select-option v-for="item in bizRegions" :key="item">
                                 {{item}}
                             </a-select-option>
@@ -13,26 +13,19 @@
                     </a-input-group>
                 <a-spin :spinning="hotelListLoading">
                     <div class="card-wrapper">
-                        <div v-if="selected.length==0">
+                        <div v-if="hotelList.length==0">抱歉，该地址暂无酒店信息</div>
+                        <div v-else>
                             <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index"
                                        @click.native="jumpToDetails(item.id)"></HotelCard>
                             <div v-for="item in emptyBox" :key="item.name"
                                  class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
                             </div>
-                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"
-                                          @change="pageChange"></a-pagination>
-                        </div>
-                        <div v-else-if="filterhotelList.length==0">抱歉，该地址暂无酒店信息</div>
-                        <div v-else>
-                            <HotelCard :hotel="item" v-for="item in filterhotelList" :key="item.index"
-                                       @click.native="jumpToDetails(item.id)"></HotelCard>
-                            <div v-for="item in emptyBox" :key="item.name"
-                                 class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
-                            </div>
-                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"
-                                          @change="pageChange"></a-pagination>
+<!--                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"-->
+<!--                                          @change="pageChange"></a-pagination>-->
                         </div>
                     </div>
+                    <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"
+                                  @change="pageChange"></a-pagination>
                 </a-spin>
             </a-layout-content>
         </a-layout>
@@ -51,7 +44,7 @@
             return {
                 emptyBox: [{name: 'box1'}, {name: 'box2'}, {name: 'box3'}],
                 options: this.bizRegions,
-                selected: "",
+                selected: "西单",
                 addresss:"",
                 searchCondition:"",
             }
@@ -98,11 +91,10 @@
             },
             onChange(value) {
                 this.selected = value
-                this.getHotelList()
+                this.getHotelByBizAndAdd({bizRegion:this.selected,address:this.addresss})
             },
             search(){
                 this.getHotelByBizAndAdd({bizRegion:this.selected,address:this.addresss})
-                console.log({bizRegion:this.selected,address:this.addresss})
             }
         }
     }
