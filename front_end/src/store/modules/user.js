@@ -13,6 +13,7 @@ import {
 import {
     getUserOrdersAPI,
     cancelOrderAPI,
+    addCommentAPI
 } from '@/api/order'
 
 const getDefaultState = () => {
@@ -23,7 +24,8 @@ const getDefaultState = () => {
         userOrderList: [
         ],
         currentOrder: {},
-        orderDetailModalVisible:false
+        orderDetailModalVisible:false,
+        orderRateModalVisible: false
     }
 }
 
@@ -61,6 +63,9 @@ const user = {
         },
         set_orderDetailModalVisible: function (state, data) {
             state.orderDetailModalVisible = data
+        },
+        set_orderRateModalVisible: function (state, data) {
+            state.orderRateModalVisible = data
         },
     },
 
@@ -138,6 +143,15 @@ const user = {
                 resolve()
             })
         },
+        addComment: async ({state,dispatch},comment)=>{
+            const res = await addCommentAPI(comment)
+            console.log(res)
+            if (res){
+                message.success("评价成功")
+            }else {
+                message.error("评价失败")
+            }
+        }
     }
 }
 

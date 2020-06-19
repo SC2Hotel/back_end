@@ -2,8 +2,7 @@
     <a-modal
             :visible="orderDetailModalVisible"
             title="订单详情"
-            cancelText="取消"
-            okText="确认"
+            :footer="null"
             @cancel="cancelOrderDetail"
             @ok="cancelOrderDetail"
     >

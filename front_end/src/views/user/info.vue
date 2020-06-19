@@ -67,7 +67,7 @@
                         {{ text }}
                     </a-tag>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="() => showModal(record)">查看</a-button>
+                        <a-button type="primary" size="small" @click="() => showOrderDetailModal(record)">查看</a-button>
                         <OrderDetailModal></OrderDetailModal>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
 
@@ -81,7 +81,9 @@
                         >
                             <a-button type="danger" size="small">撤销</a-button>
                         </a-popconfirm>
-                        
+                        <a-divider type="vertical" v-if="record.orderState == '已执行'"></a-divider>
+                        <a-button size="small" @click="() => showOrderRateModal(record)" v-if="record.orderState == '已执行'">评价</a-button>
+                        <order-rate-modal></order-rate-modal>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -92,7 +94,7 @@
     import {mapGetters, mapMutations, mapActions} from 'vuex'
 
     import OrderDetailModal from "./components/orderDetailModal";
-    import orderDetailModal from "./components/orderDetailModal";
+    import OrderRateModal from "./components/orderRateModal";
 
     const columns = [
         {
@@ -128,7 +130,7 @@
         },
         {
             title: '状态',
-            filters: [{text: '已预订', value: '已预订'}, {text: '已撤销', value: '已撤销'}, {text: '已入住', value: '已入住'}],
+            filters: [{text: '已预订', value: '已预订'}, {text: '已撤销', value: '已撤销'}, {text: '已执行', value: '已执行'},{text:'异常',value:'异常'}],
             onFilter: (value, record) => record.orderState.includes(value),
             dataIndex: 'orderState',
             scopedSlots: {customRender: 'orderState'}
@@ -152,7 +154,7 @@
                 form: this.$form.createForm(this, {name: 'coordinated'}),
             }
         },
-        components: {OrderDetailModal},
+        components: {OrderRateModal, OrderDetailModal},
         computed: {
             ...mapGetters([
                 'userId',
@@ -174,6 +176,7 @@
             ]),
             ...mapMutations([
                 'set_orderDetailModalVisible',
+                'set_orderRateModalVisible',
                 'set_currentOrder'
             ]),
             saveModify() {
@@ -207,10 +210,13 @@
             },
             cancelCancelOrder() {
             },
-            showModal(record){
+            showOrderDetailModal(record){
                 this.set_currentOrder(record)
                 this.set_orderDetailModalVisible(true)
-
+            },
+            showOrderRateModal(record){
+                this.set_currentOrder(record)
+                this.set_orderRateModalVisible(true)
             }
         }
     }
