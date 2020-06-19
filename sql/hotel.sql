@@ -114,7 +114,7 @@ CREATE TABLE `OrderList` (
 
 BEGIN;
 /*!40000 ALTER TABLE `OrderList` DISABLE KEYS */;
-INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
+INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(2,4,3,'桂圆酒店','2020-06-05','2020-06-06','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(3,4,3,'桂圆酒店','2020-06-07','2020-06-08','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常'),(4,4,3,'桂圆酒店','2020-06-08','2020-06-09','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(5,4,3,'桂圆酒店','2020-06-09','2020-06-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行');
 /*!40000 ALTER TABLE `OrderList` ENABLE KEYS */;
 COMMIT;
 
@@ -142,7 +142,7 @@ CREATE TABLE `Room` (
 
 BEGIN;
 /*!40000 ALTER TABLE `Room` DISABLE KEYS */;
-INSERT INTO `Room` VALUES (2,199,20,20,1,'BigBed'),(3,299,30,30,1,'DoubleBed'),(4,399,10,10,1,'Family'),(5,122,7,0,1,'BigBed'),(6,399,10,10,2,'Family');
+INSERT INTO `Room` VALUES (2,199,20,20,1,'BigBed'),(3,299,30,30,1,'DoubleBed'),(4,399,10,10,1,'Family'),(6,399,10,10,2,'Family'),(7,399,8,10,3,'Family');
 /*!40000 ALTER TABLE `Room` ENABLE KEYS */;
 COMMIT;
 
@@ -188,9 +188,18 @@ COMMIT;
 -- Dump completed on 2020-04-12 10:08:42
 SET FOREIGN_KEY_CHECKS = 1;
 
+DROP TABLE IF EXISTS `Vip`;
 CREATE TABLE `Vip` (
     user_id int primary key,
     type int COMMENT '类型 1 表示普通会员 2 表示企业会员',
     message varchar(30) COMMENT '会员登记信息 普通会员登记生日 yyyy-MM-dd 企业会员登记企业名'
 );
 INSERT INTO Vip VALUES (4,1,'2000-01-01');
+
+DROP TABLE IF EXISTS `Comment`;
+CREATE TABLE `Comment`(
+    order_id int primary key,
+    score double,
+    content varchar(255)
+);
+INSERT INTO Comment VALUES (4,4.5,'挺好的');

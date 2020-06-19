@@ -2,6 +2,7 @@ package com.example.hotel.bl.order;
 
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
+import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
@@ -99,4 +100,5 @@ public interface OrderService {
       */
     void checkOutOrder(int orderId);
 
+    ResponseVO comment(CommentVO commentVO);
 }

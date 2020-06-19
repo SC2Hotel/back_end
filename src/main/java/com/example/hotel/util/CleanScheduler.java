@@ -27,7 +27,7 @@ public class CleanScheduler {
     public void cleanExpiredOrder(){
         List<Order> orders = orderMapper.getAllOrders();
         for (Order order :orders) {
-            System.out.println(order.getId());
+//            System.out.println(order.getId());
             LocalDateTime orderLatestCheckInTime = DateTimeUtil.
                     dateTimeStr2LocalDateTime(order.getCheckInDate(),DateTimeUtil.LATEST_CHECK_IN_TIME);
             if(LocalDateTime.now().compareTo(orderLatestCheckInTime) > 0

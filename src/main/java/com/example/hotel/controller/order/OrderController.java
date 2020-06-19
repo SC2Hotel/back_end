@@ -1,6 +1,7 @@
 package com.example.hotel.controller.order;
 
 import com.example.hotel.bl.order.OrderService;
+import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,11 @@ public class OrderController {
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }
+    }
+
+    @PostMapping("/{orderId}/comment")
+    public ResponseVO comment(@RequestBody CommentVO commentVO) {
+        return orderService.comment(commentVO);
     }
 
 }

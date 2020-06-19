@@ -1,6 +1,7 @@
 package com.example.hotel.blImpl.order;
 
 import com.example.hotel.bl.hotel.HotelService;
+import com.example.hotel.bl.order.CommentService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
@@ -9,6 +10,7 @@ import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.DateTimeUtil;
+import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
@@ -38,6 +40,8 @@ public class OrderServiceImpl implements OrderService {
     HotelService hotelService;
     @Autowired
     AccountService accountService;
+    @Autowired
+    CommentService commentService;
 
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
@@ -213,6 +217,17 @@ public class OrderServiceImpl implements OrderService {
         order = orderMapper.getOrderById(orderId);
         hotelService.updateRoomInfo(order.getHotelId(), order.getRoomType(), -order.getRoomNum());
         orderMapper.checkOutOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
+    }
+
+    @Override
+    public ResponseVO comment(CommentVO commentVO) {
+        Order order = orderMapper.getOrderById(commentVO.getOrderId());
+        if(OrderState.execute.toString().equals(order.getOrderState())){
+            return commentService.addComment(commentVO);
+        }else{
+            return ResponseVO.buildFailure("订单状态不是已执行");
+        }
+
     }
 
 }
