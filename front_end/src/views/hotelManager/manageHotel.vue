@@ -41,7 +41,7 @@
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small">订单详情</a-button>
+                        <a-button type="primary" size="small" @click="showOrderDetail(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该订单吗？"
@@ -58,6 +58,7 @@
         </a-tabs>
         <AddHotelModal></AddHotelModal>
         <AddRoomModal></AddRoomModal>
+        <orderDetail></orderDetail>
         <Coupon></Coupon>
     </div>
 </template>
@@ -66,6 +67,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
 import Coupon from './components/coupon'
+import orderDetail from './components/orderDetail'
+
 const moment = require('moment')
 const columns1 = [
     {  
@@ -151,6 +154,7 @@ export default {
         AddHotelModal,
         AddRoomModal,
         Coupon,
+        orderDetail,
     },
     computed: {
         ...mapGetters([
@@ -172,11 +176,15 @@ export default {
             'set_addRoomModalVisible',
             'set_couponVisible',
             'set_activeHotelId',
+            'set_orderDetailModalVisible',
+            'set_currentOrder'
         ]),
         ...mapActions([
             'getHotelList',
             'getAllOrders',
-            'getHotelCoupon'
+            'getHotelCoupon',
+            'delOrder',
+            'delHotel',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -190,12 +198,16 @@ export default {
             this.set_couponVisible(true)
             this.getHotelCoupon()
         },
-        deleteHotel(){
-
+        deleteHotel(record){
+            // this.delHotel(record.id)
         },
-        deleteOrder(){
-
+        deleteOrder(record){
+            this.delOrder(record.id)
         },
+        showOrderDetail(record){
+            this.set_currentOrder(record)
+            this.set_orderDetailModalVisible(true)
+        }
     }
 }
 </script>
