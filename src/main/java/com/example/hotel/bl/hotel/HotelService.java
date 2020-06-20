@@ -75,4 +75,11 @@ public interface HotelService {
      */
     ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO);
 
+    /**
+     * 删除酒店
+     * @param hotelId
+     * @return
+     */
+    int deleteHotel(Integer hotelId);
+
 }

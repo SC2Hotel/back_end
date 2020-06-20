@@ -162,4 +162,8 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 
+    @Override
+    public int deleteHotel(Integer hotelId) {
+        return hotelMapper.deleteHotel(hotelId);
+    }
 }
