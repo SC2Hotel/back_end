@@ -199,7 +199,7 @@ export default {
             this.getHotelCoupon()
         },
         deleteHotel(record){
-            // this.delHotel(record.id)
+            this.delHotel(record.id)
         },
         deleteOrder(record){
             this.delOrder(record.id)

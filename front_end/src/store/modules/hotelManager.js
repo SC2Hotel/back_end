@@ -1,6 +1,7 @@
 import {
     addRoomAPI,
     addHotelAPI,
+    delHotelAPI,
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -149,14 +150,14 @@ const hotelManager = {
             }
         },
         delHotel : async ({commit, dispatch}, data) => {
-            // todo:更新删除酒店API
-            // const res = await cancelOrderAPI(data)
-            // if (res) {
-            //     this.$message.success('删除成功');
-            // } else {
-            //     // 添加失败后的操作
-            //     this.$message.error('删除失败');
-            // }
+
+            const res = await delHotelAPI(data)
+            if (res) {
+                this.$message.success('删除成功');
+            } else {
+                // 添加失败后的操作
+                this.$message.error('删除失败');
+            }
         },
     }
 }
