@@ -8,6 +8,7 @@ import {
     registerAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
+    registerVIPAPI
 } from '@/api/user'
 
 import {
@@ -25,7 +26,8 @@ const getDefaultState = () => {
         ],
         currentOrder: {},
         orderDetailModalVisible:false,
-        orderRateModalVisible: false
+        orderRateModalVisible: false,
+        registerVIPModalVisible:false
     }
 }
 
@@ -67,6 +69,9 @@ const user = {
         set_orderRateModalVisible: function (state, data) {
             state.orderRateModalVisible = data
         },
+        set_registerVIPModalVisible: function (state, data) {
+            state.registerVIPModalVisible = data
+        }
     },
 
     actions: {
@@ -145,13 +150,21 @@ const user = {
         },
         addComment: async ({state,commit},comment)=>{
             const res = await addCommentAPI(comment)
-            console.log(res)
             if (res){
                 message.success("评价成功")
             }else {
                 message.error("评价失败")
             }
             commit('set_orderRateModalVisible',false)
+        },
+        registerVIP: async ({state,commit},data)=>{
+            const res = await registerVIPAPI(data)
+            if (res){
+                message.success("注册成功")
+            }else{
+                message.error("注册失败")
+            }
+            commit('set_registerVIPModalVisible',false)
         }
     }
 }

@@ -12,6 +12,15 @@
                         />
                         <span v-else>{{ userInfo.userName }}</span>
                     </a-form-item>
+                    <a-form-item label="账号类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
+                        <span>
+                            {{userInfo.userType}}
+                        </span>
+                        <a-button v-if="userInfo.userType=='Client'" style="margin-left: 40px" @click="showVIPModal">
+                            注册会员
+                        </a-button>
+                        <register-v-i-p-modal></register-v-i-p-modal>
+                    </a-form-item>
                     <a-form-item label="邮箱" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.email }}</span>
                     </a-form-item>
@@ -95,6 +104,7 @@
 
     import OrderDetailModal from "./components/orderDetailModal";
     import OrderRateModal from "./components/orderRateModal";
+    import RegisterVIPModal from "./components/registerVIPModal";
 
     const columns = [
         {
@@ -154,7 +164,7 @@
                 form: this.$form.createForm(this, {name: 'coordinated'}),
             }
         },
-        components: {OrderRateModal, OrderDetailModal},
+        components: {RegisterVIPModal, OrderRateModal, OrderDetailModal},
         computed: {
             ...mapGetters([
                 'userId',
@@ -177,7 +187,8 @@
             ...mapMutations([
                 'set_orderDetailModalVisible',
                 'set_orderRateModalVisible',
-                'set_currentOrder'
+                'set_currentOrder',
+                'set_registerVIPModalVisible'
             ]),
             saveModify() {
                 this.form.validateFields((err, values) => {
@@ -217,6 +228,9 @@
             showOrderRateModal(record){
                 this.set_currentOrder(record)
                 this.set_orderRateModalVisible(true)
+            },
+            showVIPModal(){
+                this.set_registerVIPModalVisible(true)
             }
         }
     }

@@ -30,3 +30,11 @@ export function updateUserInfoAPI(data) {
         data
     })
 }
+
+export function registerVIPAPI(data) {
+    return axios({
+        url: `${api.userPre}/${data.id}/registerSenior`,
+        method: 'POST',
+        params: {type:data.type,message:data.message}
+    })
+}

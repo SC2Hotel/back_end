@@ -70,7 +70,6 @@
             },
             submitOrderRate(e){
                 e.preventDefault();
-                var mydate = new Date()
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data={
