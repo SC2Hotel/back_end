@@ -48,24 +48,31 @@
         methods: {
             ...mapActions([
                 'updateExecuteOrder',
-                'delOrder'
+                'delayCheckInOrder',
+                'getAllOrders',
             ]),
             ...mapMutations([
                 'set_orderDetailModalVisible',
                 'set_currentOrder'
             ]),
-            cancelOrderDetail() {
+            async cancelOrderDetail() {
                 this.set_orderDetailModalVisible(false)
+                await this.getAllOrders()
             },
             //处理订单
             executeOrder(){
                 this.updateExecuteOrder({orderId:this.currentOrder.id,userId:this.userId})
                 this.set_currentOrder({...this.currentOrder,orderState:'已执行'})
             },
-            //撤回订单
-            cancelOrder(){
-                this.delOrder({orderId:this.currentOrder.id})
-                this.set_currentOrder({...this.currentOrder,orderState:'已撤回'})
+            //延时撤回订单
+            async cancelOrder(){
+                const data = await this.delayCheckInOrder({orderId:this.currentOrder.id})
+                if(data==="超过最长延迟入住时间"){
+                    this.set_currentOrder({...this.currentOrder,orderState:'超过最长延迟入住时间'})
+                }else{
+                    this.set_currentOrder({...this.currentOrder,orderState:'延长成功'})
+                }
+
             }
         },
 

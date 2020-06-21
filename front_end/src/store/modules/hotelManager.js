@@ -6,6 +6,7 @@ import {
 import {
     getAllOrdersAPI,
     cancelOrderAPI,
+    delayCheckInOrderAPI,
     executeOrderAPI,
 } from '@/api/order'
 import {
@@ -168,6 +169,17 @@ const hotelManager = {
                 // 添加失败后的操作
                 console.log('执行失败');
             }
+        },
+        //异常延时
+        delayCheckInOrder: async ({commit, dispatch}, data) => {
+            const res = await delayCheckInOrderAPI(data)
+            if (res) {
+                console.log('延长成功');
+            } else {
+                // 添加失败后的操作
+                console.log('延长失败');
+            }
+            return res;
         },
     }
 }

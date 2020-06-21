@@ -41,3 +41,10 @@ export function executeOrderAPI(data) {
         method: 'POST',
     })
 }
+
+export function delayCheckInOrderAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data.orderId}/delayCheckIn`,
+        method: 'POST',
+    })
+}
