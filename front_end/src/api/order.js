@@ -21,9 +21,9 @@ export function getUserOrdersAPI(data) {
         method: 'GET',
     })
 }
-export function cancelOrderAPI(orderId) {
+export function cancelOrderAPI(data) {
     return axios({
-        url: `${api.orderPre}/${orderId}/annulOrder`,
+        url: `${api.orderPre}/${data.orderId}/annulOrder`,
         method: 'GET',
     })
 }
@@ -35,3 +35,9 @@ export function addCommentAPI(data) {
     })
 }
 
+export function executeOrderAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data.userId}/${data.orderId}/executeOrder`,
+        method: 'POST',
+    })
+}

@@ -9,8 +9,12 @@
         <div style="font-size: large">
             <span style="display: flex;justify-content: space-between">
                 <span>预定时间 : {{currentOrder.createDate}}</span>
-                <span>订单状态 : {{currentOrder.orderState}}</span>
-            </span><br>
+                <span style="display: flex;flex-direction: column;justify-content: center">
+                    <span>订单状态 : {{currentOrder.orderState}}</span>
+                    <span v-if="currentOrder.orderState==='已预订'"><a-button type="primary" size="small" @click="executeOrder">处理订单</a-button></span>
+                    <span v-if="currentOrder.orderState==='异常'"><a-button type="danger" size="small" @click="cancelOrder">撤回订单</a-button></span>
+                </span>
+            </span>
             <span>酒店名称 : {{currentOrder.hotelName}}</span><br>
             <span>预定入住时间 : {{currentOrder.checkInDate}}</span><br>
             <span>预定离开时间 : {{currentOrder.checkOutDate}}</span><br><br>
@@ -37,16 +41,32 @@
         computed: {
             ...mapGetters([
                 'orderDetailModalVisible',
-                'currentOrder'
+                'currentOrder',
+                'userId',
             ]),
         },
         methods: {
+            ...mapActions([
+                'updateExecuteOrder',
+                'delOrder'
+            ]),
             ...mapMutations([
-                'set_orderDetailModalVisible'
+                'set_orderDetailModalVisible',
+                'set_currentOrder'
             ]),
             cancelOrderDetail() {
                 this.set_orderDetailModalVisible(false)
             },
+            //处理订单
+            executeOrder(){
+                this.updateExecuteOrder({orderId:this.currentOrder.id,userId:this.userId})
+                this.set_currentOrder({...this.currentOrder,orderState:'已执行'})
+            },
+            //撤回订单
+            cancelOrder(){
+                this.delOrder({orderId:this.currentOrder.id})
+                this.set_currentOrder({...this.currentOrder,orderState:'已撤回'})
+            }
         },
 
     }

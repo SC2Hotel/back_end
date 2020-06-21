@@ -6,6 +6,7 @@ import {
 import {
     getAllOrdersAPI,
     cancelOrderAPI,
+    executeOrderAPI,
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -150,13 +151,22 @@ const hotelManager = {
             }
         },
         delHotel : async ({commit, dispatch}, data) => {
-
             const res = await delHotelAPI(data)
             if (res) {
                 this.$message.success('删除成功');
             } else {
                 // 添加失败后的操作
                 this.$message.error('删除失败');
+            }
+        },
+        //订单为已预订状态时执行订单
+        updateExecuteOrder: async ({commit, dispatch}, data) => {
+            const res = await executeOrderAPI(data)
+            if (res) {
+                console.log('执行成功');
+            } else {
+                // 添加失败后的操作
+                console.log('执行失败');
             }
         },
     }

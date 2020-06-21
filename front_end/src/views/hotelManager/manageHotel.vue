@@ -199,10 +199,10 @@ export default {
             this.getHotelCoupon()
         },
         deleteHotel(record){
-            this.delHotel(record.id)
+            this.delHotel({hotelId:record.id})
         },
         deleteOrder(record){
-            this.delOrder(record.id)
+            this.delOrder({orderId:record.id})
         },
         showOrderDetail(record){
             this.set_currentOrder(record)
