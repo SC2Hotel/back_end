@@ -72,8 +72,7 @@ public class OrderController {
     @PostMapping("/{orderId}/delayCheckIn")
     public ResponseVO delayCheckIn(@PathVariable int orderId){
         try{
-            orderService.executeExceptionOrder(orderId);
-            return ResponseVO.buildSuccess();
+            return orderService.executeExceptionOrder(orderId);
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }

@@ -190,7 +190,6 @@ public class OrderServiceImpl implements OrderService {
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }
-
         if(DateTimeUtil.compare(order.getCheckInDate(), "00:00:00", LocalDateTime.now(), DateTimeUtil.LATEST_DELAY_CHECK_IN, 0) > 0){
             try{
                 orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
