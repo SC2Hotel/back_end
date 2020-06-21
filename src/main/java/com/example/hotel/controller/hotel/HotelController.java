@@ -23,7 +23,6 @@ public class HotelController {
 
     @PostMapping("/addHotel")
     public ResponseVO createHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
-
         hotelService.addHotel(hotelVO);
         return ResponseVO.buildSuccess(true);
     }
@@ -62,6 +61,22 @@ public class HotelController {
     @PostMapping("/update")
     public ResponseVO updateHotelInfo(@RequestBody UpdateHotelVO updateHotelVO){
         return hotelService.updateHotelInfo(updateHotelVO);
+    }
+
+    @PostMapping("/{hotelId}/delete")
+    public ResponseVO deleteHotel(@PathVariable("hotelId") Integer hotelId){
+        int res = -1;
+        try{
+            res = hotelService.deleteHotel(hotelId);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            if(res == -1){
+                return ResponseVO.buildFailure("数据库出错");
+            }else if(res == 0){
+                return ResponseVO.buildFailure("hotelId不存在");
+            }
+            return ResponseVO.buildFailure(e.getMessage());
+        }
     }
 
 }

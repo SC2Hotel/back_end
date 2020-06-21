@@ -99,4 +99,10 @@ public class HotelMapperTest {
         hotelMapper.updateHotelInfo(updateHotelVO);
 
     }
+
+    @Test
+    public void deleteHotel(){
+        int res = hotelMapper.deleteHotel(1);
+        Assert.assertEquals(1, res);
+    }
 }

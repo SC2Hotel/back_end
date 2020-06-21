@@ -26,4 +26,6 @@ public interface HotelMapper {
     int updateHotelInfo(UpdateHotelVO updateHotelVO);
 
     List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
+
+    int deleteHotel(Integer hotelId);
 }
