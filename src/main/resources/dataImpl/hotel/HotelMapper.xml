@@ -25,7 +25,7 @@
                 and price between #{loPrice} and #{hiPrice}
                 and hotel_id in (
                     select id from Hotel
-                    where bizRegion=#{bizRegion}
+                    where bizRegion=#{bizRegionEnum}
                     and address like concat('%',#{address},'%')
                     and hotelName like concat('%',#{name},'%')
                     and rate>=#{rate}

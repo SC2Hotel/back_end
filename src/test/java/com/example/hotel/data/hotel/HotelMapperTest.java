@@ -63,7 +63,7 @@ public class HotelMapperTest {
         //3	桂圆酒店	欢迎您入住	南京市栖霞区珠江路268号	XiDan	Four	1829553719	4.8	6
         //9	399	10	10	3	Family
         HotelAndRoomVO hotelAndRoomVO = new HotelAndRoomVO();
-        hotelAndRoomVO.setBizRegion("XiDan");
+        hotelAndRoomVO.setBizRegionEnum(BizRegion.XiDan);
         hotelAndRoomVO.setAddress("南京");
         hotelAndRoomVO.setRoomType("Family");
         hotelAndRoomVO.setLoPrice(100.0);
