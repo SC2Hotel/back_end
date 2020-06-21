@@ -54,7 +54,7 @@ public class HotelController {
         return ResponseVO.buildSuccess(hotelService.retrieveAllBizRegions());
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseVO retrieveHotelsByHotelAndRoomVO(@RequestBody HotelAndRoomVO hotelAndRoomVO){
         return ResponseVO.buildSuccess(hotelService.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO));
     }

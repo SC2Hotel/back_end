@@ -32,3 +32,11 @@ export function getHotelByBizAndAddAPI(data) {
         params: {address: data.address},
     })
 }
+
+export  function getHotelExactlyAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/search`,
+        method: 'Post',
+        data,
+    })
+}

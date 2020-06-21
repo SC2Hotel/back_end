@@ -10,6 +10,7 @@ const getters = {
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
+  searchModalVisible: state => state.hotel.searchModalVisible,
   orderDetailModalVisible: state => state.user.orderDetailModalVisible,
   orderRateModalVisible: state => state.user.orderRateModalVisible,
   currentOrderRoom: state => state.hotel.currentOrderRoom,

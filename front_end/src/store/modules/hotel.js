@@ -4,7 +4,8 @@ import {
     getHotelsAPI,
     getHotelByIdAPI,
     getBizregionsAPI,
-    getHotelByBizAndAddAPI
+    getHotelByBizAndAddAPI,
+    getHotelExactlyAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -12,7 +13,6 @@ import {
 import {
     orderMatchCouponsAPI,
 } from '@/api/coupon'
-import {dataToArray} from "ant-design-vue/lib/vc-drawer/src/utils";
 
 const hotel = {
     state: {
@@ -25,6 +25,7 @@ const hotel = {
         currentHotelId: '',
         currentHotelInfo: {},
         orderModalVisible: false,
+        searchModalVisible: false,
         currentOrderRoom: {},
         orderMatchCouponList: [],
         bizRegions:[]
@@ -65,6 +66,9 @@ const hotel = {
         },
         set_bizRegions:function (state,data) {
             state.bizRegions = data
+        },
+        set_searchModalVisible: function (state, data) {
+            state.searchModalVisible = data
         }
     },
 
@@ -110,6 +114,13 @@ const hotel = {
             const res = await getHotelByBizAndAddAPI(data)
             if (res){
                 commit('set_hotelList',res)
+            }
+        },
+        getHotelExactly: async ({commit,state},data)=>{
+            const res = await getHotelExactlyAPI(data)
+            if (res){
+                commit('set_hotelList',res)
+                commit('set_searchModalVisible',false)
             }
         }
     }

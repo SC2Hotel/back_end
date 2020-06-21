@@ -1,27 +1,33 @@
 <template>
     <div class="hotelList">
         <a-layout>
-            <a-layout-content style="min-width: 800px">
-                    <a-input-group compact style="margin-bottom: 50px">
-                        <a-select default-value="西单" @change="onChange" >
-                            <a-select-option v-for="item in bizRegions" :key="item">
+            <a-layout-content style="min-width: 1000px">
+                <div style="margin-bottom: 50px; display: flex">
+                    <a-input-group compact>
+                        <a-select default-value="西单" @change="onChange">
+                            <a-select-option v-for="(item,index) in bizRegions" :key="index">
                                 {{item}}
                             </a-select-option>
                         </a-select>
-                        <a-input style="width: 50%" placeholder="请输入地址（可选）" v-model="addresss"/>
-                        <a-button v-on:click="search">搜索</a-button>
+                        <a-input style="width: 400px" placeholder="请输入地址（可选）" v-model="address"/>
+                        <a-button v-on:click="searchByBiz">搜索</a-button>
                     </a-input-group>
+                    <a-input-group style="margin-left: -600px">
+                        <a-button type="primary" @click="searchExactly">精确查找</a-button>
+                        <search-modal></search-modal>
+                    </a-input-group>
+                </div>
                 <a-spin :spinning="hotelListLoading">
                     <div class="card-wrapper">
                         <div v-if="hotelList.length==0">抱歉，该地址暂无酒店信息</div>
                         <div v-else>
-                            <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index"
+                            <HotelCard :hotel="item" v-for="(item,index) in hotelList" :key="index"
                                        @click.native="jumpToDetails(item.id)"></HotelCard>
                             <div v-for="item in emptyBox" :key="item.name"
                                  class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
                             </div>
-<!--                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"-->
-<!--                                          @change="pageChange"></a-pagination>-->
+                            <!--                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"-->
+                            <!--                                          @change="pageChange"></a-pagination>-->
                         </div>
                     </div>
                     <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1"
@@ -34,10 +40,12 @@
 <script>
     import HotelCard from './components/hotelCard'
     import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import SearchModal from "./components/searchModal";
 
     export default {
         name: 'home',
         components: {
+            SearchModal,
             HotelCard
         },
         data() {
@@ -45,8 +53,7 @@
                 emptyBox: [{name: 'box1'}, {name: 'box2'}, {name: 'box3'}],
                 options: this.bizRegions,
                 selected: "西单",
-                addresss:"",
-                searchCondition:"",
+                address: ""
             }
         },
         async mounted() {
@@ -70,7 +77,8 @@
         methods: {
             ...mapMutations([
                 'set_hotelListParams',
-                'set_hotelListLoading'
+                'set_hotelListLoading',
+                'set_searchModalVisible',
             ]),
             ...mapActions([
                 'getHotelList',
@@ -91,11 +99,14 @@
             },
             onChange(value) {
                 this.selected = value
-                this.getHotelByBizAndAdd({bizRegion:this.selected,address:this.addresss})
+                this.getHotelByBizAndAdd({bizRegion: this.selected, address: this.address})
             },
-            search(){
-                this.getHotelByBizAndAdd({bizRegion:this.selected,address:this.addresss})
-            }
+            searchByBiz() {
+                this.getHotelByBizAndAdd({bizRegion: this.selected, address: this.address})
+            },
+            searchExactly() {
+                this.set_searchModalVisible(true)
+            },
         }
     }
 </script>
