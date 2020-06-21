@@ -1,5 +1,6 @@
 package com.example.hotel.data.user;
 
+import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import org.junit.Assert;
@@ -85,5 +86,12 @@ public class AccountMapperTest {
             Vip vip1 = accountMapper.getVipById(13);
             Assert.assertNotNull(vip1);
         }
+    }
+
+    @Test
+    public void updateUserType(){
+        accountMapper.updateUserType(4, commonSeniorClient);
+        User user = accountMapper.getAccountById(4);
+        Assert.assertEquals(user.getUserType(), commonSeniorClient);
     }
 }

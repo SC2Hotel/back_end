@@ -21,6 +21,10 @@
         where id=#{id}
     </update>
 
+    <update id="updateUserType">
+        update User set usertype = #{userType} where id = #{userId}
+    </update>
+
     <select id="getVipById" resultMap="Vip">
         select * from Vip where user_id=#{id}
     </select>

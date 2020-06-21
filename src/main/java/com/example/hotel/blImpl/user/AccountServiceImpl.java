@@ -2,6 +2,7 @@ package com.example.hotel.blImpl.user;
 
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import com.example.hotel.util.MD5Encryption;
@@ -87,6 +88,7 @@ public class AccountServiceImpl implements AccountService {
         vipPO.setUserId(id);
         vipPO.setType(type);
         vipPO.setMessage(message);
+        accountMapper.updateUserType(id, UserType.commonSeniorClient);
         return ResponseVO.buildSuccess(accountMapper.createNewVip(vipPO));
     }
 

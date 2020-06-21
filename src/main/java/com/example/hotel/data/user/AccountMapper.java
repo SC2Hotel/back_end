@@ -1,5 +1,6 @@
 package com.example.hotel.data.user;
 
+import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import org.apache.ibatis.annotations.Mapper;
@@ -55,4 +56,6 @@ public interface AccountMapper {
     Vip getVipById(int id);
 
     int createNewVip(Vip vip);
+
+    int updateUserType(int userId, UserType userType);
 }
