@@ -158,7 +158,8 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO) {
-        // todo 将枚举字符串转换为对应的枚举值
+        String bizRegionStr = hotelAndRoomVO.getBizRegion();
+        hotelAndRoomVO.setBizRegionEnum(stringToBizRegion(bizRegionStr));
         return hotelMapper.retrieveHotelsByHotelAndRoomVO(hotelAndRoomVO);
     }
 
