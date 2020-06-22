@@ -71,7 +71,8 @@
                 'set_registerVIPModalVisible'
             ]),
             ...mapActions([
-                'registerVIP'
+                'registerVIP',
+                'getUserInfo'
             ]),
             submitRegister(e) {
                 e.preventDefault();
@@ -83,6 +84,7 @@
                 console.log(data)
                 this.registerVIP(data)
                 this.set_registerVIPModalVisible(false)
+                this.getUserInfo()
             },
             cancelRegister() {
                 this.set_registerVIPModalVisible(false)
