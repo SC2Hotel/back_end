@@ -5,14 +5,14 @@
                 <div style="margin-bottom: 50px; display: flex">
                     <a-input-group compact>
                         <a-select default-value="西单" @change="onChange">
-                            <a-select-option v-for="(item,index) in bizRegions" :key="index">
+                            <a-select-option v-for="item in bizRegions" :key="item">
                                 {{item}}
                             </a-select-option>
                         </a-select>
                         <a-input style="width: 400px" placeholder="请输入地址（可选）" v-model="address"/>
                         <a-button v-on:click="searchByBiz">搜索</a-button>
                     </a-input-group>
-                    <a-input-group style="margin-left: -600px">
+                    <a-input-group>
                         <a-button type="primary" @click="searchExactly">精确查找</a-button>
                         <search-modal></search-modal>
                     </a-input-group>
@@ -102,6 +102,7 @@
                 this.getHotelByBizAndAdd({bizRegion: this.selected, address: this.address})
             },
             searchByBiz() {
+                console.log(this.selected)
                 this.getHotelByBizAndAdd({bizRegion: this.selected, address: this.address})
             },
             searchExactly() {
