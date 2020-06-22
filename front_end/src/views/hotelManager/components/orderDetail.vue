@@ -11,8 +11,8 @@
                 <span>预定时间 : {{currentOrder.createDate}}</span>
                 <span style="display: flex;flex-direction: column;justify-content: center">
                     <span>订单状态 : {{currentOrder.orderState}}</span>
-                    <span v-if="currentOrder.orderState==='已预订'"><a-button type="primary" size="small" @click="executeOrder">处理订单</a-button></span>
-                    <span v-if="currentOrder.orderState==='异常'"><a-button type="danger" size="small" @click="cancelOrder">撤回订单</a-button></span>
+                    <span v-if="currentOrder.orderState==='已预订'"><a-button type="primary" size="small" @click="executeOrder">执行订单</a-button></span>
+                    <span v-if="currentOrder.orderState==='异常'"><a-button type="danger" size="small" @click="cancelOrder">处理订单</a-button></span>
                 </span>
             </span>
             <span>酒店名称 : {{currentOrder.hotelName}}</span><br>
