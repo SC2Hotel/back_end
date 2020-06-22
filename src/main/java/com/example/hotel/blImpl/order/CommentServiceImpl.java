@@ -9,6 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author qin
  * @date 2020-06-19
@@ -32,5 +34,15 @@ public class CommentServiceImpl implements CommentService {
             return ResponseVO.buildFailure("已评价");
         }
         return ResponseVO.buildSuccess(true);
+    }
+
+    @Override
+    public Comment getComment(Integer orderId) {
+        return commentMapper.selectByOrderId(orderId);
+    }
+
+    @Override
+    public List<Comment> getAllHotelComment(Integer hotelId) {
+        return commentMapper.selectAllHotelComment(hotelId);
     }
 }

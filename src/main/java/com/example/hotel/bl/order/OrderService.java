@@ -101,4 +101,8 @@ public interface OrderService {
     void checkOutOrder(int orderId);
 
     ResponseVO comment(CommentVO commentVO);
+
+    ResponseVO getOrderComment(int orderId);
+
+    ResponseVO getHotelComment(int hotelId);
 }

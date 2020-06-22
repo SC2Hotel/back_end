@@ -7,7 +7,7 @@ package com.example.hotel.enums;
 public enum UserType {
     Client(1),
     HotelManager(2),
-    Manager(3),
+    Admin(3),
     commonSeniorClient(4),
     companySeniorClient(5),
     webPromotionStaff(6);

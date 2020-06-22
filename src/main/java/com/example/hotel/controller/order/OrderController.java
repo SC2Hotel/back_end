@@ -93,4 +93,13 @@ public class OrderController {
         return orderService.comment(commentVO);
     }
 
+    @GetMapping("/{orderId}/getOrderComment")
+    public ResponseVO getOrderComment(@PathVariable("orderId") int orderId){
+        return orderService.getOrderComment(orderId);
+    }
+
+    @GetMapping("/{hotelId}/getHotelComment")
+    public ResponseVO getHotelComment(@PathVariable("hotelId") int hotelId){
+        return orderService.getHotelComment(hotelId);
+    }
 }

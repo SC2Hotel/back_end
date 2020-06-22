@@ -13,6 +13,10 @@
         values (#{orderId},#{score},#{content})
     </insert>
 
+    <select id="selectAllHotelComment" resultMap="Comment">
+        select * from Comment where order_id in (select id from OrderList where hotelId = #{hotelId})
+    </select>
+
     <resultMap id="Comment" type="com.example.hotel.po.Comment">
         <result column="order_id" property="orderId"></result>
         <result column="score" property="score"></result>

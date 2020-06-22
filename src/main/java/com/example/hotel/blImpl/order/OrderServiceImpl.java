@@ -6,6 +6,7 @@ import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
+import com.example.hotel.po.Comment;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
@@ -229,4 +230,25 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public ResponseVO getOrderComment(int orderId) {
+        try{
+            Comment comment = commentService.getComment(orderId);
+            return ResponseVO.buildSuccess(comment);
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public ResponseVO getHotelComment(int hotelId) {
+        try{
+            List<Comment> comments = commentService.getAllHotelComment(hotelId);
+            return ResponseVO.buildSuccess(comments);
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+
+    }
 }
