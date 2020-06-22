@@ -9,7 +9,11 @@
 export default {
   components: {
     
-  }
+  },
+  mounted() {
+
+  },
+
 }
 </script>
 <style>

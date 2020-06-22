@@ -8,10 +8,19 @@
 </template>
 <script>
 import Header from '@/components/header'
+import {mapActions} from "vuex";
 export default {
     name: 'layout',
     components: {
         Header
-    }
+    },
+    mounted() {
+        this.getUserInfo()
+    },
+    methods:{
+        ...mapActions([
+            'getUserInfo',
+        ]),
+    },
 }
 </script>

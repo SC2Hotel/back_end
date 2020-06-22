@@ -75,11 +75,12 @@ const user = {
     },
 
     actions: {
-        login: async ({ dispatch, commit }, userData) => {
+        login: async ({ dispatch, commit, state }, userData) => {
             const res = await loginAPI(userData)
             if(res){
                 setToken(res.njuToken)
                 commit('set_userId', res.id)
+                localStorage.setItem('uid',res.id)
                 dispatch('getUserInfo')
                 router.push('/hotel/hotelList')
             }
@@ -92,7 +93,7 @@ const user = {
         },
         getUserInfo({ state, commit }) {
             return new Promise((resolve, reject) => {
-              getUserInfoAPI(state.userId).then(response => {
+              getUserInfoAPI(localStorage.getItem('uid')).then(response => {
                 const data = response
                 if (!data) {
                   reject('登录已过期，请重新登录')
