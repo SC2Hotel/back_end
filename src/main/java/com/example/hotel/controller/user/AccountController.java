@@ -2,12 +2,11 @@ package com.example.hotel.controller.user;
 
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.po.User;
-import com.example.hotel.vo.UserForm;
-import com.example.hotel.vo.ResponseVO;
-import com.example.hotel.vo.UserInfoVO;
-import com.example.hotel.vo.UserVO;
+import com.example.hotel.util.JwtUtil;
+import com.example.hotel.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +27,10 @@ public class AccountController {
         if (user == null) {
             return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);
         }
-        return ResponseVO.buildSuccess(user);
+        UserWithTokenVO userWithToken = new UserWithTokenVO();
+        BeanUtils.copyProperties(user,userWithToken);
+        userWithToken.setNjuToken(JwtUtil.createToken(user.getId()));
+        return ResponseVO.buildSuccess(userWithToken);
 
     }
 
