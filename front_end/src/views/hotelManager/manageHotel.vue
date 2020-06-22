@@ -15,6 +15,9 @@
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
+                        <a-button type="info" size="small" @click="showDetail(record)">详情</a-button>
+                        <HotailDetailModel></HotailDetailModel>
+                        <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该酒店吗？"
                             @confirm="deleteHotel(record)"
@@ -67,6 +70,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
 import Coupon from './components/coupon'
+import HotailDetailModel from './components/hotelDetailModel'
 import orderDetail from './components/orderDetail'
 
 const moment = require('moment')
@@ -155,6 +159,7 @@ export default {
         AddRoomModal,
         Coupon,
         orderDetail,
+        HotailDetailModel,
     },
     computed: {
         ...mapGetters([
@@ -164,6 +169,7 @@ export default {
             'addRoomModalVisible',
             'activeHotelId',
             'couponVisible',
+            'currentHotelInfo',
         ]),
     },
     async mounted() {
@@ -177,10 +183,13 @@ export default {
             'set_couponVisible',
             'set_activeHotelId',
             'set_orderDetailModalVisible',
-            'set_currentOrder'
+            'set_currentOrder',
+            'set_currentHotelId',
+            'set_hotelDetailModalVisible',
         ]),
         ...mapActions([
             'getHotelList',
+            'getHotelById',
             'getAllOrders',
             'getHotelCoupon',
             'delOrder',
@@ -207,7 +216,12 @@ export default {
         showOrderDetail(record){
             this.set_currentOrder(record)
             this.set_orderDetailModalVisible(true)
-        }
+        },
+        showDetail(record){
+            this.set_currentHotelId(record.id)
+            this.getHotelById()
+            this.set_hotelDetailModalVisible(true)
+        },
     }
 }
 </script>

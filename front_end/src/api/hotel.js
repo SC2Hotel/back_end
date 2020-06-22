@@ -40,3 +40,11 @@ export  function getHotelExactlyAPI(data) {
         data,
     })
 }
+
+export  function updateHotelDetailAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/update`,
+        method: 'Post',
+        data,
+    })
+}

@@ -5,7 +5,8 @@ import {
     getHotelByIdAPI,
     getBizregionsAPI,
     getHotelByBizAndAddAPI,
-    getHotelExactlyAPI
+    getHotelExactlyAPI,
+    updateHotelDetailAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI,
@@ -27,9 +28,11 @@ const hotel = {
         currentHotelInfo: {},
         orderModalVisible: false,
         searchModalVisible: false,
+        hotelDetailModalVisible:false,
         currentOrderRoom: {},
         orderMatchCouponList: [],
-        bizRegions:[]
+        bizRegions:[],
+        hotelCommentList:[],
     },
     mutations: {
         set_hotelList: function (state, data) {
@@ -73,6 +76,9 @@ const hotel = {
         },
         set_hotelCommentList: function (state,data) {
             state.hotelCommentList = data
+        },
+        set_hotelDetailModalVisible: function (state,data) {
+            state.hotelDetailModalVisible = data
         }
     },
 
@@ -132,7 +138,13 @@ const hotel = {
             if (res){
                 commit('set_hotelCommentList',res)
             }
-        }
+        },
+        updateHotelDetail: async ({commit,state},data)=>{
+            const res = await updateHotelDetailAPI(data)
+            if (res){
+                console.log('修改成功')
+            }
+        },
     }
 }
 
