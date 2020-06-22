@@ -61,4 +61,8 @@
         DELETE from Hotel where id = #{hotelId}
     </delete>
 
+    <select id="selectByHotelManagerId" resultMap="Hotel">
+        select * from Hotel where manager_id = #{id}
+    </select>
+
 </mapper>

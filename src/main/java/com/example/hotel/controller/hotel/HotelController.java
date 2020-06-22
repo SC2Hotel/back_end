@@ -63,6 +63,16 @@ public class HotelController {
         return hotelService.updateHotelInfo(updateHotelVO);
     }
 
+    @GetMapping("/{hotelManagerId}/getHotel")
+    public ResponseVO getHotelByManager(@PathVariable("hotelManagerId") int hotelManagerId){
+        try{
+            return ResponseVO.buildSuccess(hotelService.getHotelByManager(hotelManagerId));
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
+
     @PostMapping("/{hotelId}/delete")
     public ResponseVO deleteHotel(@PathVariable("hotelId") Integer hotelId){
         int res = -1;

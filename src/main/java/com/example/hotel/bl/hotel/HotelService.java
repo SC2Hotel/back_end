@@ -76,6 +76,13 @@ public interface HotelService {
     ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO);
 
     /**
+     * 根据酒店管理员的Id找到他管理的酒店
+     * @param hotelManagerId
+     * @return
+     */
+    HotelVO getHotelByManager(Integer hotelManagerId);
+
+    /**
      * 删除酒店
      * @param hotelId
      * @return

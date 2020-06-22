@@ -28,4 +28,6 @@ public interface HotelMapper {
     List<HotelVO> retrieveHotelsByHotelAndRoomVO(HotelAndRoomVO hotelAndRoomVO);
 
     int deleteHotel(Integer hotelId);
+
+    HotelVO selectByHotelManagerId(Integer id);
 }
