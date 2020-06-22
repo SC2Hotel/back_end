@@ -5,6 +5,10 @@ import com.example.hotel.blImpl.admin.AdminServiceImpl;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +20,25 @@ import java.util.List;
  */
 @RestController()
 @RequestMapping("/api/admin")
+@Api(tags = "AdminController管理员相关接口")
 public class AdminController {
     @Autowired
     AdminService adminService;
 
+    @ApiOperation("添加酒店管理员")
     @PostMapping("/addManager")
     public ResponseVO addManager(@RequestBody UserForm userForm){
 
         return adminService.addManager(userForm);
     }
 
+    @ApiOperation("获取所有的管理员")
     @PostMapping("/getAllManagers")
     public ResponseVO getAllManagers(){
         return ResponseVO.buildSuccess(adminService.getAllManagers());
     }
 
-
+    @ApiOperation("获取某个酒店的管理员信息")
     @GetMapping("/{hotelId}/getManager")
     public ResponseVO getHotelManager(@PathVariable int hotelId){
         try{
@@ -41,6 +48,11 @@ public class AdminController {
         }
     }
 
+    @ApiOperation("通过邮箱或者用户名查找到用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "type = 1 邮箱 type = 0 名字"),
+            @ApiImplicitParam(name = "information", value = "邮箱或者名字")
+    })
     @GetMapping("/{type}/{information}/findUser")
     public ResponseVO findUser(@PathVariable Integer type, @PathVariable String information){
         try {
@@ -49,6 +61,8 @@ public class AdminController {
             return ResponseVO.buildFailure(e.getMessage());
         }
     }
+
+    @ApiOperation("更新用户信息")
     @PostMapping("/updateUserInfo")
     public ResponseVO updateUserInfo(@RequestBody User user){
         try{
