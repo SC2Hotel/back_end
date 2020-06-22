@@ -44,6 +44,9 @@ service.interceptors.request.use((config) => {
   const requestConfig = {
     ...config,
     url: `${config.url}`,
+    headers: {
+      'nju-token':getToken()
+    }
   }
   return requestConfig
 }, err)

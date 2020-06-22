@@ -78,7 +78,7 @@ const user = {
         login: async ({ dispatch, commit }, userData) => {
             const res = await loginAPI(userData)
             if(res){
-                setToken(res.id)
+                setToken(res.njuToken)
                 commit('set_userId', res.id)
                 dispatch('getUserInfo')
                 router.push('/hotel/hotelList')
