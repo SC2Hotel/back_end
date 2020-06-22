@@ -49,6 +49,12 @@
         WHERE id = #{orderid}
     </update>
 
+    <update id="evaluationOrder">
+        update Orderlist
+        set orderState = '已评价'
+        where id = #{orderId}
+    </update>
+
 
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>

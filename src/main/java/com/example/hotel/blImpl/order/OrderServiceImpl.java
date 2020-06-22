@@ -223,7 +223,9 @@ public class OrderServiceImpl implements OrderService {
     public ResponseVO comment(CommentVO commentVO) {
         Order order = orderMapper.getOrderById(commentVO.getOrderId());
         if(OrderState.execute.toString().equals(order.getOrderState())){
-            return commentService.addComment(commentVO);
+            ResponseVO responseVO = commentService.addComment(commentVO);
+            if(responseVO.getSuccess()) orderMapper.evaluationOrder(order.getId());
+            return responseVO;
         }else{
             return ResponseVO.buildFailure("订单状态不是已执行");
         }

@@ -45,6 +45,8 @@ public interface OrderMapper {
      */
     int executeOrder(int orderId, String checkInDate);
 
+    int evaluationOrder(int orderId);
+
     int checkOutOrder(int orderId, String checkOutDate);
 
 

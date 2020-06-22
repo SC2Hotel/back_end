@@ -15,7 +15,8 @@ public enum OrderState {
     Booked("已预订"),
     Withdrawn("已撤销"),
     exception("异常"),
-    execute("已执行");
+    execute("已执行"),
+    evaluation("已评价");
     private String value;
 
     OrderState(String value) {

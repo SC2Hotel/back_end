@@ -51,7 +51,7 @@ public class AccountController {
         return ResponseVO.buildSuccess(user);
     }
 
-    @ApiOperation("更行某个用户的信息")
+    @ApiOperation("更新某个用户的信息")
     @PostMapping("/{id}/userInfo/update")
     public ResponseVO updateInfo(@RequestBody UserInfoVO userInfoVO,@PathVariable int id){
         return accountService.updateUserInfo(id,userInfoVO.getPassword(),userInfoVO.getUserName(),userInfoVO.getPhoneNumber());
