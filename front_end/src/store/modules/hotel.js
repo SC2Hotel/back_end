@@ -8,7 +8,8 @@ import {
     getHotelExactlyAPI
 } from '@/api/hotel'
 import {
-    reserveHotelAPI
+    reserveHotelAPI,
+    getHotelCommentAPI
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -69,6 +70,9 @@ const hotel = {
         },
         set_searchModalVisible: function (state, data) {
             state.searchModalVisible = data
+        },
+        set_hotelCommentList: function (state,data) {
+            state.hotelCommentList = data
         }
     },
 
@@ -121,6 +125,12 @@ const hotel = {
             if (res){
                 commit('set_hotelList',res)
                 commit('set_searchModalVisible',false)
+            }
+        },
+        getHotelComment: async ({commit,state},data)=>{
+            const res = await getHotelCommentAPI(data)
+            if (res){
+                commit('set_hotelCommentList',res)
             }
         }
     }

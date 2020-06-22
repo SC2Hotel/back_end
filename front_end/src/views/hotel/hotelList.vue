@@ -52,6 +52,7 @@
             return {
                 emptyBox: [{name: 'box1'}, {name: 'box2'}, {name: 'box3'}],
                 options: this.bizRegions,
+                oriHotelList: this.getHotelList(),
                 selected: "西单",
                 address: ""
             }

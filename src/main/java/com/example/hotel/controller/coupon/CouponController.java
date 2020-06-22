@@ -5,16 +5,20 @@ import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelTargetMoneyCouponVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/coupon")
+@Api(tags = "CouponController优惠卷相关接口")
 public class CouponController {
 
     @Autowired
     private CouponService couponService;
 
+    @ApiOperation("添加优惠券")
     @PostMapping("/hotelTargetMoney")
     public ResponseVO addHotelTargetMoneyCoupon(@RequestBody HotelTargetMoneyCouponVO hotelTargetMoneyCouponVO) {
 
@@ -23,11 +27,13 @@ public class CouponController {
         return ResponseVO.buildSuccess(couponVO);
     }
 
+    @ApiOperation("获取酒店所有的优惠券")
     @GetMapping("/hotelAllCoupons")
     public ResponseVO getHotelAllCoupons(@RequestParam Integer hotelId) {
         return ResponseVO.buildSuccess(couponService.getHotelAllCoupon(hotelId));
     }
 
+    @ApiOperation("获取所有和订单匹配的优惠券")
     @GetMapping("/orderMatchCoupons")
     public ResponseVO getOrderMatchCoupons(@RequestParam Integer userId,
                                            @RequestParam Integer hotelId,
