@@ -24,15 +24,15 @@
                             <span class="value">{{ currentHotelInfo.address }}</span>
                         </div>
                         <div class="items" v-if="currentHotelInfo.rate">
-                            <span class="label">评分:</span> 
+                            <span class="label">评分:</span>
                             <span class="value">{{ currentHotelInfo.rate }}</span>
                         </div>
                         <div class="items" v-if="currentHotelInfo.hotelStar">
-                            <span class="label">星级:</span> 
+                            <span class="label">星级:</span>
                             <a-rate style="font-size: 15px" :value="currentHotelInfo.rate" disabled allowHalf/>
                         </div>
                         <div class="items" v-if="currentHotelInfo.description">
-                            <span class="label">酒店简介:</span> 
+                            <span class="label">酒店简介:</span>
                             <span class="value">{{ currentHotelInfo.description }}</span>
                         </div>
                     </div>
@@ -45,6 +45,17 @@
                     <a-tab-pane tab="酒店详情" key="2">
                         <HotelDetail></HotelDetail>
                     </a-tab-pane>
+                    <a-tab-pane tab="酒店评价" key="3">
+                        <a-comment v-for="item in hotelCommentList" :key="item">
+                            <a slot="author">{{item.score}}</a>
+                            <p slot="content">
+                                {{item.content}}
+                            </p>
+                            <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
+                                <span>{{ moment().fromNow() }}</span>
+                            </a-tooltip>
+                        </a-comment>
+                    </a-tab-pane>
                 </a-tabs>
             </div>
         </a-layout-content>
@@ -54,6 +65,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
 import HotelDetail from './components/hotelDetail'
+import moment from 'moment';
 
 export default {
     name: 'hotelDetail',
@@ -63,16 +75,18 @@ export default {
     },
     data() {
         return {
-
+            moment
         }
     },
     computed: {
         ...mapGetters([
             'currentHotelInfo',
+            'hotelCommentList'
         ])
     },
     mounted() {
         this.set_currentHotelId(Number(this.$route.params.hotelId))
+        this.getHotelComment(Number(this.$route.params.hotelId))
         this.getHotelById()
     },
     beforeRouteUpdate(to, from, next) {
@@ -85,7 +99,8 @@ export default {
             'set_currentHotelId',
         ]),
         ...mapActions([
-            'getHotelById'
+            'getHotelById',
+            'getHotelComment'
         ])
     }
 }

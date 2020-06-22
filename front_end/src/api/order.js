@@ -1,7 +1,9 @@
-import { axios } from '@/utils/request'
+import {axios} from '@/utils/request'
+
 const api = {
     orderPre: '/api/order'
 }
+
 export function reserveHotelAPI(data) {
     return axios({
         url: `${api.orderPre}/addOrder`,
@@ -9,24 +11,28 @@ export function reserveHotelAPI(data) {
         data,
     })
 }
+
 export function getAllOrdersAPI() {
     return axios({
         url: `${api.orderPre}/getAllOrders`,
         method: 'GET',
     })
 }
+
 export function getUserOrdersAPI(data) {
     return axios({
         url: `${api.orderPre}/${data.userId}/getUserOrders`,
         method: 'GET',
     })
 }
+
 export function cancelOrderAPI(data) {
     return axios({
         url: `${api.orderPre}/${data.orderId}/annulOrder`,
         method: 'GET',
     })
 }
+
 export function addCommentAPI(data) {
     return axios({
         url: `${api.orderPre}/${data.orderId}/comment`,
@@ -46,5 +52,12 @@ export function delayCheckInOrderAPI(data) {
     return axios({
         url: `${api.orderPre}/${data.orderId}/delayCheckIn`,
         method: 'POST',
+    })
+}
+
+export function getHotelCommentAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data}/getHotelComment`,
+        method: 'Get'
     })
 }
