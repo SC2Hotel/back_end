@@ -149,9 +149,10 @@ const user = {
                 resolve()
             })
         },
-        addComment: async ({state,commit},comment)=>{
+        addComment: async ({state,commit,dispatch},comment)=>{
             const res = await addCommentAPI(comment)
             if (res){
+                dispatch('getUserOrders')
                 message.success("评价成功")
             }else {
                 message.error("评价失败")

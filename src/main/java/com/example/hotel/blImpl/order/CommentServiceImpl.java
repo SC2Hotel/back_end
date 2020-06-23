@@ -2,6 +2,7 @@ package com.example.hotel.blImpl.order;
 
 import com.example.hotel.bl.order.CommentService;
 import com.example.hotel.data.order.CommentMapper;
+import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.po.Comment;
 import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.ResponseVO;
@@ -20,6 +21,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public ResponseVO addComment(CommentVO commentVO) {
@@ -28,6 +31,7 @@ public class CommentServiceImpl implements CommentService {
         }
         if(null==commentMapper.selectByOrderId(commentVO.getOrderId())){
             Comment comment = new Comment();
+            orderMapper.evaluationOrder(commentVO.getOrderId()),
             BeanUtils.copyProperties(commentVO,comment);
             commentMapper.insertComment(comment);
         }else {

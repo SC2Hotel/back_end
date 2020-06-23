@@ -57,7 +57,9 @@
                     </span>
                 </a-table>
             </a-tab-pane>
-            
+            <a-tab-pane tab="所有评价" key="3">
+
+            </a-tab-pane>
         </a-tabs>
         <AddHotelModal></AddHotelModal>
         <AddRoomModal></AddRoomModal>
