@@ -65,4 +65,8 @@
         select * from Hotel where manager_id = #{id}
     </select>
 
+    <update id="updateManager">
+        update Hotel set manager_id = #{userId} where id = #{hotelId}
+    </update>
+
 </mapper>

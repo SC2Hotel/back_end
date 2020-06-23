@@ -25,6 +25,7 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
     private final static String ACCOUNT_EXIST = "账号已存在";
+    private final static String MANAGER_EXIST = "该酒店已经存在管理员";
     @Autowired
     AdminMapper adminMapper;
     @Autowired
@@ -38,8 +39,11 @@ public class AdminServiceImpl implements AdminService {
         user.setPassword(userForm.getPassword());
         user.setUserType(UserType.HotelManager);
         try {
+            if(hotelMapper.selectById(userForm.getHotelId()).getManagerId()!=null){
+                return ResponseVO.buildFailure(MANAGER_EXIST);
+            }
             adminMapper.addManager(user);
-            //TODO 给相应的酒店设置管理员标记。如果酒店由管理员了，那就不能再添加管理员了
+            hotelMapper.updateManager(user.getId(), userForm.getHotelId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseVO.buildFailure(ACCOUNT_EXIST);

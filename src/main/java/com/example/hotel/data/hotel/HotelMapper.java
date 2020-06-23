@@ -30,4 +30,6 @@ public interface HotelMapper {
     int deleteHotel(Integer hotelId);
 
     HotelVO selectByHotelManagerId(Integer id);
+
+    int updateManager(Integer userId, Integer hotelId);
 }
