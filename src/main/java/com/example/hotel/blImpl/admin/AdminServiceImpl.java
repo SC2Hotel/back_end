@@ -37,16 +37,12 @@ public class AdminServiceImpl implements AdminService {
         user.setPassword(userForm.getPassword());
         user.setUserType(UserType.HotelManager);
         try {
-            if(hotelMapper.selectById(userForm.getHotelId()).getManagerId()!=null){
-                return ResponseVO.buildFailure(MANAGER_EXIST);
-            }
             adminMapper.addManager(user);
-            hotelMapper.updateManager(user.getId(), userForm.getHotelId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
-        return ResponseVO.buildSuccess(true);
+        return ResponseVO.buildSuccess(user.getId());
     }
 
     @Override
