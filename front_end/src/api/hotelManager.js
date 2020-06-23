@@ -23,3 +23,10 @@ export function delHotelAPI(data) {
     })
 }
 
+export  function getHotelByManagerAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/${data}/getHotel`,
+        method: 'Get'
+    })
+}
+

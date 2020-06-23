@@ -1,5 +1,6 @@
 package com.example.hotel.vo;
 
+import com.example.hotel.enums.BizRegion;
 import com.example.hotel.enums.HotelStar;
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class UpdateHotelVO {
     private String bizRegion;
     private HotelStar hotelStar;
     private String description;
+    private BizRegion bizRegionEnum;
 
 }

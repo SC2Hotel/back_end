@@ -2,12 +2,16 @@ import {
     addRoomAPI,
     addHotelAPI,
     delHotelAPI,
+    getHotelByManagerAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
     cancelOrderAPI,
     delayCheckInOrderAPI,
     executeOrderAPI,
+    getHotelOrderAPI,
+    getHotelCommentAPI,
+    getOrderCommentAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -42,7 +46,7 @@ const hotelManager = {
         addCouponVisible: false,
         activeHotelId: 0,
         couponList: [],
-
+        commentItem:""
     },
     mutations: {
         set_orderList: function (state, data) {
@@ -78,6 +82,9 @@ const hotelManager = {
         set_addCouponVisible: function (state, data) {
             state.addCouponVisible = data
         },
+        set_commentItem: function (state,data) {
+            state.commentItem = data
+        }
 
     },
     actions: {
@@ -181,6 +188,30 @@ const hotelManager = {
             }
             return res;
         },
+        getHotelByManager: async ({commit,state},data)=>{
+            const res = await getHotelByManagerAPI(data)
+            if(res){
+                commit('set_hotelList',res)
+            }
+        },
+        getOrderByHotel:async ({commit,state},data)=>{
+            const res = await getHotelOrderAPI(data)
+            if (res){
+                commit('set_orderList',res)
+            }
+        },
+        getHotelComment:async ({commit,state},data)=>{
+            const res = await getHotelCommentAPI(data)
+            if (res){
+                commit('set_hotelCommentList',res)
+            }
+        },
+        getOrderComment:async ({commit,state},data)=>{
+            const res = await getOrderCommentAPI(data)
+            if (res){
+                commit('set_commentItem',res)
+            }
+        }
     }
 }
 export default hotelManager
