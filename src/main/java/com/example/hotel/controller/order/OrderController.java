@@ -42,8 +42,8 @@ public class OrderController {
     }
 
     @ApiOperation("撤销订单，只能撤销预定中的")
-    @GetMapping("/{orderid}/annulOrder")
-    public ResponseVO annulOrder(@PathVariable int orderid){
+    @PostMapping("/{orderid}/annulOrder")
+    public ResponseVO annulOrder(@PathVariable Integer orderid){
         return orderService.annulOrder(orderid);
     }
 

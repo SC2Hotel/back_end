@@ -28,8 +28,8 @@ export function getUserOrdersAPI(data) {
 
 export function cancelOrderAPI(data) {
     return axios({
-        url: `${api.orderPre}/${data.orderId}/annulOrder`,
-        method: 'GET',
+        url: `${api.orderPre}/${data}/annulOrder`,
+        method: 'POST',
     })
 }
 
