@@ -2,6 +2,7 @@ import {
     addRoomAPI,
     addHotelAPI,
     delHotelAPI,
+    getHotelByManagerAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -181,6 +182,12 @@ const hotelManager = {
             }
             return res;
         },
+        getHotelByManager: async ({commit,state},data)=>{
+            const res = await getHotelByManagerAPI(data)
+            if(res){
+                commit('set_hotelList',res)
+            }
+        }
     }
 }
 export default hotelManager
