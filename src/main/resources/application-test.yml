@@ -13,6 +13,18 @@ spring:
      cache: false
   jackson:
     time-zone: GMT+8
+  redis:
+    host: 106.15.248.13
+    password: seecoder
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 5
+        max-wait: 1ms
+      shutdown-timeout: 100ms
+    database: 1
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml
