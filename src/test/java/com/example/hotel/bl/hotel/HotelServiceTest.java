@@ -100,7 +100,7 @@ public class HotelServiceTest {
         hotelAndRoomVO.setHotelStar("Four");
         hotelAndRoomVO.setName("酒店");
         hotelAndRoomVO.setRate(4.0);
-        hotelAndRoomVO.setBizRegion("XiDan");
+        hotelAndRoomVO.setBizRegion("西单");
         hotelAndRoomVO.setAddress("区");
         hotelAndRoomVO.setLoPrice(80.0);
         hotelAndRoomVO.setHiPrice(580.0);

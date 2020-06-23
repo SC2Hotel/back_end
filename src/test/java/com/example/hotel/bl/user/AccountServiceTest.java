@@ -53,6 +53,7 @@ public class AccountServiceTest {
     public void updateUserInfo() {
         ResponseVO responseVO = accountService.updateUserInfo(4, "123456", "测试", "15521210202");
         assertTrue(responseVO.getSuccess());
+        accountService.updateUserInfo(4, "123456", "测试一号", "15521210202");
     }
 
     @Test

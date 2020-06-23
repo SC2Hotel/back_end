@@ -30,8 +30,6 @@ public class AdminServiceImpl implements AdminService {
     AdminMapper adminMapper;
     @Autowired
     HotelMapper hotelMapper;
-    @Autowired
-    RedisUtil redisUtil;
     @Override
     public ResponseVO addManager(UserForm userForm) {
         User user = new User();

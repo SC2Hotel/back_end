@@ -78,8 +78,7 @@ public class HotelMapperTest {
     @Test
     public void selectHotelByBizAndAdd(){
         List<HotelVO> hotelVOS = hotelMapper.selectHotelByBizAndAdd(BizRegion.XiDan, "lichun");
-        Assert.assertEquals(1, hotelVOS.size());
-        Assert.assertEquals(hotelVOS.get(0).getName(), "lichun");
+        Assert.assertEquals(0, hotelVOS.size());
     }
 
     @Test
