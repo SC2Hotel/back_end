@@ -9,6 +9,8 @@ import {
     cancelOrderAPI,
     delayCheckInOrderAPI,
     executeOrderAPI,
+    getHotelOrderAPI,
+    getHotelCommentAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -186,6 +188,18 @@ const hotelManager = {
             const res = await getHotelByManagerAPI(data)
             if(res){
                 commit('set_hotelList',res)
+            }
+        },
+        getOrderByHotel:async ({commit,state},data)=>{
+            const res = await getHotelOrderAPI(data)
+            if (res){
+                commit('set_orderList',res)
+            }
+        },
+        getHotelComment:async ({commit,state},data)=>{
+            const res = getHotelCommentAPI(data)
+            if (res){
+                commit('set_hotelCommentList',res)
             }
         }
     }

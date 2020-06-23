@@ -104,6 +104,7 @@
         </a-tabs>
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
+        <OrderDetailModal></OrderDetailModal>
     </div>
 </template>
 <script>
@@ -111,6 +112,7 @@
     import AddRoomModal from './components/addRoomModal'
     import Coupon from './components/coupon'
     import orderDetail from './components/orderDetail'
+    import OrderDetailModal from "../user/components/orderDetailModal";
 
     const moment = require('moment')
     const columns2 = [
@@ -150,6 +152,10 @@
             dataIndex: 'price',
         },
         {
+            title:'状态',
+            dataIndex: 'orderState'
+        },
+        {
             title: '操作',
             key: 'action',
             scopedSlots: {customRender: 'action'},
@@ -169,6 +175,7 @@
             }
         },
         components: {
+            OrderDetailModal,
             // AddHotelModal,
             AddRoomModal,
             Coupon,
@@ -180,7 +187,6 @@
                 'bizRegions',
                 'orderList',
                 'hotelList',
-                'addHotelModalVisible',
                 'addRoomModalVisible',
                 'activeHotelId',
                 'couponVisible',
@@ -192,6 +198,8 @@
             await this.getUserInfo()
             await this.getHotelByManager(this.userInfo.id)
             await this.getBizregions()
+            await this.getOrderByHotel(this.hotelList.id)
+            await this.getHotelComment(this.hotelList.id)
         },
         methods: {
             ...mapMutations([
@@ -211,7 +219,9 @@
                 'getHotelCoupon',
                 'delOrder',
                 'delHotel',
-                'getUserInfo'
+                'getUserInfo',
+                'getOrderByHotel',
+                'getHotelComment'
             ]),
             addHotel() {
                 this.set_addHotelModalVisible(true)
@@ -225,9 +235,6 @@
                 this.set_couponVisible(true)
                 this.getHotelCoupon()
             },
-            // deleteHotel(record){
-            //     this.delHotel({hotelId:record.id})
-            // },
             deleteOrder(record) {
                 this.delOrder({orderId: record.id})
             },
@@ -235,12 +242,6 @@
                 this.set_currentOrder(record)
                 this.set_orderDetailModalVisible(true)
             },
-            // showDetail(record){
-            //     console.log(this.userInfo)
-            //     this.set_currentHotelId(record.id)
-            //     this.getHotelById()
-            //     this.set_hotelDetailModalVisible(true)
-            // },
             modifyInfo() {
                 setTimeout(() => {
                     this.form.setFieldsValue({
