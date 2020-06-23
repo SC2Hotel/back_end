@@ -114,6 +114,7 @@ public class HotelServiceTest {
         UpdateHotelVO updateHotelVO = new UpdateHotelVO();
         updateHotelVO.setId(1);
         updateHotelVO.setDescription("welcome");
+        updateHotelVO.setBizRegion(BizRegion.FuZiMiao.toString());
         ResponseVO responseVO = hotelService.updateHotelInfo(updateHotelVO);
         assertTrue(responseVO.getSuccess());
     }

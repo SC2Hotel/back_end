@@ -50,7 +50,7 @@
         update Hotel
         <set>
             <if test="address!=null">address=#{address},</if>
-            <if test="bizRegion!=null">bizRegion=#{bizRegion},</if>
+            <if test="bizRegion!=null">bizRegion=#{bizRegionEnum},</if>
             <if test="hotelStar!=null">hotelStar=#{hotelStar},</if>
             <if test="description!=null">hotelDescription=#{description}</if>
         </set>

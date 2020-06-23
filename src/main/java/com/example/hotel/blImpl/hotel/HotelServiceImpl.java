@@ -149,6 +149,7 @@ public class HotelServiceImpl implements HotelService {
             redisUtil.delete(hotelKeyNamePrefix+updateHotelVO.getId());
         }
         try{
+            updateHotelVO.setBizRegionEnum(stringToBizRegion(updateHotelVO.getBizRegion()));
             hotelMapper.updateHotelInfo(updateHotelVO);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
