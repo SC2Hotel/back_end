@@ -46,16 +46,16 @@ public class AdminMapperTest {
         //5	123@qq.com	123456	测试二号	12345678911	100	HotelManager
         User user = adminMapper.getAccountById(5);
         Assert.assertEquals(user.getEmail(), "123@qq.com");
-        Assert.assertEquals(user.getPassword(), "123456");
-        Assert.assertEquals(user.getUserType(), UserType.HotelManager);
+        Assert.assertEquals(user.getPassword(), "4QrcOUm6Wau+VuBX8g+IPg==");
+        Assert.assertEquals(user.getUserType(), UserType.Client);
     }
 
     @Test
     public void Test04getHotelManager(){
-        User user = adminMapper.getHotelManager(4);
+        User user = adminMapper.getHotelManager(3);
         Assert.assertEquals(user.getUserType(), UserType.HotelManager);
-        Assert.assertEquals(user.getEmail(), "123@qq.com");
-        Assert.assertEquals(user.getPassword(), "123456");
+        Assert.assertEquals(user.getEmail(), "333@qq.com");
+        Assert.assertEquals(user.getPassword(), "4QrcOUm6Wau+VuBX8g+IPg==");
     }
 
     @Test
@@ -75,13 +75,13 @@ public class AdminMapperTest {
     @Test
     public void Test07updateUserInfo(){
         User user = new User();
-        user.setId(15);
+        user.setId(4);
         user.setCredit(1.0);
         user.setUserType(UserType.HotelManager);
         user.setPassword("1234567");
         adminMapper.updateUserInfo(user);
         adminMapper.updateHelper(user.getPassword(), user.getId());
-        User test = adminMapper.getAccountById(15);
+        User test = adminMapper.getAccountById(4);
         Assert.assertEquals(test.getUserType(), user.getUserType());
         Assert.assertEquals(test.getPassword(), user.getPassword());
         user.setCredit(0.0);
