@@ -238,6 +238,7 @@
                 'getUserInfo',
                 'getOrderByHotel',
                 'getHotelComment',
+                'getOrderComment'
             ]),
             addHotel() {
                 this.set_addHotelModalVisible(true)
@@ -255,6 +256,7 @@
                 this.delOrder({orderId: record.id})
             },
             showOrderDetail(record) {
+                this.getOrderComment(record.id)
                 this.set_currentOrder(record)
                 this.set_orderDetailModalVisible(true)
             },
