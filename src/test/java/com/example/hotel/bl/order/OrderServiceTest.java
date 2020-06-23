@@ -1,9 +1,12 @@
 package com.example.hotel.bl.order;
 
+import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Order;
+import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class OrderServiceTest {
 
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderMapper orderMapper;
     @Test
     public void addOrder() {
         OrderVO orderVO = new OrderVO();
@@ -104,5 +109,15 @@ public class OrderServiceTest {
     public void checkOutOrder() {
         orderService.checkOutOrder(4);
         assertTrue(true);
+    }
+
+    @Test
+    public void comment(){
+        CommentVO commentVO = new CommentVO();
+        commentVO.setOrderId(5);
+        commentVO.setContent("测试");
+        commentVO.setScore(4.0);
+        orderService.comment(commentVO);
+        Assert.assertTrue(orderMapper.getOrderById(commentVO.getOrderId()).getOrderState().equals(OrderState.evaluation.toString()));
     }
 }

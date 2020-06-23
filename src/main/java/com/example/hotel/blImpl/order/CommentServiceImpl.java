@@ -31,7 +31,6 @@ public class CommentServiceImpl implements CommentService {
         }
         if(null==commentMapper.selectByOrderId(commentVO.getOrderId())){
             Comment comment = new Comment();
-            orderMapper.evaluationOrder(commentVO.getOrderId()),
             BeanUtils.copyProperties(commentVO,comment);
             commentMapper.insertComment(comment);
         }else {

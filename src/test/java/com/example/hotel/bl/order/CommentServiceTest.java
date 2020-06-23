@@ -34,15 +34,6 @@ public class CommentServiceTest {
         assertFalse(responseVO.getSuccess());
     }
 
-    @Test
-    public void addComment2() {
-        CommentVO commentVO = new CommentVO();
-        commentVO.setOrderId(5);
-        commentVO.setScore(5.0);
-        commentVO.setContent("good");
-        ResponseVO responseVO = commentService.addComment(commentVO);
-        assertTrue(responseVO.getSuccess());
-    }
 
     @Test
     public void getOrderComment(){
