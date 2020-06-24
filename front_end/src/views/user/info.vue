@@ -216,11 +216,8 @@
             cancelModify() {
                 this.modify = false
             },
-            confirmCancelOrder(orderId_) {
-                const t = {
-                    orderId: orderId_
-                }
-                this.cancelOrder(t)
+            confirmCancelOrder(orderId) {
+                this.cancelOrder(orderId)
             },
             cancelCancelOrder() {
             },

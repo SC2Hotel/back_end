@@ -32,9 +32,6 @@ public class AutoTest {
 
     private static String phoneNumber = "12345678911";
 
-    @Autowired
-    RoomMapper roomMapper;
-
 
     @BeforeClass
     public static void openBrowser(){
@@ -195,10 +192,11 @@ public class AutoTest {
         loginAsSenior();
         userInfoCenter();
         browser.findElement(By.xpath(changeUserInfoBottom)).click();
+        browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[4]/div[2]/div/span/input")).sendKeys("");
         browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[4]/div[2]/div/span/input")).sendKeys("11987654321");
-        browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[6]/div[2]/div/span/input")).sendKeys("123456");
         browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[7]/div/div/span/button[1]")).click();
-        Assert.assertEquals("11987654321", browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[4]/div[2]/div/span")).getText());
+        browser.navigate().refresh();
+        Assert.assertEquals("1234567891911987654321", browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[3]/div[1]/form/div[4]/div[2]/div/span")).getText());
     }
 
     @Test

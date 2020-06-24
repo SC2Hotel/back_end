@@ -30,7 +30,7 @@ public class AdminServiceTest {
         userForm.setEmail("test@test.com");
         userForm.setPassword("testtest");
         ResponseVO responseVO = adminService.addManager(userForm);
-        Assert.assertTrue(responseVO.getContent().equals(7));
+        Assert.assertTrue(responseVO.getContent().equals(8));
     }
 
     @Test
