@@ -11,7 +11,8 @@ import {
 import {
     reserveHotelAPI,
     getHotelCommentAPI,
-    getBookedHotelsAPI
+    getBookedHotelsAPI,
+    getUserHotelOrdersAPI
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -150,6 +151,12 @@ const hotel = {
             const res = await getBookedHotelsAPI(data)
             if (res){
                 commit('set_hotelList',res)
+            }
+        },
+        getUserHotelOrders : async ({commit,state},data)=>{
+            const res = await getUserHotelOrdersAPI(data)
+            if (res){
+                commit('set_userOrderList',res)
             }
         }
 

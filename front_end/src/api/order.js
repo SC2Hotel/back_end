@@ -82,3 +82,10 @@ export function getBookedHotelsAPI(data) {
         method: 'Get'
     })
 }
+
+export function getUserHotelOrdersAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data.userId}/${data.hotelId}/getAllUsersOrdersInAHotel`,
+        method: 'Get'
+    })
+}

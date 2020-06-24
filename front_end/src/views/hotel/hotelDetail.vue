@@ -8,11 +8,11 @@
                 <div class="hotel-info">
                     <a-card style="width: 240px">
                         <img
-                            alt="example"
-                            src="@/assets/cover.jpeg"
-                            slot="cover"
-                            referrerPolicy="no-referrer"
-                            />
+                                alt="example"
+                                src="@/assets/cover.jpeg"
+                                slot="cover"
+                                referrerPolicy="no-referrer"
+                        />
                     </a-card>
                     <div class="info">
                         <div class="items" v-if="currentHotelInfo.name">
@@ -46,7 +46,7 @@
                         <HotelDetail></HotelDetail>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店评价" key="3">
-                        <a-comment v-for="item in hotelCommentList" :key="item">
+                        <a-comment v-for="item in hotelCommentList" :key="item.id">
                             <a slot="author">{{item.score}}</a>
                             <p slot="content">
                                 {{item.content}}
@@ -56,77 +56,117 @@
                             </a-tooltip>
                         </a-comment>
                     </a-tab-pane>
+                    <a-tab-pane tab="我的订单" key="4">
+                        <a-table
+                                :columns="columns1" :data-source="userOrderList" bordered>
 
+                        </a-table>
+                    </a-tab-pane>
                 </a-tabs>
             </div>
         </a-layout-content>
     </a-layout>
 </template>
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
-import RoomList from './components/roomList'
-import HotelDetail from './components/hotelDetail'
-import moment from 'moment';
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import RoomList from './components/roomList'
+    import HotelDetail from './components/hotelDetail'
+    import moment from 'moment';
 
-export default {
-    name: 'hotelDetail',
-    components: {
-        RoomList,
-        HotelDetail,
-    },
-    data() {
-        return {
-            moment
+    const columns1= [
+        {
+            title: "订单号",
+            dataIndex: "id",
+            key:"id"
+        },
+        {
+            title:"入住时间",
+            dataIndex:"checkInDate"
+        },
+        {
+            title:"离店时间",
+            dataIndex:"checkOutDate"
+        },
+        {
+            title:"预定房间数",
+            dataIndex:"roomNum"
+        },
+        {
+            title:"房间类型",
+            dataIndex:"roomType"
         }
-    },
-    computed: {
-        ...mapGetters([
-            'currentHotelInfo',
-            'hotelCommentList'
-        ])
-    },
-    mounted() {
-        this.set_currentHotelId(Number(this.$route.params.hotelId))
-        this.getHotelComment(Number(this.$route.params.hotelId))
-        this.getHotelById()
-    },
-    beforeRouteUpdate(to, from, next) {
-        this.set_currentHotelId(Number(to.params.hotelId))
-        this.getHotelById()
-        next()
-    },
-    methods: {
-        ...mapMutations([
-            'set_currentHotelId',
-        ]),
-        ...mapActions([
-            'getHotelById',
-            'getHotelComment'
-        ])
+    ]
+    export default {
+        name: 'hotelDetail',
+        components: {
+            RoomList,
+            HotelDetail,
+        },
+        data() {
+            return {
+                moment,
+                myOrders: [],
+                columns1
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'currentHotelInfo',
+                'hotelCommentList',
+                'userOrderList',
+                'userInfo'
+            ])
+        },
+        mounted() {
+            this.set_currentHotelId(Number(this.$route.params.hotelId))
+            this.getHotelComment(Number(this.$route.params.hotelId))
+            this.getHotelById()
+            this.getUserHotelOrders({hotelId:Number(this.$route.params.hotelId),userId:this.userInfo.id})
+            console.log(this.userInfo)
+        },
+        beforeRouteUpdate(to, from, next) {
+            this.set_currentHotelId(Number(to.params.hotelId))
+            this.getHotelById()
+            next()
+        },
+        methods: {
+            ...mapMutations([
+                'set_currentHotelId',
+            ]),
+            ...mapActions([
+                'getHotelById',
+                'getHotelComment',
+                'getUserHotelOrders',
+            ])
+        }
     }
-}
 </script>
 <style scoped lang="less">
     .hotelDetailCard {
         padding: 50px 50px;
     }
+
     .hotel-info {
         display: flex;
         align-items: stretch;
         justify-content: flex-start;
-        .info{
+
+        .info {
             padding: 10px 0;
             display: flex;
             flex-direction: column;
             margin-left: 20px;
+
             .items {
                 display: flex;
                 align-items: center;
                 margin-bottom: 10px;
-                .label{
+
+                .label {
                     margin-right: 10px;
                     font-size: 18px;
                 }
+
                 .value {
                     margin-right: 15px
                 }
