@@ -183,6 +183,7 @@
                 'currentOrderRoom',
                 'currentHotelId',
                 'currentHotelInfo',
+                'userInfo',
                 'userId',
                 'orderMatchCouponList'
             ]),
@@ -222,13 +223,12 @@
             },
             handleSubmit(e) {
                 e.preventDefault();
-                var mydate = new Date()
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data = {
                             hotelId: this.currentHotelId,
                             hotelName: this.currentHotelInfo.name,
-                            userId: Number(this.userId),
+                            userId: this.userInfo.id,
                             checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                             checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                             roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
@@ -246,7 +246,7 @@
         watch: {
             totalPrice(val) {
                 let data = {
-                    userId: this.userId,
+                    userId: this.userInfo.id,
                     hotelId: this.currentHotelId,
                     orderPrice: this.totalPrice,
                     roomNum: this.form.getFieldValue('roomNum'),

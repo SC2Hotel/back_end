@@ -10,7 +10,8 @@ import {
 } from '@/api/hotel'
 import {
     reserveHotelAPI,
-    getHotelCommentAPI
+    getHotelCommentAPI,
+    getBookedHotelsAPI
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -145,6 +146,12 @@ const hotel = {
                 console.log('修改成功')
             }
         },
+        getBookedHotels :async ({commit,state},data)=>{
+            const res = await getBookedHotelsAPI(data)
+            if (res){
+                commit('set_hotelList',res)
+            }
+        }
     }
 }
 

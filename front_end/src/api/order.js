@@ -75,3 +75,10 @@ export  function getOrderCommentAPI(data) {
         method: 'Get'
     })
 }
+
+export function getBookedHotelsAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data}/getBookedHotels`,
+        method: 'Get'
+    })
+}
