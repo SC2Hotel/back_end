@@ -1,9 +1,12 @@
 package com.example.hotel.vo;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author fjj
  * @date 2019/3/12 5:14 PM
  */
+@Slf4j
 public class ResponseVO {
 
     /**
@@ -38,7 +41,8 @@ public class ResponseVO {
         ResponseVO response=new ResponseVO();
         response.setSuccess(false);
         response.setMessage(message);
-        System.out.println(message);
+//        System.out.println(message);
+        log.info(message);
         return response;
     }
 

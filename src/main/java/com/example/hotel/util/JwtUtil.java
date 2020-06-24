@@ -15,6 +15,7 @@ import java.util.*;
  * @date 2020-06-22
  */
 public class JwtUtil {
+    public static final String TOKEN_NAME = "nju-token";
     // 秘钥
     static final String SECRET = "Nju-Hotel-Token";
     // 签名是有谁生成

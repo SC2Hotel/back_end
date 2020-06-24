@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController()
@@ -43,7 +44,12 @@ public class AccountController {
 
     @ApiOperation("获取某个用户信息")
     @GetMapping("/{id}/getUserInfo")
-    public ResponseVO getUserInfo(@PathVariable int id) {
+    public ResponseVO getUserInfo(@PathVariable int id, HttpServletRequest request) {
+        String token = request.getHeader(JwtUtil.TOKEN_NAME);
+        Integer userId = JwtUtil.verifyTokenAndGetUserId(token);
+        if(userId==null || id!=userId){
+            return ResponseVO.buildFailure("用户id错误");
+        }
         User user = accountService.getUserInfo(id);
         if(user==null){
             return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);
@@ -53,7 +59,12 @@ public class AccountController {
 
     @ApiOperation("更新某个用户的信息")
     @PostMapping("/{id}/userInfo/update")
-    public ResponseVO updateInfo(@RequestBody UserInfoVO userInfoVO,@PathVariable int id){
+    public ResponseVO updateInfo(@RequestBody UserInfoVO userInfoVO,@PathVariable int id, HttpServletRequest request){
+        String token = request.getHeader(JwtUtil.TOKEN_NAME);
+        Integer userId = JwtUtil.verifyTokenAndGetUserId(token);
+        if(userId==null || id!=userId){
+            return ResponseVO.buildFailure("用户id错误");
+        }
         return accountService.updateUserInfo(id,userInfoVO.getPassword(),userInfoVO.getUserName(),userInfoVO.getPhoneNumber());
     }
 
