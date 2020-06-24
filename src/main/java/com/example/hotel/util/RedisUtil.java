@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisUtil {
+    public static final String hotelKeyNamePrefix = "hotel:hotel:";
+
+    public static final String roomKeyNamePrefix = "hotel:room:";
 
     Logger log = LoggerFactory.getLogger(RedisUtil.class);
 

@@ -25,7 +25,7 @@ public class OrderController {
 
     @ApiOperation("增加订单")
     @PostMapping("/addOrder")
-    public ResponseVO reserveHotel(@RequestBody OrderVO orderVO){
+    public ResponseVO reserveOrder(@RequestBody OrderVO orderVO){
         return orderService.addOrder(orderVO);
     }
 

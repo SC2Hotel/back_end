@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.example.hotel.util.RedisUtil.hotelKeyNamePrefix;
+import static com.example.hotel.util.RedisUtil.roomKeyNamePrefix;
+
 @Service
 public class HotelServiceImpl implements HotelService {
 
@@ -36,9 +39,7 @@ public class HotelServiceImpl implements HotelService {
     private RoomService roomService;
     @Autowired
     RedisUtil redisUtil;
-    private static final String hotelKeyNamePrefix = "hotel:hotel:";
 
-    private static final String roomKeyNamePrefix = "hotel:room:";
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
         User manager = accountService.getUserInfo(hotelVO.getManagerId());
@@ -171,6 +172,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public int deleteHotel(Integer hotelId) {
+        if(redisUtil.hasKey(hotelKeyNamePrefix + hotelId)){
+            redisUtil.delete(hotelKeyNamePrefix + hotelId);
+        }
         return hotelMapper.deleteHotel(hotelId);
     }
 }

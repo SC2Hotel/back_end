@@ -11,6 +11,7 @@ import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.DateTimeUtil;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
@@ -43,6 +44,8 @@ public class OrderServiceImpl implements OrderService {
     AccountService accountService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
@@ -64,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(orderVO,order);
             orderMapper.addOrder(order);
             hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
+//            if(redisUtil.hasKey(RedisUtil.hotelKeyNamePrefix))
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseVO.buildFailure(RESERVE_ERROR);
