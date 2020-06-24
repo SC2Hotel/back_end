@@ -86,7 +86,7 @@ CREATE TABLE `User` (
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
-INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',100,'Client'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
+INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',100,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
 
 CREATE TABLE `Vip` (
                        user_id int primary key,
