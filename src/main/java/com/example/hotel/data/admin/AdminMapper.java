@@ -29,4 +29,6 @@ public interface AdminMapper {
     int updateUserInfo(User user);
 
     int updateHelper(String password, int userId);
+
+    void delAccountById(Integer userId);
 }

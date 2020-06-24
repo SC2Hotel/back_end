@@ -1,9 +1,9 @@
 <template>
     <div class="manageUser-wrapper">
         <a-tabs>
-            <a-tab-pane tab="账户管理" key="1">
+            <a-tab-pane tab="管理员管理" key="1">
                 <div style="width: 100%; text-align: right; margin:20px 0">
-                    <a-button type="primary" @click="addManager"><a-icon type="plus" />添加用户</a-button>
+                    <a-button type="primary" @click="addManager"><a-icon type="plus" />添加酒店管理员</a-button>
                 </div>
                 <a-table
                     :columns="columns"
@@ -14,8 +14,16 @@
                         <span>￥{{ text }}</span>
                     </span>
                     <span slot="action" slot-scope="text, record">
-                        <a-button type="danger" @click="order(record)">删除用户</a-button>
+                        <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                     </span>
+                </a-table>
+            </a-tab-pane>
+            <a-tab-pane tab="酒店详情" key="2">
+                <a-table
+                        :columns="columns2"
+                        :dataSource="hotelList"
+                        bordered
+                >
                 </a-table>
             </a-tab-pane>
         </a-tabs>
@@ -26,11 +34,15 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddManagerModal from './components/addManagerModal'
 const columns = [
-    {  
+    {
+        title: '用户id',
+        dataIndex: 'id',
+    },
+    {
         title: '用户邮箱',
         dataIndex: 'email',
     },
-    {  
+    {
         title: '用户名',
         dataIndex: 'userName',
     },
@@ -52,6 +64,21 @@ const columns = [
       scopedSlots: { customRender: 'action' },
     },
   ];
+const columns2 = [
+    {
+        title: '酒店id',
+        dataIndex: 'id',
+    },
+    {
+        title: '酒店名称',
+        dataIndex: 'name',
+    },
+    {
+        title: '管理员id',
+        dataIndex: 'managerId',
+    },
+];
+
 export default {
     name: 'manageHotel',
     data(){
@@ -59,6 +86,7 @@ export default {
             formLayout: 'horizontal',
             pagination: {},
             columns,
+            columns2,
             data: [],
             form: this.$form.createForm(this, { name: 'manageUser' }),
         }
@@ -69,21 +97,30 @@ export default {
     computed: {
         ...mapGetters([
             'addManagerModalVisible',
-            'managerList'
+            'managerList',
+            'hotelList'
         ])
     },
     mounted() {
-      this.getManagerList()
+      this.getManagerList();
+        this.getHotelList();
     },
     methods: {
         ...mapActions([
-            'getManagerList'
+            'getManagerList',
+            'getHotelList',
+            'delHotelManager'
         ]),
         ...mapMutations([
-            'set_addManagerModalVisible'
+            'set_addManagerModalVisible',
         ]),
         addManager(){
-            this.set_addManagerModalVisible(true)
+            this.set_addManagerModalVisible(true);
+        },
+        async delManager(record){
+            await this.delHotelManager(record.id);
+            this.getManagerList();
+            this.getHotelList();
         }
     }
 }
@@ -107,5 +144,5 @@ export default {
     }
 </style>
 <style lang="less">
-    
+
 </style>

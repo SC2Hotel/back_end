@@ -53,4 +53,13 @@ public interface AdminService {
       */
     int updateUserInformation(User user);
 
+    /**
+     * @description: 更改用户信息
+     * @param: userId
+     * @return: 操作结果
+     * @author: lzh
+     * @date: 2020/6/24
+     */
+    ResponseVO delUser(Integer userId);
+
 }

@@ -15,3 +15,9 @@ export function addManagerAPI(data) {
         data
     })
 }
+export function delHotelManagerAPI(data) {
+    return axios({
+        url: `${api.adminPre}/delUser/`+data,
+        method: 'POST'
+    })
+}

@@ -112,7 +112,7 @@
     import AddRoomModal from './components/addRoomModal'
     import Coupon from './components/coupon'
     import orderDetail from './components/orderDetail'
-    import OrderDetailModal from "../user/components/orderDetailModal";
+    import OrderDetailModal from "./components/orderDetail";
 
     const moment = require('moment')
     const columns2 = [

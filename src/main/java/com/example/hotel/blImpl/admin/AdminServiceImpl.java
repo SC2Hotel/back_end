@@ -15,6 +15,7 @@ import com.example.hotel.vo.UserForm;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -43,7 +44,6 @@ public class AdminServiceImpl implements AdminService {
             adminMapper.addManager(user);
             hotelMapper.updateManager(user.getId(), userForm.getHotelId());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
         return ResponseVO.buildSuccess(true);
@@ -74,6 +74,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int updateUserInformation(User user){
         return this.updateUserInfoHelper(user);
+    }
+
+    @Override
+    @Transactional
+    public ResponseVO delUser(Integer userId) {
+        if(adminMapper.getAccountById(userId)==null){
+            return ResponseVO.buildFailure(MANAGER_EXIST);
+        }
+        try{
+            adminMapper.delAccountById(userId);
+            hotelMapper.clearManager(userId);
+            return ResponseVO.buildSuccess("删除管理员成功");
+        }catch (Exception e){
+            return ResponseVO.buildFailure("删除管理员失败");
+        }
     }
 
     public int updateUserInfoHelper(User user){

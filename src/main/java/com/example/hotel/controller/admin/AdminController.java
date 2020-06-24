@@ -28,7 +28,6 @@ public class AdminController {
     @ApiOperation("添加酒店管理员")
     @PostMapping("/addManager")
     public ResponseVO addManager(@RequestBody UserForm userForm){
-
         return adminService.addManager(userForm);
     }
 
@@ -67,6 +66,16 @@ public class AdminController {
     public ResponseVO updateUserInfo(@RequestBody User user){
         try{
             return ResponseVO.buildSuccess(adminService.updateUserInformation(user));
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
+    @ApiOperation("删除管理员并更新酒店信息")
+    @PostMapping("/delUser/{userId}")
+    public ResponseVO delUser(@PathVariable Integer userId){
+        try{
+            return adminService.delUser(userId);
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }

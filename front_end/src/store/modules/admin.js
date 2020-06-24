@@ -1,6 +1,7 @@
 import {
     getManagerListAPI,
     addManagerAPI,
+    delHotelManagerAPI,
 } from '@/api/admin'
 import { message } from 'ant-design-vue'
 
@@ -49,7 +50,13 @@ const admin = {
             }else{
                 message.error('添加失败')
             }
-        }
+        },
+        delHotelManager: async ({commit,state},data)=>{
+            const res = await delHotelManagerAPI(data)
+            if (res){
+                console.log('删除成功')
+            }
+        },
     }
 }
 export default admin

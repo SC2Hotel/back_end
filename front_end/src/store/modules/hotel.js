@@ -145,6 +145,7 @@ const hotel = {
                 console.log('修改成功')
             }
         },
+
     }
 }
 

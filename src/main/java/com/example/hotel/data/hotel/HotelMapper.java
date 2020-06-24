@@ -31,5 +31,7 @@ public interface HotelMapper {
 
     HotelVO selectByHotelManagerId(Integer id);
 
+    void clearManager(Integer userId);
+
     int updateManager(Integer userId, Integer hotelId);
 }

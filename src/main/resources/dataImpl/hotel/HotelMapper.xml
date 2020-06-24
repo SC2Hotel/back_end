@@ -69,4 +69,8 @@
         update Hotel set manager_id = #{userId} where id = #{hotelId}
     </update>
 
+    <update id="clearManager">
+        update Hotel set manager_id = null where manager_id = #{userId}
+    </update>
+
 </mapper>

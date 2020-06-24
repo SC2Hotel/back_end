@@ -5,6 +5,11 @@
         insert into User(email,password,usertype)
         values(#{email},#{password},#{userType})
     </insert>
+
+    <delete id="delAccountById">
+        DELETE from User where id = #{userId}
+    </delete>
+
     <select id="getAllManagers" resultMap="User">
         select * from User where usertype='HotelManager'
     </select>
