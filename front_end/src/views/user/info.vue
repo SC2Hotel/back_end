@@ -40,7 +40,7 @@
                                  v-if="modify">
                         <a-input
                                 placeholder="请输入新密码"
-                                v-decorator="['password', { rules: [{ required: true, message: '请输入新密码' }] }]"
+                                v-decorator="['password', { rules: [{ required: false, message: '请输入密码(为空为不修改)' }] }]"
                         />
                     </a-form-item>
                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-if="modify">
@@ -196,7 +196,7 @@
                         const data = {
                             userName: this.form.getFieldValue('userName'),
                             phoneNumber: this.form.getFieldValue('phoneNumber'),
-                            password: this.form.getFieldValue('password')
+                            password: this.form.getFieldValue('password')?this.form.getFieldValue('password'):''
                         }
                         this.updateUserInfo(data).then(() => {
                             this.modify = false

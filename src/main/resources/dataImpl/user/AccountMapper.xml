@@ -12,7 +12,18 @@
         select * from User where id=#{id}
     </select>
     <update id="updateAccount">
-        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber}
+        update User
+        <set>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="userName!=null and userName!=''">
+                username=#{userName},
+            </if>
+            <if test="phoneNumber !=null and phoneNumber!=''">
+                phonenumber=#{phoneNumber},
+            </if>
+        </set>
         where id=#{id}
     </update>
 

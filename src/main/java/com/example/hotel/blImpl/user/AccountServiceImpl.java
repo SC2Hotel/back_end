@@ -61,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO updateUserInfo(int id, String password, String username, String phonenumber) {
         try {
-            accountMapper.updateAccount(id, MD5Encryption.encrypt(password), username, phonenumber);
+            accountMapper.updateAccount(id, password.equals("")?"":MD5Encryption.encrypt(password), username, phonenumber);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseVO.buildFailure(UPDATE_ERROR);
