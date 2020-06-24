@@ -29,4 +29,10 @@ export  function getHotelByManagerAPI(data) {
         method: 'Get'
     })
 }
+export function delRoomByIdAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/delRoom/${data}`,
+        method: 'POST'
+    })
+}
 

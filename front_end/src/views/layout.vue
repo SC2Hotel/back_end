@@ -14,8 +14,8 @@ export default {
     components: {
         Header
     },
-    mounted() {
-        this.getUserInfo()
+    async mounted() {
+        await this.getUserInfo()
     },
     methods:{
         ...mapActions([

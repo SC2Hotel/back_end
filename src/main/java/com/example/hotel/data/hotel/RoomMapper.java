@@ -19,4 +19,6 @@ public interface RoomMapper {
     List<HotelRoom> selectRoomsByHotelId(@Param("hotelId") Integer hotelId);
 
     Integer getRoomCurNum(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType);
+
+    void delRoomByRoomId(Integer roomId);
 }

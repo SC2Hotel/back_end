@@ -20,6 +20,9 @@
         select curNum from Room where hotel_id=#{hotelId} and roomType=#{roomType}
     </select>
 
+    <delete id="delRoomByRoomId">
+        DELETE from Room where id = #{roomId}
+    </delete>
 
     <resultMap id="room" type="com.example.hotel.po.HotelRoom">
         <id column="id" property="id"></id>
@@ -29,6 +32,7 @@
         <result column="total" property="total"></result>
         <result column="hotel_id" property="hotelId"></result>
     </resultMap>
+
 
 
 </mapper>

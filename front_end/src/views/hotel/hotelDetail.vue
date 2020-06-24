@@ -59,7 +59,6 @@
                     <a-tab-pane tab="我的订单" key="4">
                         <a-table
                                 :columns="columns1" :data-source="userOrderList" bordered>
-
                         </a-table>
                     </a-tab-pane>
                 </a-tabs>
@@ -122,7 +121,6 @@
             this.getHotelComment(Number(this.$route.params.hotelId))
             this.getHotelById()
             this.getUserHotelOrders({hotelId:Number(this.$route.params.hotelId),userId:this.userInfo.id})
-            console.log(this.userInfo)
         },
         beforeRouteUpdate(to, from, next) {
             this.set_currentHotelId(Number(to.params.hotelId))

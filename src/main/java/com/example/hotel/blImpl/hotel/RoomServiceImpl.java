@@ -3,6 +3,7 @@ package com.example.hotel.blImpl.hotel;
 import com.example.hotel.bl.hotel.RoomService;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.po.HotelRoom;
+import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,17 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Integer getRoomCurNum(Integer hotelId, String roomType) {
         return roomMapper.getRoomCurNum(hotelId,roomType);
+    }
+
+    @Override
+    public ResponseVO delRoomInfo(Integer roomId) {
+        try{
+            roomMapper.delRoomByRoomId(roomId);
+            return ResponseVO.buildSuccess("删除成功");
+        }catch (Exception e){
+            System.out.println(e);
+            return ResponseVO.buildFailure("删除失败");
+        }
     }
 
 

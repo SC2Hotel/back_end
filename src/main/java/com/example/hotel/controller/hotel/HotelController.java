@@ -40,7 +40,13 @@ public class HotelController {
     @PostMapping("/roomInfo")
     public ResponseVO addRoomInfo(@RequestBody HotelRoom hotelRoom) {
         roomService.insertRoomInfo(hotelRoom);
-        return ResponseVO.buildSuccess();
+        return ResponseVO.buildSuccess("添加成功");
+    }
+
+    @ApiOperation("删除酒店住房")
+    @PostMapping("/delRoom/{roomId}")
+    public ResponseVO delRoomInfo(@PathVariable Integer roomId) {
+        return roomService.delRoomInfo(roomId);
     }
 
     @ApiOperation("根据hotelId返回酒店信息")

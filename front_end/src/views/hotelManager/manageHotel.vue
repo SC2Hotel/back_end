@@ -69,9 +69,19 @@
                         <a-button type="info" @click="showCoupon(hotelList.id)" style="margin: 20px">优惠策略</a-button>
                     </a-form-item>
                 </a-form>
-
-                //todo 客房信息的增删改查
-
+<!--房间列表-->
+                <a-table
+                        :columns="columns4"
+                        :dataSource="currentHotelInfo.rooms"
+                >
+                    <span slot="price" slot-scope="text">
+                        <span>￥{{ text }}</span>
+                    </span>
+                    <span slot="action" slot-scope="record">
+                        <a-button type="danger" @click="delRoom(record)">删除房间</a-button>
+                    </span>
+                </a-table>
+<!--end-->
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -178,7 +188,40 @@
             scopedSlots: {customRender: 'action'},
         },
     ]
-    const columns3=[
+    const columns3 = [
+        {
+            title: '房型',
+            dataIndex: 'roomType',
+            key: 'roomType',
+        },
+        {
+            title: '今日剩余房间数',
+            dataIndex: 'curNum',
+            key: 'curNum',
+        },
+        {
+            title: '总房间数',
+            dataIndex: 'total',
+            key: 'total',
+        },
+        {
+            title: '入住人数',
+            key: 'peopleNum',
+            dataIndex: 'peopleNum',
+        },
+        {
+            title: '房价',
+            key: 'price',
+            dataIndex: 'price',
+            scopedSlots: { customRender: 'price'}
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            scopedSlots: { customRender: 'action' },
+        },
+    ];
+    const columns4=[
         {
             title:'房间类型',
             dataIndex:'roomType'
@@ -195,7 +238,12 @@
             title:'房间价格',
             dataIndex:'price'
         },
-    ];
+        {
+            title: '操作',
+            key: 'action',
+            scopedSlots: {customRender: 'action'},
+        },
+    ]
     export default {
         name: 'manageHotel',
         data() {
@@ -204,6 +252,7 @@
                 formLayout: 'horizontal',
                 pagination: {},
                 columns2,
+                columns4,
                 columns1,
                 columns3,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
@@ -235,6 +284,9 @@
             await this.getUserInfo()
             await this.getHotelByManager(this.userInfo.id)
             await this.getBizregions()
+            if(!this.hotelList.id)return;
+            await this.set_currentHotelId(this.hotelList.id)
+            await this.getHotelById(this.hotelList.id)
             await this.getOrderByHotel(this.hotelList.id)
             await this.getHotelComment(this.hotelList.id)
         },
@@ -248,10 +300,12 @@
                 'set_currentOrder',
                 'set_currentHotelId',
                 'set_hotelDetailModalVisible',
+                'set_currentHotelId',
             ]),
             ...mapActions([
                 'updateHotelDetail',
                 'getBizregions',
+                'getHotelById',
                 'getHotelByManager',
                 'getHotelCoupon',
                 'delOrder',
@@ -259,7 +313,8 @@
                 'getUserInfo',
                 'getOrderByHotel',
                 'getHotelComment',
-                'getOrderComment'
+                'getOrderComment',
+                'delRoomById',
             ]),
             addHotel() {
                 this.set_addHotelModalVisible(true)
@@ -314,6 +369,10 @@
             },
             onChange(value) {
                 this.selected = value
+            },
+            async delRoom(record){
+              await this.delRoomById(record.id)
+                await this.getHotelById(this.hotelList.id)
             },
         }
     }

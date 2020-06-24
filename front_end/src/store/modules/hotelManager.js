@@ -2,7 +2,8 @@ import {
     addRoomAPI,
     addHotelAPI,
     delHotelAPI,
-    getHotelByManagerAPI
+    getHotelByManagerAPI,
+    delRoomByIdAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -26,7 +27,7 @@ const hotelManager = {
         addHotelParams: {
             name: '',
             address: '',
-            bizRegion: 'XiDan',
+            bizRegion: '',
             hotelStar: '',
             rate: 0,
             description: '',
@@ -211,7 +212,13 @@ const hotelManager = {
             if (res){
                 commit('set_commentItem',res)
             }
-        }
+        },
+        delRoomById:async ({commit,state},data)=>{
+            const res = await delRoomByIdAPI(data)
+            if (res){
+                console.log("删除成功")
+            }
+        },
     }
 }
 export default hotelManager
