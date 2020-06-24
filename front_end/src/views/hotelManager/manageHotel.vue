@@ -69,6 +69,9 @@
                         <a-button type="info" @click="showCoupon(hotelList.id)" style="margin: 20px">优惠策略</a-button>
                     </a-form-item>
                 </a-form>
+
+                //todo 客房信息的增删改查
+
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -104,7 +107,6 @@
                         :dataSource="hotelCommentList"
                         bordered
                 >
-
                 </a-table>
             </a-tab-pane>
         </a-tabs>
@@ -175,6 +177,24 @@
             key: 'action',
             scopedSlots: {customRender: 'action'},
         },
+    ]
+    const columns3=[
+        {
+            title:'房间类型',
+            dataIndex:'roomType'
+        },
+        {
+            title:'房间总数',
+            dataIndex:'total'
+        },
+        {
+            title:'房间剩余数',
+            dataIndex:'curNum'
+        },
+        {
+            title:'房间价格',
+            dataIndex:'price'
+        },
     ];
     export default {
         name: 'manageHotel',
@@ -185,6 +205,7 @@
                 pagination: {},
                 columns2,
                 columns1,
+                columns3,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
                 selected: "西单"
                 // hotelStar: this.hotelList.hotelStar=='Five'?5:this.hotelList.hotelStar=='Four'?4:this.hotelList.hotelStar=='Three'?3:this.hotelList.hotelStar=='Two'?2:1

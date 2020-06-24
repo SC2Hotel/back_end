@@ -69,7 +69,6 @@
             ]),
             async cancelOrderDetail() {
                 this.set_orderDetailModalVisible(false)
-                console.log(this.commentItem)
                 await this.this.getOrderByHotel(this.currentHotelInfo.id)
             },
             //处理订单
