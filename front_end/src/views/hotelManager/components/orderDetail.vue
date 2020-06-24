@@ -25,7 +25,15 @@
             <span>预定房间数目 : {{currentOrder.roomNum}}</span><br>
             <span>是否有儿童 : {{currentOrder.haveChild?"是":"否"}}</span><br>
             <span>预定总价 : ¥{{currentOrder.price}}</span><br>
-
+            <span v-if="currentOrder.orderState==='已评价'">
+                <span>
+                    评分 : {{commentItem.score}}
+                </span>
+                <br>
+                <span>
+                    评价 : {{commentItem.content}}
+                </span>
+            </span>
         </div>
     </a-modal>
 </template>
@@ -36,13 +44,16 @@
     export default {
         name: "orderDetailModal",
         data() {
-            return {}
+            return {
+            }
         },
         computed: {
             ...mapGetters([
                 'orderDetailModalVisible',
                 'currentOrder',
                 'userId',
+                'commentItem',
+                'currentHotelInfo'
             ]),
         },
         methods: {
@@ -50,6 +61,7 @@
                 'updateExecuteOrder',
                 'delayCheckInOrder',
                 'getAllOrders',
+                'getOrderByHotel'
             ]),
             ...mapMutations([
                 'set_orderDetailModalVisible',
@@ -57,7 +69,7 @@
             ]),
             async cancelOrderDetail() {
                 this.set_orderDetailModalVisible(false)
-                await this.getAllOrders()
+                await this.this.getOrderByHotel(this.currentHotelInfo.id)
             },
             //处理订单
             executeOrder(){

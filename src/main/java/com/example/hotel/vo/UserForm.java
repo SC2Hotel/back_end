@@ -16,6 +16,4 @@ public class UserForm {
      * 用户密码
      */
     private String password;
-
-    private Integer hotelId;
 }

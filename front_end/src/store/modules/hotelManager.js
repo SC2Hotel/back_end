@@ -10,7 +10,8 @@ import {
     delayCheckInOrderAPI,
     executeOrderAPI,
     getHotelOrderAPI,
-    getHotelCommentAPI
+    getHotelCommentAPI,
+    getOrderCommentAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -45,7 +46,7 @@ const hotelManager = {
         addCouponVisible: false,
         activeHotelId: 0,
         couponList: [],
-
+        commentItem:""
     },
     mutations: {
         set_orderList: function (state, data) {
@@ -81,6 +82,9 @@ const hotelManager = {
         set_addCouponVisible: function (state, data) {
             state.addCouponVisible = data
         },
+        set_commentItem: function (state,data) {
+            state.commentItem = data
+        }
 
     },
     actions: {
@@ -197,9 +201,15 @@ const hotelManager = {
             }
         },
         getHotelComment:async ({commit,state},data)=>{
-            const res = getHotelCommentAPI(data)
+            const res = await getHotelCommentAPI(data)
             if (res){
                 commit('set_hotelCommentList',res)
+            }
+        },
+        getOrderComment:async ({commit,state},data)=>{
+            const res = await getOrderCommentAPI(data)
+            if (res){
+                commit('set_commentItem',res)
             }
         }
     }

@@ -69,6 +69,9 @@
                         <a-button type="info" @click="showCoupon(hotelList.id)" style="margin: 20px">优惠策略</a-button>
                     </a-form-item>
                 </a-form>
+
+                //todo 客房信息的增删改查
+
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
                 <a-table
@@ -99,12 +102,17 @@
                 </a-table>
             </a-tab-pane>
             <a-tab-pane tab="所有评价" key="3">
-
+                <a-table
+                        :columns="columns1"
+                        :dataSource="hotelCommentList"
+                        bordered
+                >
+                </a-table>
             </a-tab-pane>
         </a-tabs>
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
-        <OrderDetailModal></OrderDetailModal>
+        <order-detail></order-detail>
     </div>
 </template>
 <script>
@@ -112,9 +120,18 @@
     import AddRoomModal from './components/addRoomModal'
     import Coupon from './components/coupon'
     import orderDetail from './components/orderDetail'
-    import OrderDetailModal from "./components/orderDetail";
 
     const moment = require('moment')
+    const columns1=[
+        {
+            title: '评分',
+            dataIndex: 'score'
+        },
+        {
+            title: '评价',
+            dataIndex: 'content'
+        }
+    ]
     const columns2 = [
         {
             title: '订单号',
@@ -160,6 +177,24 @@
             key: 'action',
             scopedSlots: {customRender: 'action'},
         },
+    ]
+    const columns3=[
+        {
+            title:'房间类型',
+            dataIndex:'roomType'
+        },
+        {
+            title:'房间总数',
+            dataIndex:'total'
+        },
+        {
+            title:'房间剩余数',
+            dataIndex:'curNum'
+        },
+        {
+            title:'房间价格',
+            dataIndex:'price'
+        },
     ];
     export default {
         name: 'manageHotel',
@@ -169,17 +204,18 @@
                 formLayout: 'horizontal',
                 pagination: {},
                 columns2,
+                columns1,
+                columns3,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
                 selected: "西单"
                 // hotelStar: this.hotelList.hotelStar=='Five'?5:this.hotelList.hotelStar=='Four'?4:this.hotelList.hotelStar=='Three'?3:this.hotelList.hotelStar=='Two'?2:1
             }
         },
         components: {
-            OrderDetailModal,
             // AddHotelModal,
             AddRoomModal,
             Coupon,
-            // orderDetail,
+            orderDetail,
             // HotailDetailModel,
         },
         computed: {
@@ -191,7 +227,8 @@
                 'activeHotelId',
                 'couponVisible',
                 'currentHotelInfo',
-                'userInfo'
+                'userInfo',
+                'hotelCommentList'
             ]),
         },
         async mounted() {
@@ -221,7 +258,8 @@
                 'delHotel',
                 'getUserInfo',
                 'getOrderByHotel',
-                'getHotelComment'
+                'getHotelComment',
+                'getOrderComment'
             ]),
             addHotel() {
                 this.set_addHotelModalVisible(true)
@@ -239,6 +277,7 @@
                 this.delOrder({orderId: record.id})
             },
             showOrderDetail(record) {
+                this.getOrderComment(record.id)
                 this.set_currentOrder(record)
                 this.set_orderDetailModalVisible(true)
             },

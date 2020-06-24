@@ -78,6 +78,7 @@ const user = {
         login: async ({ dispatch, commit, state }, userData) => {
             const res = await loginAPI(userData)
             if(res){
+                console.log(res)
                 setToken(res.njuToken)
                 commit('set_userId', res.id)
                 localStorage.setItem('uid',res.id)

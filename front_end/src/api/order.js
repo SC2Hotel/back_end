@@ -28,8 +28,8 @@ export function getUserOrdersAPI(data) {
 
 export function cancelOrderAPI(data) {
     return axios({
-        url: `${api.orderPre}/${data.orderId}/annulOrder`,
-        method: 'GET',
+        url: `${api.orderPre}/${data}/annulOrder`,
+        method: 'POST',
     })
 }
 
@@ -65,6 +65,20 @@ export function getHotelCommentAPI(data) {
 export  function getHotelOrderAPI(data) {
     return axios({
         url: `${api.orderPre}/${data}/allOrders`,
+        method: 'Get'
+    })
+}
+
+export  function getOrderCommentAPI(data) {
+    return  axios({
+        url: `${api.orderPre}/${data}/getOrderComment`,
+        method: 'Get'
+    })
+}
+
+export function getBookedHotelsAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data}/getBookedHotels`,
         method: 'Get'
     })
 }
