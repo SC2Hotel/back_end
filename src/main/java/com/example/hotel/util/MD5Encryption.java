@@ -23,7 +23,7 @@ public class MD5Encryption {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] input = s.getBytes();
             byte[] output = md.digest(input);
-            System.out.println(Base64.encodeBase64String(output));
+//            System.out.println(Base64.encodeBase64String(output));
 //            return Hex.encodeHexString(output);  // 4位编码
             /*
  * base64只有64个字符，因此只需要6个二进制位来表示 实现:每3个字节为一组凑4个base64字符。
