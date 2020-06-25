@@ -136,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseVO getBookedHotels(int userId){
-        List<Order> orders = this.getAllOrders();
+        List<Order> orders = this.getUserOrders(userId);
         List<HotelVO> hotels = new LinkedList<>();
         Set<Integer> hotelIds = new HashSet<>();
         try{

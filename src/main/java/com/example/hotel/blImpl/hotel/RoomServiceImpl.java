@@ -46,6 +46,7 @@ public class RoomServiceImpl implements RoomService {
     public ResponseVO delRoomInfo(Integer roomId) {
         try{
             roomMapper.delRoomByRoomId(roomId);
+            //TODO 这里需要保证缓存一致性
             return ResponseVO.buildSuccess("删除成功");
         }catch (Exception e){
             System.out.println(e);
