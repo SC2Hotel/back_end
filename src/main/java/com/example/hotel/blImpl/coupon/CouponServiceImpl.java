@@ -92,6 +92,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDiscountMoney(couponVO.getDiscountMoney());
         coupon.setStatus(1);
         int result = couponMapper.insertCoupon(coupon);
+        redisUtil.clean(keyNamePrefix + coupon.getHotelId());
         couponVO.setId(result);
         return couponVO;
     }

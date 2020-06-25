@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -86,4 +87,18 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 删除缓存
+     * @param key 可以传一个值 或多个
+     */
+    @SuppressWarnings("unchecked")
+    public void clean(String ... key){
+        if(key!=null&&key.length>0){
+            if(key.length==1){
+                redisTemplate.delete(key[0]);
+            }else{
+                redisTemplate.delete(CollectionUtils.arrayToList(key));
+            }
+        }
+    }
 }

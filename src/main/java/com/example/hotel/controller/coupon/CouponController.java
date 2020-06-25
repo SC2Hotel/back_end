@@ -30,8 +30,6 @@ public class CouponController {
     @ApiOperation("获取酒店所有的优惠券")
     @GetMapping("/hotelAllCoupons")
     public ResponseVO getHotelAllCoupons(@RequestParam("hotelId") Integer hotelId) {
-        System.out.println(hotelId);
-        System.out.println(couponService.getHotelAllCoupon(hotelId));
         return ResponseVO.buildSuccess(couponService.getHotelAllCoupon(hotelId));
     }
 
