@@ -132,6 +132,7 @@ const hotelManager = {
             }
         },
         getHotelCoupon: async ({state, commit}) => {
+            console.log(state.activeHotelId)
             const res = await hotelAllCouponsAPI(state.activeHotelId)
             if (res) {
                 // 获取到酒店策略之后的操作（将获取到的数组赋值给couponList）

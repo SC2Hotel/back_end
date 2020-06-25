@@ -55,7 +55,6 @@
             return {
                 columns,
             }
-
         },
         components: {
             AddCoupon,
@@ -66,14 +65,10 @@
                 'couponList',
             ])
         },
-
         methods: {
             ...mapMutations([
                 'set_addCouponVisible',
                 'set_couponVisible',
-            ]),
-            ...mapActions([
-                'getHotelCoupon'
             ]),
             cancel() {
                 this.set_couponVisible(false)

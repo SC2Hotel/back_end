@@ -102,7 +102,7 @@ export default {
             this.form.validateFieldsAndScroll((err, values) => {
                 if (!err) {
                     const data = {
-                        couponType: Number(this.form.getFieldValue('couponType')),
+                        type: Number(this.form.getFieldValue('couponType')),
                         discountMoney: Number(this.form.getFieldValue('discountMoney')),
                         targetMoney: Number(this.form.getFieldValue('targetMoney')),
                         name: this.form.getFieldValue('couponName'),
