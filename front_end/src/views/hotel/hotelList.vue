@@ -9,17 +9,25 @@
                                 {{item}}
                             </a-select-option>
                         </a-select>
-                        <a-input style="width: 400px" placeholder="请输入地址（可选）" v-model="address"/>
+                        <a-input style="width: 200px" placeholder="请输入地址（可选）" v-model="address"/>
                         <a-button v-on:click="searchByBiz">搜索</a-button>
                         <!--                    </a-input-group>-->
                         <!--                    <a-input-group>-->
                         <a-button type="primary" @click="searchExactly">精确查找</a-button>
                         <search-modal></search-modal>
                     </a-input-group>
-                    <a-input-group>
+                    <a-input-group style="align-content: center">
                         <a-checkbox @change="chooseItem">
                             是否曾经预订
                         </a-checkbox>
+                        <a-select default-value="请选择排序方式" @change="changeFilter">
+                            <a-select-option value="评分从高到低">
+                                评分从高到低
+                            </a-select-option>
+                            <a-select-option value="评分从低到高">
+                                评分从低到高
+                            </a-select-option>
+                        </a-select>
                     </a-input-group>
                 </div>
                 <a-spin :spinning="hotelListLoading">
@@ -122,6 +130,20 @@
                 }
                 else {
                     this.getHotelList()
+                }
+            },
+            changeFilter(value){
+                console.log(`${value}`)
+                if (value=="评分从低到高"){
+                    this.hotelList.sort(function (a,b) {
+                        return a.rate-b.rate
+                    })
+                    console.log(this.hotelList)
+                }else if (value=="评分从高到低"){
+                    this.hotelList.sort(function (a,b) {
+                        return b.rate-a.rate
+                    })
+                    console.log(this.hotelList)
                 }
             }
         }
