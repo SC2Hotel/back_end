@@ -143,29 +143,29 @@ const hotelManager = {
             console.log(res)
             if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
-                this.$message.success('添加成功');
+                message.success('添加成功');
                 commit('set_addCouponVisible', false)
             } else {
                 // 添加失败后的操作
-                this.$message.error('添加失败');
+                message.error('添加失败');
             }
         },
         delOrder : async ({commit, dispatch}, data) => {
             const res = await cancelOrderAPI(data)
             if (res) {
-                this.$message.success('删除成功');
+                message.success('删除成功');
             } else {
                 // 添加失败后的操作
-                this.$message.error('删除失败');
+                message.error('删除失败');
             }
         },
         delHotel : async ({commit, dispatch}, data) => {
             const res = await delHotelAPI(data)
             if (res) {
-                this.$message.success('删除成功');
+                message.success('删除成功');
             } else {
                 // 添加失败后的操作
-                this.$message.error('删除失败');
+                message.error('删除失败');
             }
         },
         //订单为已预订状态时执行订单
