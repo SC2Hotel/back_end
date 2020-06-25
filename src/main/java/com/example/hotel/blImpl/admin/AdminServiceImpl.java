@@ -5,18 +5,16 @@ import com.example.hotel.data.admin.AdminMapper;
 import com.example.hotel.data.hotel.HotelMapper;
 import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.enums.UserType;
-import com.example.hotel.po.Hotel;
 import com.example.hotel.po.User;
-import com.example.hotel.util.RedisUtil;
-import com.example.hotel.vo.DisplayUserVO;
-import com.example.hotel.vo.HotelVO;
+import com.example.hotel.util.MD5Encryption;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -24,6 +22,7 @@ import java.util.List;
  * @Date: 2020-03-04
  */
 @Service
+@Slf4j
 public class AdminServiceImpl implements AdminService {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String MANAGER_EXIST = "该酒店已经存在管理员";
@@ -31,11 +30,16 @@ public class AdminServiceImpl implements AdminService {
     AdminMapper adminMapper;
     @Autowired
     HotelMapper hotelMapper;
+    @Autowired
+    AccountMapper accountMapper;
     @Override
     public ResponseVO addManager(UserForm userForm) {
+        if(accountMapper.getAccountByEmail(userForm.getEmail())!=null){
+            return ResponseVO.buildFailure(ACCOUNT_EXIST);
+        }
         User user = new User();
         user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
+        user.setPassword(MD5Encryption.encrypt(userForm.getPassword()));
         user.setUserType(UserType.HotelManager);
         try {
             adminMapper.addManager(user);
@@ -47,7 +51,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<User> getAllManagers() {
-        return adminMapper.getAllManagers();
+        List<User> users = adminMapper.getAllManagers();
+        users.stream().forEach(user -> user.setPassword("******"));
+        return users;
     }
 
     @Override
@@ -92,6 +98,20 @@ public class AdminServiceImpl implements AdminService {
             return adminMapper.updateUserInfo(user)&adminMapper.updateHelper(user.getPassword(), user.getId());
         }
         else return adminMapper.updateUserInfo(user);
+    }
+
+    @Override
+    public ResponseVO resetPassword(Integer userId){
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(MD5Encryption.encrypt("123456"));
+        try{
+            adminMapper.updateUserInfo(user);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseVO.buildFailure("修改密码失败");
+        }
     }
 
 }

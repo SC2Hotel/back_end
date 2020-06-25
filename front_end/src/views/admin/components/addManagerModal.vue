@@ -24,14 +24,6 @@
                     ]"
                 />
             </a-form-item >
-            <a-form-item v-bind="formItemLayout" label="酒店id">
-                <a-input
-                        v-decorator="[
-                            'hotelId',
-                            { rules: [{required: true, message: '请输入酒店id', }] }
-                        ]"
-                />
-            </a-form-item >
     </a-Form>
     </a-modal>
 </template>
@@ -85,7 +77,6 @@ export default {
                     const data = {
                         email: this.form.getFieldValue('email'),
                         password: this.form.getFieldValue('password'),
-                        hotelId:this.form.getFieldValue('hotelId')
                     }
                     this.set_addManagerParams(data)
                     this.addManager()

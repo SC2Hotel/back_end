@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -79,5 +81,11 @@ public class AdminController {
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }
+    }
+
+    @ApiOperation("重置密码")
+    @PostMapping("/{userId}/resetPassword")
+    public ResponseVO resetPassword(@PathVariable Integer userId){
+        return adminService.resetPassword(userId);
     }
 }

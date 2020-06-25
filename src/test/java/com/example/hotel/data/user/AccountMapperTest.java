@@ -1,6 +1,5 @@
 package com.example.hotel.data.user;
 
-import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import org.junit.Assert;
@@ -12,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static com.example.hotel.enums.UserType.HotelManager;
 import static com.example.hotel.enums.UserType.commonSeniorClient;
-import static org.junit.Assert.*;
 
 /**
  * @author qin
@@ -43,7 +41,7 @@ public class AccountMapperTest {
 
     @Test
     public void getAccountByName() {
-        User user = accountMapper.getAccountByName("123@qq.com");
+        User user = accountMapper.getAccountByEmail("123@qq.com");
         Assert.assertEquals("测试二号",user.getUserName());
     }
 

@@ -5,7 +5,7 @@
         insert into User(email,password,username,phonenumber,credit,usertype)
         values(#{email},#{password},#{userName},#{phoneNumber},#{credit},#{userType})
     </insert>
-    <select id="getAccountByName" resultMap="User">
+    <select id="getAccountByEmail" resultMap="User">
         select * from User where email=#{email}
     </select>
     <select id="getAccountById" resultMap="User">

@@ -25,7 +25,7 @@ public interface AccountMapper {
      * @param email
      * @return
      */
-     User getAccountByName(@Param("email") String email);
+     User getAccountByEmail(@Param("email") String email);
 
      User getAccountById(@Param("id") int id);
 

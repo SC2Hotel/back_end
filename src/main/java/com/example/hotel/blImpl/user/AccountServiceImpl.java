@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(userVO,user);
         user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
-            User user1 = accountMapper.getAccountByName(userVO.getEmail());
+            User user1 = accountMapper.getAccountByEmail(userVO.getEmail());
             if(user1!=null){
                 return ResponseVO.buildFailure(ACCOUNT_EXIST);
             }
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User login(UserForm userForm) {
-        User user = accountMapper.getAccountByName(userForm.getEmail());
+        User user = accountMapper.getAccountByEmail(userForm.getEmail());
         if (null == user || !user.getPassword().equals(MD5Encryption.encrypt(userForm.getPassword()))) {
             return null;
         }

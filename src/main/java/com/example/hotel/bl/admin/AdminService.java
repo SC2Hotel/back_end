@@ -4,6 +4,7 @@ import com.example.hotel.po.User;
 import com.example.hotel.vo.DisplayUserVO;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -61,5 +62,15 @@ public interface AdminService {
      * @date: 2020/6/24
      */
     ResponseVO delUser(Integer userId);
+
+
+    /**
+      * @description: 重置密码
+      * @param: userId
+      * @return: ResponseVO
+      * @author: pkun
+      * @date: 2020/6/25
+      */
+    ResponseVO resetPassword(Integer userId);
 
 }
