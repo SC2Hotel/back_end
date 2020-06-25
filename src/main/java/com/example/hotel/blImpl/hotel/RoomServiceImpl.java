@@ -34,6 +34,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms) {
         roomMapper.updateRoomInfo(hotelId,roomType,rooms);
+        redisUtil.delete(roomKeyNamePrefix + hotelId);
     }
 
     @Override

@@ -17,22 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.hotel.util.DateTimeUtil.TWO_HOURS_IN_SECOND;
+import static com.example.hotel.util.RedisUtil.couponKeyNamePrefix;
 
 
 @Service
 @Slf4j
 public class CouponServiceImpl implements CouponService {
 
-
     private final  TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy;
-
     private final  TimeCouponStrategyImpl timeCouponStrategy;
     private final CouponMapper couponMapper;
     @Autowired
     RedisUtil redisUtil;
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
 
-    private static final String keyNamePrefix = "hotel:coupon:";
     @Autowired
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
                              TimeCouponStrategyImpl timeCouponStrategy,
@@ -66,17 +64,17 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
-        if(redisUtil.hasKey(keyNamePrefix + hotelId)){
-//            log.info("get from redis key="+keyNamePrefix+hotelId);
-            return (List<Coupon>) redisUtil.get(keyNamePrefix + hotelId);
+        if(redisUtil.hasKey(couponKeyNamePrefix + hotelId)){
+//            log.info("get from redis key="+couponKeyNamePrefix+hotelId);
+            return (List<Coupon>) redisUtil.get(couponKeyNamePrefix + hotelId);
         }else {
-//            log.info("get from mysql "+ keyNamePrefix +hotelId);
+//            log.info("get from mysql "+ couponKeyNamePrefix +hotelId);
             List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
             if(hotelCoupons==null || hotelCoupons.size()==0){
                 return hotelCoupons;
             }
-            redisUtil.set(keyNamePrefix + hotelId,hotelCoupons);
-            redisUtil.expire(keyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND); // 设置2小时过期
+            redisUtil.set(couponKeyNamePrefix + hotelId,hotelCoupons);
+            redisUtil.expire(couponKeyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND); // 设置2小时过期
             return hotelCoupons;
         }
     }
@@ -92,7 +90,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDiscountMoney(couponVO.getDiscountMoney());
         coupon.setStatus(1);
         int result = couponMapper.insertCoupon(coupon);
-        redisUtil.clean(keyNamePrefix + coupon.getHotelId());
+        redisUtil.clean(couponKeyNamePrefix + coupon.getHotelId());
         couponVO.setId(result);
         return couponVO;
     }

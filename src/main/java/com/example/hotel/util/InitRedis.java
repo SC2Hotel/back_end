@@ -1,5 +1,6 @@
 package com.example.hotel.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.Set;
  * @date 2020/6/25 14:41
  */
 @Component
+@Slf4j
 public class InitRedis implements CommandLineRunner {
 
     @Autowired
@@ -20,13 +22,13 @@ public class InitRedis implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Begin to clean the redis");
+        log.info("Begin to clean the redis");
         Set<String> keys = redisUtil.keys();
         Iterator<String> it = keys.iterator();
         while(it.hasNext()){
             redisUtil.delete(it.next());
         }
-        System.out.println("clean the redis successfully");
+        log.info("clean the redis successfully");
     }
 
 }
