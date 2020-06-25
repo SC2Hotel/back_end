@@ -35,7 +35,7 @@ public class AutoTest {
 
     @BeforeClass
     public static void openBrowser(){
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "E:\\不想用英文的文件夹\\大学\\大二下\\软工与计算二\\chromedriver.exe");
         browser = new ChromeDriver();
         browser.manage().deleteAllCookies();
         browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

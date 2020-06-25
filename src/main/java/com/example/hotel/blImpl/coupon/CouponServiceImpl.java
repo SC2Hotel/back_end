@@ -66,12 +66,15 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
-        if( redisUtil.hasKey(keyNamePrefix + hotelId)){
+        if(redisUtil.hasKey(keyNamePrefix + hotelId)){
 //            log.info("get from redis key="+keyNamePrefix+hotelId);
             return (List<Coupon>) redisUtil.get(keyNamePrefix + hotelId);
         }else {
 //            log.info("get from mysql "+ keyNamePrefix +hotelId);
             List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
+            if(hotelCoupons==null || hotelCoupons.size()==0){
+                return hotelCoupons;
+            }
             redisUtil.set(keyNamePrefix + hotelId,hotelCoupons);
             redisUtil.expire(keyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND); // 设置2小时过期
             return hotelCoupons;
