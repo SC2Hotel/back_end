@@ -224,7 +224,7 @@ public class AutoTest {
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/form/div[4]/div[2]/div/span/input")).sendKeys("150");
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/form/div[5]/div[2]/div/span/input")).sendKeys("150");
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[3]/div/button[2]")).click();
-        //TODO
+        
     }
 
     @Test

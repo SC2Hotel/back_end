@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +20,8 @@ public class RedisUtil {
     public static final String hotelKeyNamePrefix = "hotel:hotel:";
 
     public static final String roomKeyNamePrefix = "hotel:room:";
+
+    public static final String couponKeyNamePrefix = "hotel:coupon:";
 
     Logger log = LoggerFactory.getLogger(RedisUtil.class);
 
@@ -100,5 +103,9 @@ public class RedisUtil {
                 redisTemplate.delete(CollectionUtils.arrayToList(key));
             }
         }
+    }
+
+    public Set<String> keys(){
+        return redisTemplate.keys("*");
     }
 }
