@@ -235,10 +235,10 @@
                             roomNum: this.form.getFieldValue('roomNum'),
                             peopleNum: this.form.getFieldValue('peopleNum'),
                             haveChild: this.form.getFieldValue('haveChild'),
-                            // createDate: mydate.toLocaleString(),
                             price: this.checkedList.length > 0 ? this.finalPrice : this.totalPrice
                         }
                         this.addOrder(data)
+                        this.$router.push({name: 'hotelList', params: {}})
                     }
                 });
             },
