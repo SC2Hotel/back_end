@@ -94,7 +94,7 @@ public class AutoTest {
 
 
     @Test
-    public void Test01BookHotel(){
+    public void Test01BookHotel() throws InterruptedException {
         browser.get(url);
         loginAsSenior();
         browser.findElement(By.xpath("//*[@id=\"layout\"]/div[2]/section/main/div[2]/div/div/div/div[1]")).click();
@@ -110,7 +110,8 @@ public class AutoTest {
         browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/form/div[7]/div[2]")).click();
         browser.findElement(By.xpath("/html/body/div[5]/div/div/div/ul/li[2]")).click();
         browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[3]/div/button[2]")).click();
-        browser.navigate().refresh();
+        browser.findElement(By.xpath("//*[@id=\"layout\"]/div[2]/section/main/div[2]/div/div/div/div[1]")).click();
+        Thread.sleep(1000);
         Assert.assertEquals("18", browser.findElement(By.xpath("//*[@id=\"layout\"]/section/main/div/div[3]/div[3]/div[1]/div[2]/div[2]/div/div/div/div/div/div/table/tbody/tr[1]/td[2]")).getText());
     }
 
@@ -211,11 +212,12 @@ public class AutoTest {
     }
 
     @Test
-    public void Test10AddCoupon(){
+    public void Test10AddCoupon() throws InterruptedException {
         browser.get(url);
         loginAsHotelManager();
         hotelInfoCenterBottom();
         couponStrategyBottom();
+        Thread.sleep(2000);
         addCouponBottom();
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/form/div[1]/div[2]/div/span/div/div/div")).click();
         browser.findElement(By.xpath("/html/body/div[4]/div/div/div/ul/li[2]")).click();
@@ -224,26 +226,62 @@ public class AutoTest {
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/form/div[4]/div[2]/div/span/input")).sendKeys("150");
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/form/div[5]/div[2]/div/span/input")).sendKeys("150");
         browser.findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[3]/div/button[2]")).click();
-        
+        browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[3]/div[1]/form/div[7]/div/div/span/button[3]")).click();
+        Thread.sleep(2000);
+        Assert.assertEquals("满500-100优惠", browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr/td[3]")).getText());
+        Assert.assertEquals("testtesttest", browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[3]")).getText());
+
     }
 
     @Test
     public void Test11ManageHotelInfo(){
-
+        browser.get(url);
+        loginAsHotelManager();
+        hotelInfoCenterBottom();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[1]/form/div[7]/div/div/span/button[1]")).click();
+        browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[3]/div[1]/form/div[4]/div[2]/div/span/input")).sendKeys("才怪");
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[1]/form/div[2]/div[2]/div/span/div/div")).click();
+        browser.findElement(By.xpath("/html/body/div[2]/div/div/div/ul/li[1]")).click();
+        browser.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[3]/div[1]/form/div[7]/div/div/span/button[1]")).click();
+        Assert.assertEquals("欢迎您入住才怪", browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[1]/form/div[4]/div[2]/div/span/span")).getText());
     }
 
     @Test
-    public void Test12ManageRoomInfo(){
-
+    public void Test12ManageRoomInfo() throws InterruptedException {
+        browser.get(url);
+        loginAsHotelManager();
+        hotelInfoCenterBottom();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[1]/form/div[7]/div/div/span/button[2]")).click();
+        Thread.sleep(1000);
+        browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/form/div[1]/div[2]")).click();
+        browser.findElement(By.xpath("/html/body/div[3]/div/div/div/ul/li[1]")).click();
+        browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).sendKeys("10");
+        browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/form/div[3]/div[2]/div/span/input")).sendKeys("300");
+        browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[3]/div/button[2]")).click();
+        browser.navigate().refresh();
+        Assert.assertEquals("300", browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/div/div/div/div/table/tbody/tr[2]/td[4]")).getText());
     }
 
     @Test
-    public void Test13ExecuteOrder(){
-
+    public void Test13ExecuteOrder() throws InterruptedException {
+        browser.get(url);
+        loginAsHotelManager();
+        hotelInfoCenterBottom();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div/div/div/div/div[1]/div[2]")).click();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr[6]/td[10]/span/button[1]")).click();
+        Thread.sleep(1000);
+        browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/span[1]/span[2]/span[2]/button")).click();
+        Thread.sleep(1000);
+        Assert.assertEquals("订单状态 : 已执行", browser.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/span[1]/span[2]/span")).getText());
     }
 
     @Test
     public void Test14ShowExceptionOrder(){
+        browser.get(url);
+        loginAsHotelManager();
+        hotelInfoCenterBottom();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div/div/div/div/div[1]/div[2]")).click();
+        Assert.assertEquals("异常", browser.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[3]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr[3]/td[9]")).getText());
 
     }
 
