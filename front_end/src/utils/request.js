@@ -3,7 +3,7 @@ import axios from 'axios'
 import { VueAxios } from './axios'
 import {notification, message} from 'ant-design-vue'
 import store from '@/store'
-import { getToken } from './auth'
+import { getToken,getLongToken } from './auth'
 import router from '../router'
 
 // 创建 axios 实例
@@ -12,7 +12,7 @@ const service = axios.create({
   withCredentials: true
 })
 console.log(process.env.NODE_ENV)
- const err = (error) => { 
+ const err = (error) => {
   if (error.response) {
     const data = error.response.data
     const token = Vue.ls.get('ACCESS_TOKEN')
@@ -45,16 +45,24 @@ service.interceptors.request.use((config) => {
     ...config,
     url: `${config.url}`,
     headers: {
-      'nju-token':getToken()
+      'nju-token':getToken(),
+      'nju-long-token':getLongToken(),
+      'userId':localStorage.getItem('uid')
     }
   }
   return requestConfig
 }, err)
 
 service.interceptors.response.use((response) => {
+  if(response.headers["nju-token"]){
+    localStorage.setItem('NJUSE-TOKEN',response.headers["nju-token"])
+  }
+  if(response.headers["nju-long-token"]){
+    localStorage.setItem('NJUSE-LONG-TOKEN',response.headers["nju-long-token"])
+  }
   switch (response.status) {
     case 200:
-      if(response.data.success && response.data.success){
+      if(response.data.success){
         return response.data.content
       }
       message.error(response.data.message)

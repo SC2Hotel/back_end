@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import router from '@/router'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken,setLongToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { message } from 'ant-design-vue'
 import {
@@ -80,6 +80,7 @@ const user = {
             if(res){
                 console.log(res)
                 setToken(res.njuToken)
+                setLongToken(res.njuLongToken)
                 commit('set_userId', res.id)
                 localStorage.setItem('uid',res.id)
                 dispatch('getUserInfo')

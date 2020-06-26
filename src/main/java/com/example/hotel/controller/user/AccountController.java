@@ -3,6 +3,7 @@ package com.example.hotel.controller.user;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.po.User;
 import com.example.hotel.util.JwtUtil;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +31,10 @@ public class AccountController {
         }
         UserWithTokenVO userWithToken = new UserWithTokenVO();
         BeanUtils.copyProperties(user,userWithToken);
-        userWithToken.setNjuToken(JwtUtil.createToken(user.getId()));
+        //短token时长20min 长token时长60min
+        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),20));
+        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),60));
         return ResponseVO.buildSuccess(userWithToken);
-
     }
 
     @ApiOperation("注册")

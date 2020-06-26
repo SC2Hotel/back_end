@@ -17,4 +17,5 @@ public class UserWithTokenVO {
     private Double credit;
     private UserType userType;
     private String njuToken;
+    private String njuLongToken;
 }

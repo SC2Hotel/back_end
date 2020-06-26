@@ -22,6 +22,8 @@ public class CORSConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         addAllowedOrigins(corsConfiguration); // 1
+        //允许token放置于请求头
+        corsConfiguration.addExposedHeader("nju-token,nju-long-token");
         //corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedHeader("*"); // 2
         corsConfiguration.addAllowedMethod("*"); // 3

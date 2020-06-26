@@ -25,13 +25,13 @@ public class JwtUtil {
     // 签名的观众
     static final String AUDIENCE = "WEB";
 
-    public static String createToken(Integer userId) {
+    public static String createToken(Integer userId,Integer expireMin) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             Map<String, Object> map = new HashMap<>();
             Date nowDate = new Date();
             // 过期时间 30min
-            Date expireDate = getAfterDate(nowDate, 0, 0, 0, 0, 30, 0);
+            Date expireDate = getAfterDate(nowDate, 0, 0, 0, 0, expireMin, 0);
             map.put("alg", "HS256");
             map.put("typ", "JWT");
             String token = JWT.create()

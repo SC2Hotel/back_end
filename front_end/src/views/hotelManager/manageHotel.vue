@@ -86,6 +86,20 @@
             <a-tab-pane tab="订单管理" key="2">
                 <a-input-search placeholder="请输入订单号、用户名或酒店名" enter-button @search="onSearch" style="width: 35%"
                                 v-model="searchContent"/>
+                <a-select style="width: 20%;margin-left: 10px" @change="handleChange" placeholder="订单状态" v-model="orderState">
+                    <a-select-option value="全部">
+                        全部
+                    </a-select-option>
+                    <a-select-option value="已预订">
+                        已预订
+                    </a-select-option>
+                    <a-select-option value="已执行">
+                        已执行
+                    </a-select-option>
+                    <a-select-option value="异常">
+                        异常
+                    </a-select-option>
+                </a-select>
                 <a-table
                         :columns="columns2"
                         :dataSource="showOrderList"
@@ -263,6 +277,7 @@
                 // hotelStar: this.hotelList.hotelStar=='Five'?5:this.hotelList.hotelStar=='Four'?4:this.hotelList.hotelStar=='Three'?3:this.hotelList.hotelStar=='Two'?2:1
                 searchContent: "",//搜索的内容
                 showOrderList: [],//筛选后的订单列表
+                orderState:'',//要筛选出的订单状态
             }
         },
         components: {
@@ -394,6 +409,19 @@
                         }
                     })
                 }
+            },
+            //筛选订单状态
+            handleChange(){
+                if(this.orderState==="全部"){
+                    this.showOrderList = this.orderList;
+                }
+                let tmpArr = [];
+                this.orderList.forEach(e=>{
+                    if(e.orderState===this.orderState){
+                        tmpArr.push(e)
+                    }
+                })
+                this.showOrderList = tmpArr;
             }
         }
     }
