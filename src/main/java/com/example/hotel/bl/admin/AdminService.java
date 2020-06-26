@@ -73,4 +73,13 @@ public interface AdminService {
       */
     ResponseVO resetPassword(Integer userId);
 
+
+    /**
+      * @description: 获取所有用户的信息
+      * @param:
+      * @return: List\<user\>
+      * @author: pkun
+      * @date: 2020/6/26
+      */
+    List<User> getAllUsers();
 }

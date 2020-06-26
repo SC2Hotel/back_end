@@ -114,4 +114,11 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public List<User> getAllUsers(){
+        List<User> users = adminMapper.selectAllUsers();
+        users.stream().forEach(user -> user.setPassword("******"));
+        return users;
+    }
+
 }

@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import java.util.List;
 @RestController()
 @RequestMapping("/api/admin")
 @Api(tags = "AdminController管理员相关接口")
+@Slf4j
 public class AdminController {
     @Autowired
     AdminService adminService;
@@ -87,5 +89,16 @@ public class AdminController {
     @PostMapping("/{userId}/resetPassword")
     public ResponseVO resetPassword(@PathVariable Integer userId){
         return adminService.resetPassword(userId);
+    }
+
+    @ApiOperation("获取所有用户的信息")
+    @PostMapping("/getAllUsersInfo")
+    public ResponseVO getAllUsersInfo(){
+        try{
+            return ResponseVO.buildSuccess(adminService.getAllUsers());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseVO.buildFailure("查询失败");
+        }
     }
 }
