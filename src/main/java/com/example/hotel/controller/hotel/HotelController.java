@@ -42,6 +42,12 @@ public class HotelController {
         return roomService.insertRoomInfo(hotelRoom);
     }
 
+    @ApiOperation("更新房间信息")
+    @PostMapping("/{roomId}/{newRoomNum}/updateRoomInfo")
+    public ResponseVO updateRoomInfo(@PathVariable Integer roomId, @PathVariable Integer newRoomNum){
+        return roomService.updateRoomNum(roomId, newRoomNum);
+    }
+
     @ApiOperation("删除酒店住房")
     @PostMapping("/delRoom/{roomId}")
     public ResponseVO delRoomInfo(@PathVariable Integer roomId) {

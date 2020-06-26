@@ -1,5 +1,6 @@
 package com.example.hotel.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
@@ -10,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
  * @author qin
  * @date 2020-05-27
  */
+@Slf4j
 public class MD5Encryption {
 
     /**
@@ -23,8 +25,6 @@ public class MD5Encryption {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] input = s.getBytes();
             byte[] output = md.digest(input);
-//            System.out.println(Base64.encodeBase64String(output));
-//            return Hex.encodeHexString(output);  // 4位编码
             /*
  * base64只有64个字符，因此只需要6个二进制位来表示 实现:每3个字节为一组凑4个base64字符。
  * 多余一个字节补4个0bit位(共12位)，凑成2个base64字符；多余两个字节补2个bit位(共18位)，凑成3个base64字符。
@@ -35,7 +35,7 @@ public class MD5Encryption {
              */
             return Base64.encodeBase64String(output); // 6位编码
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return s;
         }
     }

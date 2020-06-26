@@ -101,15 +101,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResponseVO resetPassword(Integer userId){
-        User user = new User();
-        user.setId(userId);
-        user.setPassword(MD5Encryption.encrypt("123456"));
         try{
-            adminMapper.updateUserInfo(user);
+            adminMapper.updateHelper(MD5Encryption.encrypt("123456"), userId);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             log.error(e.getMessage());
-            return ResponseVO.buildFailure("修改密码失败");
+            return ResponseVO.buildFailure("重置密码失败");
         }
     }
 

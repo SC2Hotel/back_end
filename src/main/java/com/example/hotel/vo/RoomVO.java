@@ -1,6 +1,5 @@
 package com.example.hotel.vo;
 
-import com.example.hotel.enums.RoomType;
 
 public class RoomVO {
     private Integer id;

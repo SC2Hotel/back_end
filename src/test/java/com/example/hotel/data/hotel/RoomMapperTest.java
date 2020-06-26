@@ -66,4 +66,13 @@ public class RoomMapperTest {
         curNum = roomMapper.getRoomCurNum(2, "Family");
         Assert.assertTrue(curNum >= 0);
     }
+
+    @Test
+    public void updateRoomNum(){
+        HotelRoom A = roomMapper.selectRoomsByRoomId(7);
+        roomMapper.updateRoomNum(100, 7);
+        HotelRoom hotelRoom = roomMapper.selectRoomsByRoomId(7);
+        Assert.assertEquals(100, hotelRoom.getTotal());
+        Assert.assertEquals(98, hotelRoom.getCurNum());
+    }
 }

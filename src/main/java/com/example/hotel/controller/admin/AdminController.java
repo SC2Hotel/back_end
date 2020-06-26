@@ -30,13 +30,13 @@ public class AdminController {
     AdminService adminService;
 
     @ApiOperation("添加酒店管理员")
-    @PostMapping("/addManager")
+    @GetMapping("/addManager")
     public ResponseVO addManager(@RequestBody UserForm userForm){
         return adminService.addManager(userForm);
     }
 
     @ApiOperation("获取所有的管理员")
-    @PostMapping("/getAllManagers")
+    @GetMapping("/getAllManagers")
     public ResponseVO getAllManagers(){
         return ResponseVO.buildSuccess(adminService.getAllManagers());
     }
@@ -92,7 +92,7 @@ public class AdminController {
     }
 
     @ApiOperation("获取所有用户的信息")
-    @PostMapping("/getAllUsersInfo")
+    @GetMapping("/getAllUsersInfo")
     public ResponseVO getAllUsersInfo(){
         try{
             return ResponseVO.buildSuccess(adminService.getAllUsers());

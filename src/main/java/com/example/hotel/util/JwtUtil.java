@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -14,6 +15,7 @@ import java.util.*;
  * @author qin
  * @date 2020-06-22
  */
+@Slf4j
 public class JwtUtil {
     public static final String TOKEN_NAME = "nju-token";
     // 秘钥
@@ -34,7 +36,7 @@ public class JwtUtil {
             Date expireDate = getAfterDate(nowDate, 0, 0, 0, 0, expireMin, 0);
             map.put("alg", "HS256");
             map.put("typ", "JWT");
-            String token = JWT.create()
+            return JWT.create()
                     // 设置头部信息 Header
                     .withHeader(map)
                     // 设置 载荷 Payload
@@ -48,10 +50,9 @@ public class JwtUtil {
                     .withExpiresAt(expireDate)
                     // 签名 Signature
                     .sign(algorithm);
-            return token;
         } catch (
                 JWTCreationException exception) {
-            exception.printStackTrace();
+            log.error(exception.getMessage());
         }
         return null;
     }
@@ -67,7 +68,7 @@ public class JwtUtil {
             Claim claim = claims.get("userId");
             return claim.asInt();
         } catch (JWTVerificationException exception){
-            exception.printStackTrace();
+            log.error(exception.getMessage());
         }
 
         return null;

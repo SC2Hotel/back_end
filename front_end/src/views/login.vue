@@ -238,7 +238,7 @@ export default {
             phoneNumber: this.form.getFieldValue('registerPhoneNumber'),
             username: this.form.getFieldValue('registerUsername'),
             credit: 100,
-            userType: 1
+            userType: 0
           }
           await this.register(data).then(() => {
             this.customActiveKey = 'tab1'

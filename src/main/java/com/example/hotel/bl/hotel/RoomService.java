@@ -42,4 +42,13 @@ public interface RoomService {
      * @return
      */
     ResponseVO delRoomInfo(Integer roomId);
+
+    /**
+      * @description: 更新房间总数
+      * @param: roomId newRoomNum
+      * @return:
+      * @author: pkun
+      * @date: 2020/6/26
+      */
+    ResponseVO updateRoomNum(Integer roomId, Integer newRoomNum);
 }

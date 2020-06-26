@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
  * @date 2020-05-31
  */
 public class DateTimeUtil {
-    public final static String LATEST_CHECK_IN_TIME = "22:00:00";
-    public final static int LATEST_DELAY_CHECK_IN = 2;
-    public final static long TWO_HOURS_IN_SECOND=2*60*60;
+    public static final String LATEST_CHECK_IN_TIME = "22:00:00";
+    public static final int LATEST_DELAY_CHECK_IN = 2;
+    public static final long TWO_HOURS_IN_SECOND= 2 * 60 * 60;
     /**
      *
      * @param date "yyyy-MM-dd"格式字符串
@@ -19,8 +19,7 @@ public class DateTimeUtil {
      */
     public static LocalDateTime dateTimeStr2LocalDateTime(String date, String time){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(date+" "+time, dtf);
-        return dateTime;
+        return LocalDateTime.parse(date+" "+time, dtf);
     }
 
     public static int compare(String date, String time, LocalDateTime current, int day, int hour){
