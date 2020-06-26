@@ -60,12 +60,6 @@ const admin = {
                 console.log('删除成功')
             }
         },
-        addHotel: async ({dispatch,state},data)=>{
-            const res = await addHotelAPI(data)
-            if (res){
-                console.log('添加成功')
-            }
-        }
     }
 }
 export default admin
