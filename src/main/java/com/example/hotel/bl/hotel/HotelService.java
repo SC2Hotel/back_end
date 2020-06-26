@@ -1,6 +1,6 @@
 package com.example.hotel.bl.hotel;
 
-import com.example.hotel.enums.BizRegion;
+
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelAndRoomVO;
 import com.example.hotel.vo.HotelVO;

@@ -34,7 +34,7 @@ CREATE TABLE `Hotel` (
                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住',NULL,'XiDan','Four',1829373819,4.8,1),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6),(4,'南大会议国际中心','欢迎您入住','南京市栖霞区仙林大道163号','XiDan','Four',1829663719,4.8,NULL);
+INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住',NULL,'XiDan','Four',1829373819,4.8,1),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6),(4,'南大会议国际中心','欢迎您入住','南京市栖霞区仙林大道163号','XiDan','Four',1829663719,4.8,3);
 
 
 DROP TABLE IF EXISTS `OrderList`;

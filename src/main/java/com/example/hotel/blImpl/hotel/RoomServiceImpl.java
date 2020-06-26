@@ -5,6 +5,7 @@ import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.ResponseVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import static com.example.hotel.util.RedisUtil.roomKeyNamePrefix;
 
 @Service
+@Slf4j
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
@@ -46,10 +48,10 @@ public class RoomServiceImpl implements RoomService {
     public ResponseVO delRoomInfo(Integer roomId) {
         try{
             roomMapper.delRoomByRoomId(roomId);
-            //TODO 这里需要保证缓存一致性
+            redisUtil.delete(roomKeyNamePrefix+roomId);
             return ResponseVO.buildSuccess("删除成功");
         }catch (Exception e){
-            System.out.println(e);
+            log.error(e.getMessage());
             return ResponseVO.buildFailure("删除失败");
         }
     }

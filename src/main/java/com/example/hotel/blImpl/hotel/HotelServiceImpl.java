@@ -53,7 +53,7 @@ public class HotelServiceImpl implements HotelService {
         hotel.setPhoneNum(hotelVO.getPhoneNum());
         hotel.setManagerId(hotelVO.getManagerId());
         hotel.setRate(hotelVO.getRate());
-        hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
+        hotel.setBizRegion(stringToBizRegion(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);
     }

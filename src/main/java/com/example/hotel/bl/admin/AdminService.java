@@ -1,11 +1,8 @@
 package com.example.hotel.bl.admin;
 
 import com.example.hotel.po.User;
-import com.example.hotel.vo.DisplayUserVO;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
-import io.swagger.models.auth.In;
-
 import java.util.List;
 
 /**
@@ -73,4 +70,13 @@ public interface AdminService {
       */
     ResponseVO resetPassword(Integer userId);
 
+
+    /**
+      * @description: 获取所有用户的信息
+      * @param:
+      * @return: List\<user\>
+      * @author: pkun
+      * @date: 2020/6/26
+      */
+    List<User> getAllUsers();
 }
