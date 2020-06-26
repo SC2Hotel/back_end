@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.hotel.util.DateTimeUtil.TWO_HOURS_IN_SECOND;
-import static com.example.hotel.util.RedisUtil.couponKeyNamePrefix;
+import static com.example.hotel.util.RedisUtil.COUPON_KEY_NAME_PREFIX;
 
 
 @Service
@@ -68,16 +67,16 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
-        if(redisUtil.hasKey(couponKeyNamePrefix + hotelId)){
-            return (List<Coupon>) redisUtil.get(couponKeyNamePrefix + hotelId);
+        if(redisUtil.hasKey(COUPON_KEY_NAME_PREFIX + hotelId)){
+            return (List<Coupon>) redisUtil.get(COUPON_KEY_NAME_PREFIX + hotelId);
         }else {
             List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
             if(hotelCoupons==null || hotelCoupons.isEmpty() ){
                 return hotelCoupons;
             }
-            redisUtil.set(couponKeyNamePrefix + hotelId,hotelCoupons);
+            redisUtil.set(COUPON_KEY_NAME_PREFIX + hotelId,hotelCoupons);
             // 设置2小时过期
-            redisUtil.expire(couponKeyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
+            redisUtil.expire(COUPON_KEY_NAME_PREFIX + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
             return hotelCoupons;
         }
     }
@@ -93,7 +92,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDiscountMoney(couponVO.getDiscountMoney());
         coupon.setStatus(1);
         int result = couponMapper.insertCoupon(coupon);
-        redisUtil.clean(couponKeyNamePrefix + coupon.getHotelId());
+        redisUtil.clean(COUPON_KEY_NAME_PREFIX + coupon.getHotelId());
         couponVO.setId(result);
         return couponVO;
     }

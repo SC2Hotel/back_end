@@ -1,9 +1,5 @@
 package com.example.hotel.vo;
 
-import com.example.hotel.enums.BizRegion;
-import com.example.hotel.enums.HotelStar;
-import com.example.hotel.po.HotelRoom;
-import com.example.hotel.po.User;
 
 import java.util.List;
 

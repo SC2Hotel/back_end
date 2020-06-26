@@ -23,8 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.example.hotel.util.RedisUtil.hotelKeyNamePrefix;
-import static com.example.hotel.util.RedisUtil.roomKeyNamePrefix;
+import static com.example.hotel.util.RedisUtil.HOTEL_KEY_NAME_PREFIX;
+import static com.example.hotel.util.RedisUtil.ROOM_KEY_NAME_PREFIX;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -66,7 +66,7 @@ public class HotelServiceImpl implements HotelService {
             // error
         }
         roomService.updateRoomInfo(hotelId,roomType,rooms);
-        redisUtil.delete(roomKeyNamePrefix+hotelId);
+        redisUtil.delete(ROOM_KEY_NAME_PREFIX +hotelId);
 
     }
 
@@ -111,23 +111,23 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public HotelVO retrieveHotelDetails(Integer hotelId) {
         HotelVO hotelVO;
-        if(redisUtil.hasKey(hotelKeyNamePrefix + hotelId)){
-            hotelVO = (HotelVO)redisUtil.get(hotelKeyNamePrefix + hotelId);
+        if(redisUtil.hasKey(HOTEL_KEY_NAME_PREFIX + hotelId)){
+            hotelVO = (HotelVO)redisUtil.get(HOTEL_KEY_NAME_PREFIX + hotelId);
         }
         else{
             hotelVO = hotelMapper.selectById(hotelId);
-            redisUtil.set(hotelKeyNamePrefix + hotelId, hotelVO);
-            redisUtil.expire(hotelKeyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
+            redisUtil.set(HOTEL_KEY_NAME_PREFIX + hotelId, hotelVO);
+            redisUtil.expire(HOTEL_KEY_NAME_PREFIX + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
         }
 
         List<HotelRoom> rooms;
-        if(redisUtil.hasKey(roomKeyNamePrefix+hotelId)){
-            rooms = (List<HotelRoom>)redisUtil.get(roomKeyNamePrefix+hotelId);
+        if(redisUtil.hasKey(ROOM_KEY_NAME_PREFIX +hotelId)){
+            rooms = (List<HotelRoom>)redisUtil.get(ROOM_KEY_NAME_PREFIX +hotelId);
         }
         else{
             rooms = roomService.retrieveHotelRoomInfo(hotelId);
-            redisUtil.set(roomKeyNamePrefix+hotelId, rooms);
-            redisUtil.expire(roomKeyNamePrefix + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
+            redisUtil.set(ROOM_KEY_NAME_PREFIX +hotelId, rooms);
+            redisUtil.expire(ROOM_KEY_NAME_PREFIX + hotelId, DateTimeUtil.TWO_HOURS_IN_SECOND);
         }
 
         List<RoomVO> roomVOS = rooms.stream().map(r -> {
@@ -146,8 +146,8 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public ResponseVO updateHotelInfo(UpdateHotelVO updateHotelVO){
-        if(redisUtil.hasKey(hotelKeyNamePrefix+updateHotelVO.getId())){
-            redisUtil.delete(hotelKeyNamePrefix+updateHotelVO.getId());
+        if(redisUtil.hasKey(HOTEL_KEY_NAME_PREFIX +updateHotelVO.getId())){
+            redisUtil.delete(HOTEL_KEY_NAME_PREFIX +updateHotelVO.getId());
         }
         try{
             updateHotelVO.setBizRegionEnum(stringToBizRegion(updateHotelVO.getBizRegion()));
@@ -172,8 +172,8 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public int deleteHotel(Integer hotelId) {
-        if(redisUtil.hasKey(hotelKeyNamePrefix + hotelId)){
-            redisUtil.delete(hotelKeyNamePrefix + hotelId);
+        if(redisUtil.hasKey(HOTEL_KEY_NAME_PREFIX + hotelId)){
+            redisUtil.delete(HOTEL_KEY_NAME_PREFIX + hotelId);
         }
         return hotelMapper.deleteHotel(hotelId);
     }

@@ -21,12 +21,11 @@ public class InitRedis implements CommandLineRunner {
     RedisUtil redisUtil;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
         log.info("Begin to clean the redis");
         Set<String> keys = redisUtil.keys();
-        Iterator<String> it = keys.iterator();
-        while(it.hasNext()){
-            redisUtil.delete(it.next());
+        for (String s: keys) {
+            redisUtil.delete(s);
         }
         log.info("clean the redis successfully");
     }

@@ -1,5 +1,6 @@
 package com.example.hotel.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,40 +17,17 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/6/16 23:31
  */
 @Component
+@Slf4j
 public class RedisUtil {
-    public static final String hotelKeyNamePrefix = "hotel:hotel:";
+    public static final String HOTEL_KEY_NAME_PREFIX = "hotel:hotel:";
 
-    public static final String roomKeyNamePrefix = "hotel:room:";
+    public static final String ROOM_KEY_NAME_PREFIX = "hotel:room:";
 
-    public static final String couponKeyNamePrefix = "hotel:coupon:";
-
-    Logger log = LoggerFactory.getLogger(RedisUtil.class);
+    public static final String COUPON_KEY_NAME_PREFIX = "hotel:coupon:";
 
     @Autowired
     RedisTemplate redisTemplate;
 
-//    /**
-//     * 这三个方法是针对<Integer, Object>
-//     */
-//    public boolean hasKey(Integer key){
-//        return redisTemplate.hasKey(key);
-//    }
-//
-//    public Object get(Integer key){
-//        return redisTemplate.opsForValue().get(key);
-//    }
-//
-//    public boolean set(final Integer key, Object value){
-//        boolean result = false;
-//        try{
-//            redisTemplate.opsForValue().set(key,value);
-//            result = true;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
     /**
      * 这三个方法是针对<String, Object>
      */
@@ -68,7 +46,7 @@ public class RedisUtil {
             redisTemplate.opsForValue().set(key, value);
             result = true;
         }catch (Exception e){
-            e.printStackTrace();;
+            log.error(e.getMessage());
         }
         return result;
     }
