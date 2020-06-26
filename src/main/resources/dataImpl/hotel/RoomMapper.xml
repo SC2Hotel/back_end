@@ -33,6 +33,13 @@
         <result column="hotel_id" property="hotelId"></result>
     </resultMap>
 
+    <update id="updateRoomNum">
+        UPDATE Room set total = #{roomNum} and curNum = curNum + #{roomNum} - total where id = #{roomId}
+    </update>
+
+    <select id="selectRoomsByRoomId" resultMap="room">
+        select * from room where id = #{roomId}
+    </select>
 
 
 </mapper>

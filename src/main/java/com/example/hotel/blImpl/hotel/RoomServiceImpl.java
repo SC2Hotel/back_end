@@ -3,6 +3,7 @@ package com.example.hotel.blImpl.hotel;
 import com.example.hotel.bl.hotel.RoomService;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.enums.RoomType;
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.ResponseVO;
@@ -56,12 +57,26 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public ResponseVO delRoomInfo(Integer roomId) {
         try{
+            int hotelId = roomMapper.selectRoomsByRoomId(roomId).getHotelId();
             roomMapper.delRoomByRoomId(roomId);
-            redisUtil.delete(ROOM_KEY_NAME_PREFIX +roomId);
+            redisUtil.delete(ROOM_KEY_NAME_PREFIX +hotelId);
             return ResponseVO.buildSuccess("删除成功");
         }catch (Exception e){
             log.error(e.getMessage());
             return ResponseVO.buildFailure("删除失败");
+        }
+    }
+
+    @Override
+    public ResponseVO updateRoomNum(Integer roomId, Integer newRoomNum){
+        try{
+            HotelRoom hotelRoom = roomMapper.selectRoomsByRoomId(roomId);
+            redisUtil.delete(ROOM_KEY_NAME_PREFIX + hotelRoom.getHotelId());
+            roomMapper.updateRoomNum(newRoomNum, roomId);
+            return ResponseVO.buildSuccess();
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseVO.buildFailure("更新失败");
         }
     }
 

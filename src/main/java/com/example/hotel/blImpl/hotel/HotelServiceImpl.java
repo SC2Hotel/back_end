@@ -66,7 +66,7 @@ public class HotelServiceImpl implements HotelService {
             // error
         }
         roomService.updateRoomInfo(hotelId,roomType,rooms);
-        redisUtil.delete(ROOM_KEY_NAME_PREFIX +hotelId);
+        redisUtil.delete(ROOM_KEY_NAME_PREFIX + hotelId);
 
     }
 
