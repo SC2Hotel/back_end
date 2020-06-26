@@ -7,7 +7,6 @@ import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Comment;
-import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.DateTimeUtil;
@@ -16,6 +15,7 @@ import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +32,11 @@ import static com.example.hotel.enums.OrderState.*;
  * @Date: 2020-03-04
  */
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
-    private final static String RESERVE_ERROR = "预订失败";
-    private final static String ROOMNUM_LACK = "预订房间数量剩余不足";
+    private static final String RESERVE_ERROR = "预订失败";
+    private static final String ROOMNUM_LACK = "预订房间数量剩余不足";
+    private static final Integer LATEST_ANNUL_INTERVAL = 6;
 
     @Autowired
     OrderMapper orderMapper;
@@ -67,9 +69,8 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(orderVO,order);
             orderMapper.addOrder(order);
             hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
-//            if(redisUtil.hasKey(RedisUtil.hotelKeyNamePrefix))
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseVO.buildFailure(RESERVE_ERROR);
         }
         return ResponseVO.buildSuccess(true);
@@ -105,11 +106,13 @@ public class OrderServiceImpl implements OrderService {
         int res = orderMapper.annulOrder(orderId);
         if(res==1)
         {
-            String checkInDate = order.getCheckInDate(); // CheckIn日期
+            // CheckIn日期
+            String checkInDate = order.getCheckInDate();
             // 最晚订单执行时间设定为 CheckIn日期的 LATEST_CHECK_IN_TIME
             LocalDateTime latestCheckInDateTime = DateTimeUtil.dateTimeStr2LocalDateTime(checkInDate,DateTimeUtil.LATEST_CHECK_IN_TIME);
             LocalDateTime curDateTime = LocalDateTime.now();
-            if(curDateTime.plusHours(6).compareTo(latestCheckInDateTime) > 0 ){ // 如果距离最晚订单执行时间不足 6 个小时,当前时间+6h > 最晚订单执行时间
+            // 如果距离最晚订单执行时间不足 6 个小时,当前时间+6h > 最晚订单执行时间
+            if(curDateTime.plusHours(LATEST_ANNUL_INTERVAL).compareTo(latestCheckInDateTime) > 0 ){
                 // 撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
                 Double creditToMinus = order.getPrice()/2;
                 int row = accountService.updateUserCredit(order.getUserId(),creditToMinus);

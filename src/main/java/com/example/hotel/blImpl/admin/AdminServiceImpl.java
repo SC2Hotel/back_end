@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -24,8 +23,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class AdminServiceImpl implements AdminService {
-    private final static String ACCOUNT_EXIST = "账号已存在";
-    private final static String MANAGER_EXIST = "该酒店已经存在管理员";
+    private static final String ACCOUNT_EXIST = "账号已存在";
+    private static final String MANAGER_EXIST = "该酒店已经存在管理员";
     @Autowired
     AdminMapper adminMapper;
     @Autowired

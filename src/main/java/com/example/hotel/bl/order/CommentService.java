@@ -3,7 +3,7 @@ package com.example.hotel.bl.order;
 import com.example.hotel.po.Comment;
 import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.ResponseVO;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 

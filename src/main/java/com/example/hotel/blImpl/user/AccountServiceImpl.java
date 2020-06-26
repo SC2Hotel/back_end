@@ -9,22 +9,25 @@ import com.example.hotel.util.MD5Encryption;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Slf4j
 public class AccountServiceImpl implements AccountService {
-    private final static String ACCOUNT_EXIST = "账号已存在";
-    private final static String UPDATE_ERROR = "修改失败";
+    private static final String ACCOUNT_EXIST = "账号已存在";
+    private static final String UPDATE_ERROR = "修改失败";
     @Autowired
     private AccountMapper accountMapper;
 
     @Override
     public ResponseVO registerAccount(UserVO userVO) {
         User user = new User();
-        user.setCredit(100.0); // 初值设置为100
+        // 初值设置为100
+        user.setCredit(100.0);
         BeanUtils.copyProperties(userVO,user);
         user.setPassword(MD5Encryption.encrypt(userVO.getPassword()));
         try {
@@ -34,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
             }
             accountMapper.createNewAccount(user);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
         return ResponseVO.buildSuccess();
@@ -63,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             accountMapper.updateAccount(id, password.equals("")?"":MD5Encryption.encrypt(password), username, phonenumber);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseVO.buildFailure(UPDATE_ERROR);
         }
         return ResponseVO.buildSuccess(true);
