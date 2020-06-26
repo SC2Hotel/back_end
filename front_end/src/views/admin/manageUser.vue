@@ -7,14 +7,15 @@
                 </div>
                 <a-table
                     :columns="columns"
-                    :dataSource="managerList"
+                    :dataSource="userList"
                     bordered
                 >
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
                     </span>
-                    <span slot="action" slot-scope="text, record">
+                    <span slot="action" slot-scope="record">
                         <a-button type="danger" @click="delManager(record)">删除用户</a-button>
+                        <a-button type="default" @click="reset(record)" style="margin-left: 10px">重置密码</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -28,9 +29,6 @@
                         :dataSource="hotelList"
                         bordered
                 >
-                    <span slot="action" slot-scope="">
-                        <a-button type="primary"></a-button>
-                    </span>
                 </a-table>
             </a-tab-pane>
         </a-tabs>
@@ -112,19 +110,20 @@ export default {
         ...mapGetters([
             'addHotelModalVisible',
             'addManagerModalVisible',
-            'managerList',
+            'userList',
             'hotelList'
         ])
     },
     mounted() {
-      this.getManagerList();
+      this.getAllUsersList();
         this.getHotelList();
     },
     methods: {
         ...mapActions([
-            'getManagerList',
-            'getHotelList',
-            'delHotelManager'
+            'getUsersList',
+            'getAllUsersList',
+            'delHotelManager',
+            'resetPassword'
         ]),
         ...mapMutations([
             'set_addManagerModalVisible',
@@ -138,8 +137,11 @@ export default {
         },
         async delManager(record){
             await this.delHotelManager(record.id);
-            this.getManagerList();
-            this.getHotelList();
+            this.getAllUsersList();
+        },
+        reset(record){
+            // console.log(record)
+            this.resetPassword(record.id)
         }
     }
 }

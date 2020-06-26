@@ -2,6 +2,8 @@ import {
     getManagerListAPI,
     addManagerAPI,
     delHotelManagerAPI,
+    resetPasswordAPI,
+    getAllUsersListAPI
 } from '@/api/admin'
 import {
     addHotelAPI
@@ -11,8 +13,8 @@ import { message } from 'ant-design-vue'
 const admin = {
     state: {
         managerList: [
-
         ],
+        userList:[],
         addManagerModalVisible: false,
         addManagerParams: {
             email:'',
@@ -31,6 +33,9 @@ const admin = {
                 ...state.addManagerParams,
                 ...data,
             }
+        },
+        set_usersList: function (state,data) {
+            state.userList = data
         }
     },
     actions: {
@@ -38,6 +43,12 @@ const admin = {
             const res = await getManagerListAPI()
             if(res){
                 commit('set_managerList', res)
+            }
+        },
+        getAllUsersList: async ({commit}) => {
+            const res = await getAllUsersListAPI()
+            if (res){
+                commit('set_usersList',res)
             }
         },
         addManager: async({ state, commit, dispatch }) => {
@@ -60,6 +71,12 @@ const admin = {
                 console.log('删除成功')
             }
         },
+        resetPassword: async ({commit, state},data)=>{
+            const res = await resetPasswordAPI(data)
+            if (res){
+                console.log('重置成功')
+            }
+        }
     }
 }
 export default admin

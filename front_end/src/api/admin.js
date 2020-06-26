@@ -21,3 +21,17 @@ export function delHotelManagerAPI(data) {
         method: 'POST'
     })
 }
+
+export function resetPasswordAPI(data) {
+    return axios({
+        url: `${api.adminPre}/${data}/resetPassword`,
+        method: 'POST'
+    })
+}
+
+export function getAllUsersListAPI() {
+    return axios({
+        url: `${api.adminPre}/getAllUsersInfo`,
+        method: 'POST'
+    })
+}
