@@ -3,6 +3,9 @@ import {
     addManagerAPI,
     delHotelManagerAPI,
 } from '@/api/admin'
+import {
+    addHotelAPI
+} from '@/api/hotelManager'
 import { message } from 'ant-design-vue'
 
 const admin = {
@@ -57,6 +60,12 @@ const admin = {
                 console.log('删除成功')
             }
         },
+        addHotel: async ({dispatch,state},data)=>{
+            const res = await addHotelAPI(data)
+            if (res){
+                console.log('添加成功')
+            }
+        }
     }
 }
 export default admin

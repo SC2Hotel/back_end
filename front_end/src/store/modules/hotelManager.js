@@ -95,20 +95,10 @@ const hotelManager = {
                 commit('set_orderList', res)
             }
         },
-        addHotel: async ({state, dispatch, commit}) => {
-            const res = await addHotelAPI(state.addHotelParams)
+        addHotel: async ({state, dispatch, commit},data) => {
+            const res = await addHotelAPI(data)
             if (res) {
-                dispatch('getHotelList')
-                commit('set_addHotelParams', {
-                    name: '',
-                    address: '',
-                    bizRegion: 'XiDan',
-                    hotelStar: '',
-                    rate: 0,
-                    description: '',
-                    phoneNum: '',
-                    managerId: '',
-                })
+                // commit('set_addHotelParams', data)
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')
             } else {
