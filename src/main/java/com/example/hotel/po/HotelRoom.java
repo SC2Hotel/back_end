@@ -6,7 +6,7 @@ public class HotelRoom {
     private Integer id;
     private RoomType roomType;
     private Integer hotelId;
-    private double price;
+    private Double price;
     /**
      * 当前剩余可预定房间数
      */

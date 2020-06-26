@@ -42,7 +42,7 @@ public class HotelServiceTest {
         HotelVO hotelVO = new HotelVO();
         hotelVO.setManagerId(6);
         hotelVO.setName("测试酒店");
-        hotelVO.setBizRegion("XiDan");
+        hotelVO.setBizRegion("西单");
         hotelVO.setHotelStar("Four");
         int row = 0;
         try {

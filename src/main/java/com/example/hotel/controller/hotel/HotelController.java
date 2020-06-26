@@ -39,8 +39,7 @@ public class HotelController {
     @ApiOperation("添加酒店住房")
     @PostMapping("/roomInfo")
     public ResponseVO addRoomInfo(@RequestBody HotelRoom hotelRoom) {
-        roomService.insertRoomInfo(hotelRoom);
-        return ResponseVO.buildSuccess("添加成功");
+        return roomService.insertRoomInfo(hotelRoom);
     }
 
     @ApiOperation("删除酒店住房")

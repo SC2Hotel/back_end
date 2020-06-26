@@ -16,7 +16,7 @@ public class OrderVO {
     private String roomType;
     private Integer roomNum;
     private Integer peopleNum;
-    private boolean haveChild;
+    private Boolean haveChild;
     private String createDate;
     private Double price;
     private String clientName;
