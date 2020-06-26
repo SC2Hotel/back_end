@@ -3,6 +3,9 @@ import {
     addManagerAPI,
     delHotelManagerAPI,
 } from '@/api/admin'
+import {
+    addHotelAPI
+} from '@/api/hotelManager'
 import { message } from 'ant-design-vue'
 
 const admin = {

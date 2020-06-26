@@ -19,11 +19,18 @@
                 </a-table>
             </a-tab-pane>
             <a-tab-pane tab="酒店详情" key="2">
+                <div style="width: 100%; text-align: right; margin:20px 0">
+                    <a-button type="primary" @click="addHotel"><a-icon type="plus" />添加酒店</a-button>
+                </div>
+                <add-hotel-modal></add-hotel-modal>
                 <a-table
                         :columns="columns2"
                         :dataSource="hotelList"
                         bordered
                 >
+                    <span slot="action" slot-scope="">
+                        <a-button type="primary"></a-button>
+                    </span>
                 </a-table>
             </a-tab-pane>
         </a-tabs>
@@ -33,6 +40,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddManagerModal from './components/addManagerModal'
+import AddHotelModal from "./components/addHotelModal";
 const columns = [
     {
         title: '用户id',
@@ -77,6 +85,11 @@ const columns2 = [
         title: '管理员id',
         dataIndex: 'managerId',
     },
+    // {
+    //     title: '操作',
+    //     key: 'action',
+    //     scopedSlots: { customRender: 'action' },
+    // },
 ];
 
 export default {
@@ -92,10 +105,12 @@ export default {
         }
     },
     components: {
+        AddHotelModal,
         AddManagerModal
     },
     computed: {
         ...mapGetters([
+            'addHotelModalVisible',
             'addManagerModalVisible',
             'managerList',
             'hotelList'
@@ -113,9 +128,13 @@ export default {
         ]),
         ...mapMutations([
             'set_addManagerModalVisible',
+            'set_addHotelModalVisible'
         ]),
         addManager(){
             this.set_addManagerModalVisible(true);
+        },
+        addHotel(){
+            this.set_addHotelModalVisible(true);
         },
         async delManager(record){
             await this.delHotelManager(record.id);

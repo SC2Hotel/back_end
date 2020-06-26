@@ -51,7 +51,7 @@
                             取消
                         </a-button>
                     </a-form-item>
-                    <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-else>
+                    <a-form-item style="margin-left: 100px" v-else>
                         <a-button type="primary" @click="modifyInfo">
                             修改信息
                         </a-button>
