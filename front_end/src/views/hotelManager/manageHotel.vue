@@ -69,7 +69,7 @@
                         <a-button type="info" @click="showCoupon(hotelList.id)" style="margin: 20px">优惠策略</a-button>
                     </a-form-item>
                 </a-form>
-<!--房间列表-->
+                <!--房间列表-->
                 <a-table
                         :columns="columns4"
                         :dataSource="currentHotelInfo.rooms"
@@ -81,13 +81,16 @@
                         <a-button type="danger" @click="delRoom(record)">删除房间</a-button>
                     </span>
                 </a-table>
-<!--end-->
+                <!--end-->
             </a-tab-pane>
             <a-tab-pane tab="订单管理" key="2">
+                <a-input-search placeholder="请输入订单号、用户名或酒店名" enter-button @search="onSearch" style="width: 35%"
+                                v-model="searchContent"/>
                 <a-table
                         :columns="columns2"
-                        :dataSource="orderList"
+                        :dataSource="showOrderList"
                         bordered
+                        style="margin-top: 10px"
                 >
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
@@ -132,7 +135,7 @@
     import orderDetail from './components/orderDetail'
 
     const moment = require('moment')
-    const columns1=[
+    const columns1 = [
         {
             title: '评分',
             dataIndex: 'score'
@@ -179,7 +182,7 @@
             dataIndex: 'price',
         },
         {
-            title:'状态',
+            title: '状态',
             dataIndex: 'orderState'
         },
         {
@@ -213,30 +216,30 @@
             title: '房价',
             key: 'price',
             dataIndex: 'price',
-            scopedSlots: { customRender: 'price'}
+            scopedSlots: {customRender: 'price'}
         },
         {
             title: 'Action',
             key: 'action',
-            scopedSlots: { customRender: 'action' },
+            scopedSlots: {customRender: 'action'},
         },
     ];
-    const columns4=[
+    const columns4 = [
         {
-            title:'房间类型',
-            dataIndex:'roomType'
+            title: '房间类型',
+            dataIndex: 'roomType'
         },
         {
-            title:'房间总数',
-            dataIndex:'total'
+            title: '房间总数',
+            dataIndex: 'total'
         },
         {
-            title:'房间剩余数',
-            dataIndex:'curNum'
+            title: '房间剩余数',
+            dataIndex: 'curNum'
         },
         {
-            title:'房间价格',
-            dataIndex:'price'
+            title: '房间价格',
+            dataIndex: 'price'
         },
         {
             title: '操作',
@@ -256,8 +259,10 @@
                 columns1,
                 columns3,
                 form: this.$form.createForm(this, {name: 'manageHotel'}),
-                selected: "西单"
+                selected: "西单",
                 // hotelStar: this.hotelList.hotelStar=='Five'?5:this.hotelList.hotelStar=='Four'?4:this.hotelList.hotelStar=='Three'?3:this.hotelList.hotelStar=='Two'?2:1
+                searchContent: "",//搜索的内容
+                showOrderList: [],//筛选后的订单列表
             }
         },
         components: {
@@ -284,11 +289,12 @@
             await this.getUserInfo()
             await this.getHotelByManager(this.userInfo.id)
             await this.getBizregions()
-            if(!this.hotelList.id)return;
+            if (!this.hotelList.id) return;
             await this.set_currentHotelId(this.hotelList.id)
             await this.getHotelById(this.hotelList.id)
             await this.getOrderByHotel(this.hotelList.id)
             await this.getHotelComment(this.hotelList.id)
+            this.showOrderList = this.orderList
         },
         methods: {
             ...mapMutations([
@@ -370,10 +376,25 @@
             onChange(value) {
                 this.selected = value
             },
-            async delRoom(record){
-              await this.delRoomById(record.id)
+            async delRoom(record) {
+                await this.delRoomById(record.id)
                 await this.getHotelById(this.hotelList.id)
             },
+            //搜索框输入内容
+            onSearch() {
+                if (this.searchContent === "") {
+                    this.showOrderList = this.orderList;
+                } else {
+                    this.showOrderList = [];
+                    this.orderList.forEach(e => {
+                        if (String(e.id).includes(this.searchContent)
+                            || String(e.hotelName).includes(this.searchContent)
+                            || String(e.clientName).includes(this.searchContent)) {
+                            this.showOrderList.push(e)
+                        }
+                    })
+                }
+            }
         }
     }
 </script>

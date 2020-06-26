@@ -59,9 +59,11 @@
                 </a-form>
             </a-tab-pane>
             <a-tab-pane tab="我的订单" key="2">
+                <a-input-search placeholder="请输入id或酒店名" enter-button @search="onSearch" style="width: 30%" v-model="searchContent"/>
                 <a-table
+                        style="margin-top: 20px"
                         :columns="columns"
-                        :dataSource="userOrderList"
+                        :dataSource="showOrderList"
                         bordered
                 >
                     <span slot="price" slot-scope="text">
@@ -162,6 +164,8 @@
                 columns,
                 data: [],
                 form: this.$form.createForm(this, {name: 'coordinated'}),
+                showOrderList:[],//用于展示的数组
+                searchContent:'',//搜索的文本
             }
         },
         components: {RegisterVIPModal, OrderRateModal, OrderDetailModal},
@@ -176,6 +180,7 @@
         async mounted() {
             await this.getUserInfo()
             await this.getUserOrders()
+            this.showOrderList = this.userOrderList;
         },
         methods: {
             ...mapActions([
@@ -231,7 +236,22 @@
             },
             showVIPModal(){
                 this.set_registerVIPModalVisible(true)
+            },
+            //搜索框输入内容
+            onSearch(){
+                if(this.searchContent===""){
+                    this.showOrderList = this.userOrderList;
+                }else{
+                    this.showOrderList = [];
+                    this.userOrderList.forEach(e=>{
+                        if(String(e.id).includes(this.searchContent)
+                        ||String(e.hotelName).includes(this.searchContent)){
+                            this.showOrderList.push(e)
+                        }
+                    })
+                }
             }
+
         }
     }
 </script>
