@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService {
     private static final String ACCOUNT_EXIST = "账号已存在";
     private static final String UPDATE_ERROR = "修改失败";
+    private static final Integer VIP_CREDIT = 600;
     @Autowired
     private AccountMapper accountMapper;
 
@@ -86,6 +87,10 @@ public class AccountServiceImpl implements AccountService {
             }else {
                 return ResponseVO.buildFailure("error");
             }
+        }
+        User user = accountMapper.getAccountById(id);
+        if(user.getCredit() < VIP_CREDIT){
+            return ResponseVO.buildFailure(String.format("信用值低于%d，无法注册为会员", VIP_CREDIT));
         }
         Vip vipPO = new Vip();
         vipPO.setUserId(id);

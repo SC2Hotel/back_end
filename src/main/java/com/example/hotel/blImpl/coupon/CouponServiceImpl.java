@@ -26,6 +26,7 @@ public class CouponServiceImpl implements CouponService {
 
     private final  TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy;
     private final  TimeCouponStrategyImpl timeCouponStrategy;
+    private final  VipCouponStrategyImpl vipCouponStrategy;
     private final CouponMapper couponMapper;
     @Autowired
     RedisUtil redisUtil;
@@ -34,12 +35,15 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
                              TimeCouponStrategyImpl timeCouponStrategy,
+                             VipCouponStrategyImpl vipCouponStrategy,
                              CouponMapper couponMapper) {
         this.couponMapper = couponMapper;
         this.targetMoneyCouponStrategy = targetMoneyCouponStrategy;
         this.timeCouponStrategy = timeCouponStrategy;
+        this.vipCouponStrategy = vipCouponStrategy;
         strategyList.add(targetMoneyCouponStrategy);
         strategyList.add(timeCouponStrategy);
+        strategyList.add(vipCouponStrategy);
     }
 
 

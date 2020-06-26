@@ -5,7 +5,7 @@ const api = {
 export function getManagerListAPI(){
     return axios({
         url: `${api.adminPre}/getAllManagers`,
-        method: 'POST'
+        method: 'GET'
     })
 }
 export function addManagerAPI(data) {
@@ -32,6 +32,6 @@ export function resetPasswordAPI(data) {
 export function getAllUsersListAPI() {
     return axios({
         url: `${api.adminPre}/getAllUsersInfo`,
-        method: 'POST'
+        method: 'GET'
     })
 }
