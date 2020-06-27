@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 public class JwtInterceptor implements HandlerInterceptor {
-    @Value("${token-time.short}")
-    private Integer shortTokenTime;
-    @Value("${token-time.long}")
-    private Integer longTokenTime;
+
+
+    private Integer shortTokenTime = 20;
+
+    private Integer longTokenTime = 60;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

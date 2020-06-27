@@ -24,7 +24,7 @@ public class AccountController {
 
     private Integer shortTokenTime = 20;
 
-    private Integer longTokenTime = 20;
+    private Integer longTokenTime = 60;
 
     @ApiOperation("登陆")
     @PostMapping("/login")
