@@ -1,7 +1,7 @@
 <template>
     <div class="manageUser-wrapper">
         <a-tabs>
-            <a-tab-pane tab="管理员管理" key="1">
+            <a-tab-pane tab="用户管理" key="1">
                 <div style="width: 100%; text-align: right; margin:20px 0">
                     <a-button type="primary" @click="addManager"><a-icon type="plus" />添加酒店管理员</a-button>
                 </div>

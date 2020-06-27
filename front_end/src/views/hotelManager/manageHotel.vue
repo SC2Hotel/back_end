@@ -415,13 +415,15 @@
                 if(this.orderState==="全部"){
                     this.showOrderList = this.orderList;
                 }
-                let tmpArr = [];
-                this.orderList.forEach(e=>{
+                else{
+                    let tmpArr = [];
+                    this.orderList.forEach(e=>{
                     if(e.orderState===this.orderState){
                         tmpArr.push(e)
-                    }
-                })
-                this.showOrderList = tmpArr;
+                        }
+                    })
+                    this.showOrderList = tmpArr;
+                }
             }
         }
     }
