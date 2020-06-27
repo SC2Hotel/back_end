@@ -1,9 +1,7 @@
 package com.example.hotel.interceptor;
 
 import com.example.hotel.util.JwtUtil;
-import com.example.hotel.util.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 public class JwtInterceptor implements HandlerInterceptor {
+    @Value("${token-time.short}")
+    private Integer shortTokenTime;
+    @Value("${token-time.long}")
+    private Integer longTokenTime;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -27,8 +29,8 @@ public class JwtInterceptor implements HandlerInterceptor {
             Integer userId2 = JwtUtil.verifyTokenAndGetUserId(longToken);
             if(userId==null&&userId2!=null){
                 //短token时长20min 长token时长60min
-                response.setHeader("nju-token",JwtUtil.createToken(uid,20));
-                response.setHeader("nju-long-token",JwtUtil.createToken(uid,60));
+                response.setHeader("nju-token",JwtUtil.createToken(uid,shortTokenTime));
+                response.setHeader("nju-long-token",JwtUtil.createToken(uid,longTokenTime));
             }
         }
         //对长期token进行验证

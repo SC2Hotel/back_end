@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,10 @@ public class AccountController {
     private final static String ACCOUNT_INFO_ERROR = "用户名或密码错误";
     @Autowired
     private AccountService accountService;
+    @Value("${token-time.short}")
+    private Integer shortTokenTime;
+    @Value("${token-time.long}")
+    private Integer longTokenTime;
 
     @ApiOperation("登陆")
     @PostMapping("/login")
@@ -32,8 +37,8 @@ public class AccountController {
         UserWithTokenVO userWithToken = new UserWithTokenVO();
         BeanUtils.copyProperties(user,userWithToken);
         //短token时长20min 长token时长60min
-        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),20));
-        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),60));
+        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),shortTokenTime));
+        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),longTokenTime));
         return ResponseVO.buildSuccess(userWithToken);
     }
 
