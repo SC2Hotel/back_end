@@ -28,7 +28,7 @@ CREATE TABLE `Hotel` (
                          `address` varchar(255) DEFAULT NULL,
                          `bizRegion` varchar(255) DEFAULT NULL,
                          `hotelStar` varchar(255) DEFAULT NULL,
-                         `phoneNum` int(11) DEFAULT NULL,
+                         `phoneNum` varchar(31) DEFAULT NULL,
                          `rate` double DEFAULT NULL,
                          `manager_id` int(11) DEFAULT NULL,
                          PRIMARY KEY (`id`)

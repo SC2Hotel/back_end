@@ -74,7 +74,7 @@
                         <span v-if="text == 'DoubleBed'">双床房</span>
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
-                    <a-tag slot="orderState" color="blue" slot-scope="text">
+                    <a-tag slot="orderState" :color=" text === '已预订' ? 'blue': text === '异常' ? 'red' : text === '已执行' ? 'green' : text === '已撤销' ? 'orange' : '' " slot-scope="text">
                         {{ text }}
                     </a-tag>
                     <span slot="action" slot-scope="record">

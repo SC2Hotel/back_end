@@ -30,7 +30,7 @@ public class AdminController {
     AdminService adminService;
 
     @ApiOperation("添加酒店管理员")
-    @GetMapping("/addManager")
+    @PostMapping("/addManager")
     public ResponseVO addManager(@RequestBody UserForm userForm){
         return adminService.addManager(userForm);
     }

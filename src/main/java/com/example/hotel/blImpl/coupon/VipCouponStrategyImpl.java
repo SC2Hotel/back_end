@@ -6,6 +6,7 @@ import com.example.hotel.po.Coupon;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import com.example.hotel.vo.OrderVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @date 2020/6/26 11:35
  */
 @Service
+@Slf4j
 public class VipCouponStrategyImpl implements CouponMatchStrategy {
 
     @Autowired
@@ -22,8 +24,12 @@ public class VipCouponStrategyImpl implements CouponMatchStrategy {
 
     @Override
     public boolean isMatch(OrderVO orderVO, Coupon coupon){
-        Vip vip = accountMapper.getVipById(orderVO.getUserId());
-        if(vip == null) return false;
+        try{
+            Vip vip = accountMapper.getVipById(orderVO.getUserId());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return false;
+        }
         User user = accountMapper.getAccountById(orderVO.getUserId());
         if(coupon.getCouponType()== 5 &&user.getCredit()>=coupon.getTargetMoney()){
             return true;
