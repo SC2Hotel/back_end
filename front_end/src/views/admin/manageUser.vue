@@ -2,12 +2,29 @@
     <div class="manageUser-wrapper">
         <a-tabs>
             <a-tab-pane tab="用户管理" key="1">
-                <div style="width: 100%; text-align: right; margin:20px 0">
+                <div style="width: 100%; display: flex;flex-direction: row;">
+                    <a-input-search placeholder="请输入id、用户邮箱或用户名" enter-button @search="onSearch" style="width: 30%;margin-right: auto" v-model="searchContent"/>
+                    <a-select style="width: 20%;margin-right: auto" @change="selectUserState" placeholder="账号类型" v-model="userState">
+                        <a-select-option value="全部">
+                            全部
+                        </a-select-option>
+                        <a-select-option value="Client">
+                            Client
+                        </a-select-option>
+                        <a-select-option value="HotelManager">
+                            HotelManager
+                        </a-select-option>
+                        <a-select-option value="Admin">
+                            Admin
+                        </a-select-option>
+                    </a-select>
                     <a-button type="primary" @click="addManager"><a-icon type="plus" />添加酒店管理员</a-button>
                 </div>
+
                 <a-table
+                        style="margin-top: 10px"
                     :columns="columns"
-                    :dataSource="userList"
+                    :dataSource="showUserList"
                     bordered
                 >
                     <span slot="price" slot-scope="text">
@@ -107,7 +124,9 @@ export default {
             columns2,
             data: [],
             form: this.$form.createForm(this, { name: 'manageUser' }),
-            searchContent: "",
+            searchContent: "",//搜索的内容
+            showUserList:[],//展示的列表
+            userState:"账号类型",//用户账号类型
         }
     },
     components: {
@@ -124,9 +143,9 @@ export default {
             'targetUserInfo'
         ])
     },
-    mounted() {
-      this.getAllUsersList();
-        this.getHotelList();
+    async mounted() {
+      await this.getAllUsersList();
+      this.showUserList = this.userList.slice();
     },
     methods: {
         ...mapActions([
@@ -161,7 +180,32 @@ export default {
             this.set_updataUserInfoModalVisible(true)
         },
         onSearch(){
-
+            if (this.searchContent === "") {
+                this.showUserList = this.userList;
+                return;
+            }
+            this.showUserList = [];
+            this.userList.forEach(e => {
+                if (String(e.id).includes(this.searchContent)
+                    || String(e.email).includes(this.searchContent)
+                    || String(e.userName).includes(this.searchContent)) {
+                    this.showUserList.push(e)
+                }
+            })
+        },
+        //筛选用户类型
+        selectUserState(){
+            if(this.userState==="全部"){
+                this.showUserList = this.userList;
+                return;
+            }
+            let tmpArr = [];
+            this.userList.forEach(e=>{
+                if(e.userType===this.userState){
+                    tmpArr.push(e)
+                }
+            })
+            this.showUserList = tmpArr;
         }
     }
 }

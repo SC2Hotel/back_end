@@ -103,7 +103,7 @@ public class AdminServiceImpl implements AdminService {
     public ResponseVO resetPassword(Integer userId){
         try{
             adminMapper.updateHelper(MD5Encryption.encrypt("123456"), userId);
-            return ResponseVO.buildSuccess();
+            return ResponseVO.buildSuccess("用户id为"+userId+"的密码成功重置为123456");
         }catch (Exception e){
             log.error(e.getMessage());
             return ResponseVO.buildFailure("重置密码失败");
