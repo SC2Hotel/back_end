@@ -22,11 +22,9 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @Value("${tokenTime.short}")
-    private String shortTokenTime;
+    private Integer shortTokenTime = 20;
 
-    @Value("${tokenTime.long}")
-    private String longTokenTime;
+    private Integer longTokenTime = 20;
 
     @ApiOperation("登陆")
     @PostMapping("/login")
@@ -38,8 +36,8 @@ public class AccountController {
         UserWithTokenVO userWithToken = new UserWithTokenVO();
         BeanUtils.copyProperties(user,userWithToken);
         //短token时长20min 长token时长60min
-        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),Integer.valueOf(shortTokenTime)));
-        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),Integer.valueOf(longTokenTime)));
+        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),shortTokenTime));
+        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),longTokenTime));
         return ResponseVO.buildSuccess(userWithToken);
     }
 
