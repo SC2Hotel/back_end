@@ -26,7 +26,7 @@ spring:
       shutdown-timeout: 100ms
     database: 1
 
-token-time:
+tokenTime:
   short: 20
   long: 20
 

@@ -25,7 +25,7 @@ spring:
     time-zone: GMT+8
 
 # token持续时间
-token-time:
+tokenTime:
   short: 20
   long: 20
 
