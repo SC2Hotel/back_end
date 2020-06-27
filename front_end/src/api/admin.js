@@ -35,3 +35,11 @@ export function getAllUsersListAPI() {
         method: 'GET'
     })
 }
+
+export function updateAccountAPI(data) {
+    return axios({
+        url: `${api.adminPre}/updateUserInfo`,
+        method: 'Post',
+        data
+    })
+}

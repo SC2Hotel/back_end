@@ -3,12 +3,14 @@ import {
     addManagerAPI,
     delHotelManagerAPI,
     resetPasswordAPI,
-    getAllUsersListAPI
+    getAllUsersListAPI,
+    updateAccountAPI
 } from '@/api/admin'
 import {
     addHotelAPI
 } from '@/api/hotelManager'
 import { message } from 'ant-design-vue'
+import {getUserInfoAPI, updateUserInfoAPI} from "../../api/user";
 
 const admin = {
     state: {
@@ -19,7 +21,8 @@ const admin = {
         addManagerParams: {
             email:'',
             password:''
-        }
+        },
+        updataUserInfoModalVisible: false
     },
     mutations: {
         set_managerList: function(state, data) {
@@ -36,6 +39,12 @@ const admin = {
         },
         set_usersList: function (state,data) {
             state.userList = data
+        },
+        set_updataUserInfoModalVisible: function (state,data) {
+            state.updataUserInfoModalVisible = data
+        },
+        set_targetUserInfo: function (state,data) {
+            state.targetUserInfo = data
         }
     },
     actions: {
@@ -68,14 +77,34 @@ const admin = {
         delHotelManager: async ({commit,state},data)=>{
             const res = await delHotelManagerAPI(data)
             if (res){
-                console.log('删除成功')
+                message.success('删除成功')
             }
         },
         resetPassword: async ({commit, state},data)=>{
             const res = await resetPasswordAPI(data)
             if (res){
-                console.log('重置成功')
+                message.success('重置成功')
             }
+        },
+        updateAccountInfo: async ({commit,state},data)=>{
+            const res = await updateUserInfoAPI(data)
+            if (res){
+                message.success('更新成功')
+            }
+        },
+        getTargetUserInfo: async ({commit, state},data)=>{
+            console.log(data)
+            const res = await getUserInfoAPI(data)
+            if (res){
+                commit('set_targetUserInfo',res)
+            }
+        },
+        updateOtherAccount: async ({commit,state},data)=>{
+            const res = await updateAccountAPI(data)
+            if (res){
+                message.success('更新成功')
+            }
+            commit('set_updataUserInfoModalVisible',false)
         }
     }
 }

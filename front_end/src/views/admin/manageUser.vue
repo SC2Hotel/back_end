@@ -2,6 +2,8 @@
     <div class="manageUser-wrapper">
         <a-tabs>
             <a-tab-pane tab="管理员管理" key="1">
+                <a-input-search placeholder="请输账号资料" enter-button @search="onSearch" style="width: 35%"
+                                v-model="searchContent"/>
                 <div style="width: 100%; text-align: right; margin:20px 0">
                     <a-button type="primary" @click="addManager"><a-icon type="plus" />添加酒店管理员</a-button>
                 </div>
@@ -16,6 +18,7 @@
                     <span slot="action" slot-scope="record">
                         <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                         <a-button type="default" @click="reset(record)" style="margin-left: 10px">重置密码</a-button>
+                        <a-button type="primary" @click="updateUserInfo(record)" style="margin-left: 10px">更新信息</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -33,12 +36,14 @@
             </a-tab-pane>
         </a-tabs>
         <AddManagerModal></AddManagerModal>
+        <update-user-infomodal></update-user-infomodal>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddManagerModal from './components/addManagerModal'
 import AddHotelModal from "./components/addHotelModal";
+import UpdateUserInfomodal from "./components/updateUserInfomodal";
 const columns = [
     {
         title: '用户id',
@@ -63,6 +68,10 @@ const columns = [
     {
         title: '信用值',
         dataIndex: 'credit',
+    },
+    {
+        title: '账号类型',
+        dataIndex: 'userType'
     },
     {
       title: '操作',
@@ -100,9 +109,11 @@ export default {
             columns2,
             data: [],
             form: this.$form.createForm(this, { name: 'manageUser' }),
+            searchContent: "",
         }
     },
     components: {
+        UpdateUserInfomodal,
         AddHotelModal,
         AddManagerModal
     },
@@ -111,7 +122,8 @@ export default {
             'addHotelModalVisible',
             'addManagerModalVisible',
             'userList',
-            'hotelList'
+            'hotelList',
+            'targetUserInfo'
         ])
     },
     mounted() {
@@ -123,11 +135,14 @@ export default {
             'getUsersList',
             'getAllUsersList',
             'delHotelManager',
-            'resetPassword'
+            'resetPassword',
+            'getTargetUserInfo'
         ]),
         ...mapMutations([
             'set_addManagerModalVisible',
-            'set_addHotelModalVisible'
+            'set_addHotelModalVisible',
+            'set_updataUserInfoModalVisible',
+            'set_targetUserInfo'
         ]),
         addManager(){
             this.set_addManagerModalVisible(true);
@@ -142,6 +157,13 @@ export default {
         reset(record){
             // console.log(record)
             this.resetPassword(record.id)
+        },
+        updateUserInfo(record){
+            this.set_targetUserInfo(record.id)
+            this.set_updataUserInfoModalVisible(true)
+        },
+        onSearch(){
+
         }
     }
 }

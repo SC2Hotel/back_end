@@ -24,6 +24,8 @@ const getters = {
   userList: state => state.admin.userList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,
   addManagerParams: state => state.admin.addManagerParams,
+  updataUserInfoModalVisible: state => state.admin.updataUserInfoModalVisible,
+  targetUserInfo: state=> state.admin.targetUserInfo,
   //hotelManager
   orderList: state => state.hotelManager.orderList,
   addHotelModalVisible: state => state.hotelManager.addHotelModalVisible,
