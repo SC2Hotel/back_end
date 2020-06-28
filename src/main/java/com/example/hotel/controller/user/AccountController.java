@@ -3,7 +3,6 @@ package com.example.hotel.controller.user;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.po.User;
 import com.example.hotel.util.JwtUtil;
-import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,10 +21,10 @@ public class AccountController {
     private final static String ACCOUNT_INFO_ERROR = "用户名或密码错误";
     @Autowired
     private AccountService accountService;
-    @Value("${token-time.short}")
-    private Integer shortTokenTime;
-    @Value("${token-time.long}")
-    private Integer longTokenTime;
+
+    private Integer shortTokenTime = 20;
+
+    private Integer longTokenTime = 60;
 
     @ApiOperation("登陆")
     @PostMapping("/login")
