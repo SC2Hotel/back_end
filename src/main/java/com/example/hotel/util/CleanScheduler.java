@@ -46,7 +46,7 @@ public class CleanScheduler {
         }
     }
 
-    @Scheduled(cron = "0 19 16 * * ?")
+    @Scheduled(cron = "0 1 12 * * ?")
     public void dealExceptionOrder(){
         List<Order> orders = orderMapper.getAllOrders().stream().filter(order -> order.getOrderState().equals(OrderState.exception.toString())).collect(Collectors.toList());
 
