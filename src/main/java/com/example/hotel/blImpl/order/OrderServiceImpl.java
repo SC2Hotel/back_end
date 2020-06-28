@@ -215,6 +215,7 @@ public class OrderServiceImpl implements OrderService {
         }
         else{
             try{
+                orderMapper.dealOutCheckoutDate(orderId);
                 hotelService.updateRoomInfo(order.getHotelId(), order.getRoomType(), -order.getRoomNum());
             }catch (Exception e){
                 return ResponseVO.buildFailure(e.getMessage());
