@@ -15,9 +15,6 @@
             <a-form-item v-bind="formItemLayout" label="邮箱">
                 <a-input v-decorator="['email']"></a-input>
             </a-form-item>
-            <a-form-item v-bind="formItemLayout" label="信用值">
-                <a-input v-decorator="['credit']"></a-input>
-            </a-form-item>
             <a-form-item v-bind="formItemLayout" label="手机号">
                 <a-input v-decorator="['phoneNum']"></a-input>
             </a-form-item>
@@ -91,7 +88,7 @@
                             phoneNumber:this.form.getFieldValue('phoneNum'),
                             userType: this.form.getFieldValue('userType'),
                             userName: this.form.getFieldValue('userName'),
-                            credit: this.form.getFieldValue('credit'),
+                            // credit: this.form.getFieldValue('credit'),
                             password: ""
                         }
                         this.updateOtherAccount(data)
