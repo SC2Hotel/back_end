@@ -26,8 +26,8 @@ spring:
 
 # token持续时间
 token-time:
-  short: 20
-  long: 20
+  short: 300
+  long: 400
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml

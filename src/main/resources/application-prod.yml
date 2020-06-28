@@ -25,8 +25,8 @@ spring:
     time-zone: GMT+8
 
 token-time:
-  short: 20
-  long: 20
+  short: 30
+  long: 60
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml

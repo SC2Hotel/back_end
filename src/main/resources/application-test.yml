@@ -27,8 +27,8 @@ spring:
     database: 1
 
 token-time:
-  short: 20
-  long: 20
+  short: 300
+  long: 300
 
 mybatis:
   mapper-locations: classpath:dataImpl/*/*Mapper.xml
