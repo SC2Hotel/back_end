@@ -49,5 +49,5 @@ public interface OrderMapper {
 
     int checkOutOrder(int orderId, String checkOutDate);
 
-
+    int dealOutCheckoutDate(int orderId);
 }

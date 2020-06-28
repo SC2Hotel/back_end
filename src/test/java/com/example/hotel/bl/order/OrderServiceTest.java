@@ -1,7 +1,9 @@
 package com.example.hotel.bl.order;
 
+import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
+import com.example.hotel.enums.RoomType;
 import com.example.hotel.po.Order;
 import com.example.hotel.vo.CommentVO;
 import com.example.hotel.vo.OrderVO;
@@ -29,6 +31,8 @@ public class OrderServiceTest {
     OrderService orderService;
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    RoomMapper roomMapper;
     @Test
     public void addOrder() {
         OrderVO orderVO = new OrderVO();
@@ -101,8 +105,9 @@ public class OrderServiceTest {
 
     @Test
     public void executeExceptionOrder() {
-        ResponseVO responseVO = orderService.executeExceptionOrder(3);
+        ResponseVO responseVO = orderService.executeExceptionOrder(7);
         assertTrue(responseVO.getSuccess());
+        Assert.assertEquals("超过最长延迟入住时间", responseVO.getContent());
     }
 
     @Test

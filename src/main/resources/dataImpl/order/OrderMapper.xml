@@ -18,41 +18,45 @@
     
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
-        update Orderlist
+        update OrderList
         SET orderState = '已撤销'
         WHERE id = #{orderid}
     </update>
 
     <!--设置订单状态异常的数据库操作-->
     <update id="exceptionOrder">
-        update Orderlist
+        update OrderList
         SET orderState = '异常'
         WHERE id = #{orderid}
     </update>
 
     <update id="executeOrder">
-        update Orderlist
+        update OrderList
         SET orderState = '已执行', checkInDate = #{checkInDate}
         WHERE id = #{orderId}
     </update>
 
     <update id="checkOutOrder">
-        update Orderlist
+        update OrderList
         SET checkOutDate = #{checkOutDate}
         WHERE id = #{orderId}
     </update>
 
 
     <update id="setOrderState">
-        update Orderlist
+        update OrderList
         SET orderState = #{state}
         WHERE id = #{orderid}
     </update>
 
     <update id="evaluationOrder">
-        update Orderlist
+        update OrderList
         set orderState = '已评价'
         where id = #{orderId}
+    </update>
+
+    <update id="dealOutCheckoutDate">
+        update OrderList set orderState = '超过最迟延时入住期限' where id = #{orderId}
     </update>
 
 

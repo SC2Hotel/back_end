@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private static final String RESERVE_ERROR = "预订失败";
     private static final String CREDIT_LACK = "信用值不足";
     private static final String ROOMNUM_LACK = "预订房间数量剩余不足";
-    private static final Integer LATEST_ANNUL_INTERVAL = 6;
+    private static final Integer LATEST_ANNUL_INTERVAL = 4;
 
     @Autowired
     OrderMapper orderMapper;
@@ -203,7 +203,8 @@ public class OrderServiceImpl implements OrderService {
         }catch (Exception e){
             return ResponseVO.buildFailure(e.getMessage());
         }
-        if(DateTimeUtil.compare(order.getCheckInDate(), "00:00:00", LocalDateTime.now(), DateTimeUtil.LATEST_DELAY_CHECK_IN, 0) > 0){
+
+        if(DateTimeUtil.compare(order.getCheckOutDate(), "12:00:00", LocalDateTime.now(), 0, 0) > 0){
             try{
                 orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
                 accountService.updateUserCredit(order.getUserId(), -order.getPrice());

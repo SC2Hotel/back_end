@@ -1,6 +1,7 @@
 package com.example.hotel.util;
 
 import com.example.hotel.bl.user.AccountService;
+import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.order.OrderMapper;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Order;
@@ -10,6 +11,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.example.hotel.util.DateTimeUtil.LATEST_CHECK_OUT_TIME;
 
 /**
  * @author qin
@@ -22,6 +26,8 @@ public class CleanScheduler {
     OrderMapper orderMapper;
     @Autowired
     AccountService accountService;
+    @Autowired
+    RoomMapper roomMapper;
 
     @Scheduled(cron = "0 1 22 * * ?")
     public void cleanExpiredOrder(){
@@ -39,4 +45,20 @@ public class CleanScheduler {
             }
         }
     }
+
+    @Scheduled(cron = "0 1 12 * * ?")
+    public void dealExceptionOrder(){
+        List<Order> orders = orderMapper.getAllOrders().stream().filter(order -> order.getOrderState().equals(OrderState.exception.toString())).collect(Collectors.toList());
+
+        for(Order order : orders){
+            LocalDateTime CheckOut = DateTimeUtil.dateTimeStr2LocalDateTime(order.getCheckOutDate(), LATEST_CHECK_OUT_TIME);
+            //超过最晚退房时间，且为异常订单
+            if(LocalDateTime.now().compareTo(CheckOut) > 0 ){
+                orderMapper.dealOutCheckoutDate(order.getId());
+                roomMapper.updateRoomInfo(order.getHotelId(), order.getRoomType(), -order.getRoomNum());
+            }
+        }
+
+    }
+
 }

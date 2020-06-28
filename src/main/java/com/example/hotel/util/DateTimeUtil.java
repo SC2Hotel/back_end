@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateTimeUtil {
     public static final String LATEST_CHECK_IN_TIME = "22:00:00";
+    public static final String LATEST_CHECK_OUT_TIME = "12:00:00";
     public static final int LATEST_DELAY_CHECK_IN = 2;
     public static final long TWO_HOURS_IN_SECOND= 2 * 60 * 60;
     /**
