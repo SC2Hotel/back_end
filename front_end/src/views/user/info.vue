@@ -78,8 +78,7 @@
                         {{ text }}
                     </a-tag>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="() => showOrderDetailModal(record)">查看</a-button>
-                        <OrderDetailModal></OrderDetailModal>
+                        <a-button type="primary" size="small" @click="showOrderDetailModal(record)">查看</a-button>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
 
                         <a-popconfirm
@@ -99,6 +98,7 @@
                 </a-table>
             </a-tab-pane>
         </a-tabs>
+        <OrderDetailModal></OrderDetailModal>
     </div>
 </template>
 <script>

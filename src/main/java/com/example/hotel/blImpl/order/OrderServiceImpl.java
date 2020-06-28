@@ -35,6 +35,7 @@ import static com.example.hotel.enums.OrderState.*;
 @Slf4j
 public class OrderServiceImpl implements OrderService {
     private static final String RESERVE_ERROR = "预订失败";
+    private static final String CREDIT_LACK = "信用值不足";
     private static final String ROOMNUM_LACK = "预订房间数量剩余不足";
     private static final Integer LATEST_ANNUL_INTERVAL = 6;
 
@@ -56,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
         if(reserveRoomNum>curNum){
             return ResponseVO.buildFailure(ROOMNUM_LACK);
         }
+
         try {
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date(System.currentTimeMillis());
@@ -63,6 +65,9 @@ public class OrderServiceImpl implements OrderService {
             orderVO.setCreateDate(curdate);
             orderVO.setOrderState(OrderState.Booked.toString());
             User user = accountService.getUserInfo(orderVO.getUserId());
+            if(user.getCredit()<0){
+                return ResponseVO.buildFailure(CREDIT_LACK);
+            }
             orderVO.setClientName(user.getUserName());
             orderVO.setPhoneNumber(user.getPhoneNumber());
             Order order = new Order();
