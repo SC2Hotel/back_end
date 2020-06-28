@@ -13,6 +13,7 @@
                     <a-select-option value="1">生日优惠</a-select-option>
                     <a-select-option value="2">满减优惠</a-select-option>
                     <a-select-option value="3">节日优惠</a-select-option>
+                    <a-select-option value="5">会员优惠</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="券名" v-bind="formItemLayout">
