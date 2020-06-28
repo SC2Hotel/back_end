@@ -114,6 +114,9 @@
                         <span v-if="text == 'DoubleBed'">双床房</span>
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
+                    <a-tag slot="orderState" :color=" text === '已预订' ? 'blue': text === '异常' ? 'red' : text === '已执行' ? 'green' : text === '已撤销' ? 'orange' : '' " slot-scope="text">
+                        {{ text }}
+                    </a-tag>
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showOrderDetail(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -197,7 +200,10 @@
         },
         {
             title: '状态',
-            dataIndex: 'orderState'
+            filters: [{text: '已预订', value: '已预订'}, {text: '已撤销', value: '已撤销'}, {text: '已执行', value: '已执行'},{text:'异常',value:'异常'}],
+            onFilter: (value, record) => record.orderState.includes(value),
+            dataIndex: 'orderState',
+            scopedSlots: {customRender: 'orderState'}
         },
         {
             title: '操作',
