@@ -80,13 +80,13 @@
                 'bizRegions',
                 'userInfo'
             ]),
-            filterhotelList: function () {
-                var selected = this.selected;
-                var hotellist = this.hotelList;
-                return hotellist.filter(function (item) {
-                    return item.bizRegion == selected
-                })
-            }
+            // filterhotelList: function () {
+            //     var selected = this.selected;
+            //     var hotellist = this.hotelList;
+            //     return hotellist.filter(function (item) {
+            //         return item.bizRegion == selected
+            //     })
+            // }
         },
         methods: {
             ...mapMutations([

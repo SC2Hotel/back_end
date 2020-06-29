@@ -35,6 +35,7 @@
                     </a-form-item>
                     <a-form-item label="信用值" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.credit }}</span>
+                        <span style="margin-left: 30px;color: dodgerblue" @click="showCreditlog">查看信用记录</span>
                     </a-form-item>
                     <a-form-item label="密码" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }"
                                  v-if="modify">
@@ -92,12 +93,13 @@
                             <a-button type="danger" size="small">撤销</a-button>
                         </a-popconfirm>
                         <a-divider type="vertical" v-if="record.orderState == '已执行'"></a-divider>
-                        <a-button size="small" @click="() => showOrderRateModal(record)" v-if="record.orderState == '已执行'">评价</a-button>
-                        <order-rate-modal></order-rate-modal>
+                        <a-button size="small" @click="showOrderRateModal(record)" v-if="record.orderState == '已执行'">评价</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
         </a-tabs>
+        <credit-log-modal></credit-log-modal>
+        <order-rate-modal></order-rate-modal>
         <OrderDetailModal></OrderDetailModal>
     </div>
 </template>
@@ -107,6 +109,7 @@
     import OrderDetailModal from "./components/orderDetailModal";
     import OrderRateModal from "./components/orderRateModal";
     import RegisterVIPModal from "./components/registerVIPModal";
+    import CreditLogModal from "./components/creditLogModal";
 
     const columns = [
         {
@@ -168,7 +171,7 @@
                 searchContent:'',//搜索的文本
             }
         },
-        components: {RegisterVIPModal, OrderRateModal, OrderDetailModal},
+        components: {CreditLogModal, RegisterVIPModal, OrderRateModal, OrderDetailModal},
         computed: {
             ...mapGetters([
                 'userId',
@@ -193,7 +196,8 @@
                 'set_orderDetailModalVisible',
                 'set_orderRateModalVisible',
                 'set_currentOrder',
-                'set_registerVIPModalVisible'
+                'set_registerVIPModalVisible',
+                'set_creditLogModalVisible'
             ]),
             saveModify() {
                 this.form.validateFields((err, values) => {
@@ -250,6 +254,10 @@
                         }
                     })
                 }
+            },
+            showCreditlog(){
+                this.set_creditLogModalVisible(true)
+                console.log("chakan")
             }
 
         }

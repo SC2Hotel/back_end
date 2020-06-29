@@ -27,7 +27,8 @@ const getDefaultState = () => {
         currentOrder: {},
         orderDetailModalVisible:false,
         orderRateModalVisible: false,
-        registerVIPModalVisible:false
+        registerVIPModalVisible:false,
+        creditLogModalVisible:false,
     }
 }
 
@@ -71,6 +72,9 @@ const user = {
         },
         set_registerVIPModalVisible: function (state, data) {
             state.registerVIPModalVisible = data
+        },
+        set_creditLogModalVisible: function (state,data) {
+            state.creditLogModalVisible = data
         }
     },
 
