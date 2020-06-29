@@ -17,6 +17,6 @@ public class CreditChange {
     private String reason;
     private Double changeNum;
     private Integer orderId;
-    private Integer credit;
+    private Double credit;
     private Timestamp time;
 }
