@@ -124,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
                 Double creditToMinus = order.getPrice()/2;
                 CreditChange creditChange = new CreditChange();
                 creditChange.setChangeNum(-creditToMinus);
-                creditChange.setOrderId(order.getId());
+                creditChange.setOrderId(orderId);
                 creditChange.setUserId(order.getUserId());
                 creditChange.setReason(CreditChangeReason.annulOrder.toString());
                 User userInfo = accountService.getUserInfo(order.getUserId());
@@ -132,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
                 int row = accountService.updateUserCredit(creditChange);
                 return ResponseVO.buildSuccess(row);
             }
-            return ResponseVO.buildSuccess(0);
+            return ResponseVO.buildSuccess(1);
         }
         else
         {
