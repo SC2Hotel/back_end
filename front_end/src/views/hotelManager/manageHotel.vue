@@ -48,7 +48,7 @@
                                 Five
                             </a-select-option>
                         </a-select>
-                        <a-rate v-else :default-value="hotelList.rate" disabled/>
+                        <a-rate v-else :value="getStar(hotelList.hotelStar)" disabled/>
                     </a-form-item>
                     <a-form-item :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }" label="评价">
                         <span>{{hotelList.rate}}</span>
@@ -386,7 +386,6 @@
                             bizRegion: this.selected,
                             id: this.hotelList.id
                         }
-                        console.log(data)
                         this.updateHotelDetail(data).then(() => {
                             this.getHotelByManager(this.userInfo.id)
                             this.modify = false
@@ -430,6 +429,18 @@
                     })
                     this.showOrderList = tmpArr;
                 }
+            },
+            //根据英文获得酒店星级
+            getStar(e){
+                let res = 0;
+                switch (e) {
+                    case 'One':res = 1;break;
+                    case 'Two':res = 2;break;
+                    case 'Three':res = 3;break;
+                    case 'Four':res = 4;break;
+                    case 'Five':res = 5;break;
+                }
+                return res;
             }
         }
     }

@@ -33,9 +33,9 @@
                         format="YYYY-MM-DD"
                         @change="changeDate"
                         v-decorator="[
-                        'date', 
+                        'date',
                         {
-                            rules: [{ required: true, message: '请选择入住时间' }]   
+                            rules: [{ required: true, message: '请选择入住时间' }]
                         }
                     ]"
                         :placeholder="['入住日期','退房日期']"
@@ -201,9 +201,10 @@
             ]),
             cancelOrder() {
                 this.set_orderModalVisible(false)
+                this.form.resetFields();
             },
             changeDate(v) {
-                if (this.totalPrice != '') {
+                if(this.form.getFieldValue('roomNum')){
                     this.totalPrice = this.form.getFieldValue('roomNum') * moment(v[1]).diff(moment(v[0]), 'day') * Number(this.currentOrderRoom.price)
                 }
             },
@@ -211,7 +212,9 @@
 
             },
             changeRoomNum(v) {
-                this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]), 'day')
+                if(this.form.getFieldValue('date')&&this.form.getFieldValue('date')[1]&&this.form.getFieldValue('date')[0]){
+                    this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]), 'day')
+                }
             },
             onchange() {
                 this.finalPrice = this.totalPrice
@@ -239,6 +242,7 @@
                         }
                         this.addOrder(data)
                         this.$router.push({name: 'hotelList', params: {}})
+                        this.form.resetFields();
                     }
                 });
             },
