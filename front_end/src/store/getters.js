@@ -20,6 +20,7 @@ const getters = {
   hotelCommentList: state => state.hotel.hotelCommentList,
   hotelDetailModalVisible: state => state.hotel.hotelDetailModalVisible,
   creditLogModalVisible: state => state.user.creditLogModalVisible,
+  creditLog: state=> state.user.creditLog,
   //admin
   managerList: state => state.admin.managerList,
   userList: state => state.admin.userList,

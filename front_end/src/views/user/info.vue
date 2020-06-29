@@ -190,7 +190,8 @@
                 'getUserInfo',
                 'getUserOrders',
                 'updateUserInfo',
-                'cancelOrder'
+                'cancelOrder',
+                'getCreditLog'
             ]),
             ...mapMutations([
                 'set_orderDetailModalVisible',
@@ -256,8 +257,9 @@
                 }
             },
             showCreditlog(){
+                this.getCreditLog(this.userInfo.id)
+                console.log(this.userInfo.id)
                 this.set_creditLogModalVisible(true)
-                console.log("chakan")
             }
 
         }

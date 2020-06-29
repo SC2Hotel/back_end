@@ -8,7 +8,8 @@ import {
     registerAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
-    registerVIPAPI
+    registerVIPAPI,
+    getCreditLogAPI
 } from '@/api/user'
 
 import {
@@ -29,6 +30,7 @@ const getDefaultState = () => {
         orderRateModalVisible: false,
         registerVIPModalVisible:false,
         creditLogModalVisible:false,
+        creditLog:[]
     }
 }
 
@@ -75,6 +77,9 @@ const user = {
         },
         set_creditLogModalVisible: function (state,data) {
             state.creditLogModalVisible = data
+        },
+        set_creditLog: function (state,data) {
+            state.creditLog = data
         }
     },
 
@@ -173,6 +178,14 @@ const user = {
                 message.error("注册失败")
             }
             commit('set_registerVIPModalVisible',false)
+        },
+        getCreditLog: async ({state,commit},data)=>{
+            const res = await getCreditLogAPI(data)
+            if (res){
+                commit('set_creditLog',res)
+            }else {
+                console.log(res)
+            }
         }
     }
 }

@@ -4,14 +4,23 @@
             title="信用值变化记录"
             @cancel="closeCreditLogModal"
             :footer="null"
+            width="900px"
     >
         <a-table
-                :columns="columns"></a-table>
+                :columns="columns"
+                :dataSource="creditLog">
+        </a-table>
     </a-modal>
 </template>
 
 <script>
     import {mapGetters, mapActions, mapMutations} from 'vuex'
+
+    import moment from 'moment'
+
+    const formatterTime = (val) => {
+        return val ? moment(val).format('YYYY-MM-DD HH:mm:ss'): ''
+    }
 
     const columns = [
         {
@@ -20,7 +29,8 @@
         },
         {
             title: '时间',
-            dataIndex: 'time'
+            dataIndex: 'time',
+            customRender : formatterTime
         },
         {
             title: '原因',
@@ -41,11 +51,13 @@
         data() {
             return {
                 columns,
+                formatterTime
             }
         },
         computed: {
             ...mapGetters([
-                'creditLogModalVisible'
+                'creditLogModalVisible',
+                'creditLog'
             ])
         },
         methods: {
@@ -56,7 +68,7 @@
             ]),
             closeCreditLogModal() {
                 this.set_creditLogModalVisible(false)
-            }
+            },
         }
     }
 </script>

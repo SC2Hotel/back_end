@@ -89,6 +89,7 @@ CREATE TABLE `User` (
 
 INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',-99.5,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
 
+DROP TABLE IF EXISTS `Vip`;
 CREATE TABLE `Vip` (
                        user_id int primary key,
                        type int COMMENT '类型 1 表示普通会员 2 表示企业会员',

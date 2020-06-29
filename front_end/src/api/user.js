@@ -38,3 +38,10 @@ export function registerVIPAPI(data) {
         params: {type:data.type,message:data.message}
     })
 }
+
+export function getCreditLogAPI(data) {
+    return axios({
+        url: `${api.userPre}/${data}/creditChange`,
+        method: 'Post'
+    })
+}
