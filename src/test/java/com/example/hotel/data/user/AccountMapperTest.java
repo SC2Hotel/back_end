@@ -105,7 +105,7 @@ public class AccountMapperTest {
         creditChange.setUserId(1);
         creditChange.setTime(new Timestamp(System.currentTimeMillis()));
         creditChange.setChangeNum(100.0);
-        creditChange.setCredit(100);
+        creditChange.setCredit(100.0);
         creditChange.setOrderId(2);
         creditChange.setReason(CreditChangeReason.init.toString());
         Assert.assertTrue(1 == accountMapper.addCreditChange(creditChange));

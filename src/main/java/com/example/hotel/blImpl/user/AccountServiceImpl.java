@@ -2,7 +2,9 @@ package com.example.hotel.blImpl.user;
 
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.enums.CreditChangeReason;
 import com.example.hotel.enums.UserType;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import com.example.hotel.util.MD5Encryption;
@@ -13,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
 
 
 @Service
@@ -37,6 +41,13 @@ public class AccountServiceImpl implements AccountService {
                 return ResponseVO.buildFailure(ACCOUNT_EXIST);
             }
             accountMapper.createNewAccount(user);
+            CreditChange creditChange = new CreditChange();
+            creditChange.setChangeNum(100.0);
+            creditChange.setCredit(100.0);
+            creditChange.setOrderId(0);
+            creditChange.setUserId(user.getId());
+            creditChange.setReason(CreditChangeReason.init.toString());
+            accountMapper.addCreditChange(creditChange);
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
@@ -101,7 +112,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public int updateUserCredit(Integer userId, Double creditToMinus) {
-        return accountMapper.updateUserCredit(userId,creditToMinus);
+    public int updateUserCredit(CreditChange creditChange) {
+        creditChange.setTime(new Timestamp(System.currentTimeMillis()));
+        accountMapper.updateUserCredit(creditChange.getUserId(),-creditChange.getChangeNum());
+        return accountMapper.addCreditChange(creditChange);
+    }
+
+    @Override
+    public ResponseVO creditChange(int id) {
+        return ResponseVO.buildSuccess(accountMapper.getAllUserCreditChange(id));
     }
 }

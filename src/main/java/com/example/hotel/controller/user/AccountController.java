@@ -79,4 +79,11 @@ public class AccountController {
     public ResponseVO registerSenior(@PathVariable int id,@RequestParam int type,@RequestParam String message){
         return accountService.registerSenior(id,type,message);
     }
+
+    @ApiOperation("获取某个用户信用值变化记录")
+    @PostMapping("/{id}/creditChange")
+    public ResponseVO creditChange(@PathVariable int id){
+        return accountService.creditChange(id);
+
+    }
 }

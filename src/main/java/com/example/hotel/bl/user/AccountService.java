@@ -1,5 +1,6 @@
 package com.example.hotel.bl.user;
 
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.*;
 
@@ -49,5 +50,7 @@ public interface AccountService {
      */
     ResponseVO registerSenior(int id,int type,String message);
 
-    int updateUserCredit(Integer userId, Double creditToMinus);
+    int updateUserCredit(CreditChange creditChange);
+
+    ResponseVO creditChange(int id);
 }

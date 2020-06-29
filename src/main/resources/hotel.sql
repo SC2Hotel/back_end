@@ -107,11 +107,11 @@ INSERT INTO Comment VALUES (4,4.5,'挺好的');
 drop table if exists `CreditChange`;
 create table `CreditChange`
 (
-    id        int primary key,
-    userId    int       default null,
+    id        int primary key auto_increment,
+    userId    int ,
     reason    varchar(255) NOT NULL,
-    changeNum double    DEFAULT NULL,
-    orderId   int       default null,
-    credit    int       default not null,
-    time      TIMESTAMP default not null,
+    changeNum double ,
+    orderId   int ,
+    credit    double ,
+    time      TIMESTAMP
 )
