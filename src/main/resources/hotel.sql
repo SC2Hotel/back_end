@@ -1,4 +1,4 @@
-SET MODE MYSQL;
+﻿SET MODE MYSQL;
 
 DROP TABLE IF EXISTS `Coupon`;
 CREATE TABLE `Coupon` (
@@ -87,7 +87,7 @@ CREATE TABLE `User` (
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
-INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',100,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
+INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',-99.5,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
 
 CREATE TABLE `Vip` (
                        user_id int primary key,
@@ -101,7 +101,7 @@ CREATE TABLE `Comment`(
                           order_id int primary key,
                           score double,
                           content varchar(255)
-);
+)CHARSET=utf8;
 INSERT INTO Comment VALUES (4,4.5,'挺好的');
 
 drop table if exists `CreditChange`;
@@ -112,9 +112,9 @@ create table `CreditChange`
     reason    varchar(255) NOT NULL,
     changeNum double    DEFAULT NULL,
     orderId   int       default null,
-    credit    double    default not null,
-    time      datetime default not null,
-);
+    credit    double    default null,
+    time      datetime default null
+)CHARSET=utf8;;
 
 insert into `CreditChange` values
 (1, 4, '初始化', 100, null, 100, '2020-05-30 09:07:03' ),
@@ -124,4 +124,4 @@ insert into `CreditChange` values
 (5, 4, '执行订单', 399.0, 4, 299.5, '2020-06-08 11:30:00'),
 (6, 4, '未按时入住', -399.0, 5, -99.5, '2020-06-12 22:00:00'),
 (7, 4, '延时入住',399.0,5, 299.5, '2020-06-15 13:00:00' ),
-(8, 4, '未按时入住', -399.0, 7, -99.5, '2020-06-27 22:00:00' )
+(8, 4, '未按时入住', -399.0, 7, -99.5, '2020-06-27 22:00:00' );
