@@ -57,8 +57,8 @@ CREATE TABLE `OrderList` (
                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
-INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(2,4,3,'桂圆酒店','2020-06-05','2020-06-06','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(3,4,3,'桂圆酒店','2020-06-07','2020-06-08','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常'),(4,4,3,'桂圆酒店','2020-06-08','2020-06-09','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已评价'),(5,4,3,'桂圆酒店','2020-06-09','2020-06-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(6,4,3,'桂圆酒店','2020-06-27','2020-07-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
-INSERT INTO `OrderList` values (7,4,3,'桂圆酒店','2020-06-27','2020-06-28','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常');
+INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(2,4,3,'桂圆酒店','2020-06-05','2020-06-06','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(3,4,3,'桂圆酒店','2020-06-07','2020-06-08','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','超过最迟延时入住期限'),(4,4,3,'桂圆酒店','2020-06-08','2020-06-09','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已评价'),(5,4,3,'桂圆酒店','2020-06-12','2020-06-25','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(6,4,3,'桂圆酒店','2020-07-02','2020-07-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
+INSERT INTO `OrderList` values (7,4,3,'桂圆酒店','2020-06-27','2020-07-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常');
 
 DROP TABLE IF EXISTS `Room`;
 
@@ -107,11 +107,11 @@ INSERT INTO Comment VALUES (4,4.5,'挺好的');
 drop table if exists `CreditChange`;
 create table `CreditChange`
 (
-    id        int primary key auto_increment,
-    userId    int ,
+    id        int primary key,
+    userId    int       default null,
     reason    varchar(255) NOT NULL,
-    changeNum double ,
-    orderId   int ,
-    credit    double ,
-    time      TIMESTAMP
+    changeNum double    DEFAULT NULL,
+    orderId   int       default null,
+    credit    int       default not null,
+    time      TIMESTAMP default not null,
 )
