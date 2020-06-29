@@ -3,8 +3,11 @@ package com.example.hotel.util;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.order.OrderMapper;
+import com.example.hotel.enums.CreditChangeReason;
 import com.example.hotel.enums.OrderState;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.Order;
+import com.example.hotel.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -41,7 +44,14 @@ public class CleanScheduler {
                 orderMapper.exceptionOrder(order.getId());
                 // 用户的信用值会被减少
                 Double creditToMinus = order.getPrice();
-                accountService.updateUserCredit(order.getUserId(),creditToMinus);
+                CreditChange creditChange = new CreditChange();
+                creditChange.setChangeNum(-creditToMinus);
+                creditChange.setOrderId(order.getId());
+                creditChange.setUserId(order.getUserId());
+                creditChange.setReason(CreditChangeReason.unCheckIn.toString());
+                User userInfo = accountService.getUserInfo(order.getUserId());
+                creditChange.setCredit(userInfo.getCredit());
+                accountService.updateUserCredit(creditChange);
             }
         }
     }

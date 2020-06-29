@@ -1,5 +1,7 @@
 package com.example.hotel.data.user;
 
+import com.example.hotel.enums.CreditChangeReason;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import org.junit.Assert;
@@ -8,6 +10,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.sql.Timestamp;
+import java.util.Currency;
+import java.util.List;
 
 import static com.example.hotel.enums.UserType.HotelManager;
 import static com.example.hotel.enums.UserType.commonSeniorClient;
@@ -91,5 +97,23 @@ public class AccountMapperTest {
         accountMapper.updateUserType(4, commonSeniorClient);
         User user = accountMapper.getAccountById(4);
         Assert.assertEquals(user.getUserType(), commonSeniorClient);
+    }
+
+    @Test
+    public void addCreditChange(){
+        CreditChange creditChange = new CreditChange();
+        creditChange.setUserId(1);
+        creditChange.setTime(new Timestamp(System.currentTimeMillis()));
+        creditChange.setChangeNum(100.0);
+        creditChange.setCredit(100.0);
+        creditChange.setOrderId(2);
+        creditChange.setReason(CreditChangeReason.init.toString());
+        Assert.assertTrue(1 == accountMapper.addCreditChange(creditChange));
+    }
+
+    @Test
+    public void getAllUserCreditChange(){
+        List<CreditChange> creditChanges = accountMapper.getAllUserCreditChange(1);
+        Assert.assertEquals(CreditChangeReason.init.toString(), creditChanges.get(0).getReason());
     }
 }

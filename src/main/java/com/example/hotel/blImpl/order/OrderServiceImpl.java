@@ -5,8 +5,10 @@ import com.example.hotel.bl.order.CommentService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
+import com.example.hotel.enums.CreditChangeReason;
 import com.example.hotel.enums.OrderState;
 import com.example.hotel.po.Comment;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.util.DateTimeUtil;
@@ -37,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private static final String RESERVE_ERROR = "预订失败";
     private static final String CREDIT_LACK = "信用值不足";
     private static final String ROOMNUM_LACK = "预订房间数量剩余不足";
-    private static final Integer LATEST_ANNUL_INTERVAL = 4;
+    private static final Integer LATEST_ANNUL_INTERVAL = 6;
 
     @Autowired
     OrderMapper orderMapper;
@@ -120,7 +122,14 @@ public class OrderServiceImpl implements OrderService {
             if(curDateTime.plusHours(LATEST_ANNUL_INTERVAL).compareTo(latestCheckInDateTime) > 0 ){
                 // 撤销的同时扣除信用值，信用值为订单的（总价值*1/2）
                 Double creditToMinus = order.getPrice()/2;
-                int row = accountService.updateUserCredit(order.getUserId(),creditToMinus);
+                CreditChange creditChange = new CreditChange();
+                creditChange.setChangeNum(-creditToMinus);
+                creditChange.setOrderId(order.getId());
+                creditChange.setUserId(order.getUserId());
+                creditChange.setReason(CreditChangeReason.annulOrder.toString());
+                User userInfo = accountService.getUserInfo(order.getUserId());
+                creditChange.setCredit(userInfo.getCredit());
+                int row = accountService.updateUserCredit(creditChange);
                 return ResponseVO.buildSuccess(row);
             }
             return ResponseVO.buildSuccess(0);
@@ -182,11 +191,16 @@ public class OrderServiceImpl implements OrderService {
 
         orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
         double credit = order.getPrice();
-
-        if(accountService.updateUserCredit(userId, -credit)==0){
+        CreditChange creditChange = new CreditChange();
+        creditChange.setChangeNum(credit);
+        creditChange.setOrderId(order.getId());
+        creditChange.setUserId(order.getUserId());
+        creditChange.setReason(CreditChangeReason.executeOrder.toString());
+        User userInfo = accountService.getUserInfo(order.getUserId());
+        creditChange.setCredit(userInfo.getCredit());
+        if(accountService.updateUserCredit(creditChange)==0){
             return ResponseVO.buildFailure("修改用户信用值失败");
         }
-
         return ResponseVO.buildSuccess(true);
     }
 
@@ -207,7 +221,14 @@ public class OrderServiceImpl implements OrderService {
         if(DateTimeUtil.compare(order.getCheckOutDate(), "12:00:00", LocalDateTime.now(), 0, 0) > 0){
             try{
                 orderMapper.executeOrder(orderId, LocalDateTime.now().toString().substring(0, 10));
-                accountService.updateUserCredit(order.getUserId(), -order.getPrice());
+                CreditChange creditChange = new CreditChange();
+                creditChange.setChangeNum(order.getPrice());
+                creditChange.setOrderId(order.getId());
+                creditChange.setUserId(order.getUserId());
+                creditChange.setReason(CreditChangeReason.executeOrder.toString());
+                User userInfo = accountService.getUserInfo(order.getUserId());
+                creditChange.setCredit(userInfo.getCredit());
+                accountService.updateUserCredit(creditChange);
             }catch (Exception e){
                 return ResponseVO.buildFailure(e.getMessage());
             }

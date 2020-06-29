@@ -1,12 +1,14 @@
 package com.example.hotel.data.user;
 
 import com.example.hotel.enums.UserType;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
 
 @Mapper
@@ -58,4 +60,8 @@ public interface AccountMapper {
     int createNewVip(Vip vip);
 
     int updateUserType(int userId, UserType userType);
+
+    int addCreditChange(CreditChange creditChange);
+
+    List<CreditChange> getAllUserCreditChange(Integer userId);
 }

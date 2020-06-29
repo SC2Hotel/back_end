@@ -1,15 +1,20 @@
 package com.example.hotel.bl.user;
 
 import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.enums.CreditChangeReason;
+import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.UserVO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
 
@@ -65,7 +70,13 @@ public class AccountServiceTest {
 
     @Test
     public void updateUserCredit() {
-        int row = accountService.updateUserCredit(4, -100.0);
-        assertEquals(1,row);
+        CreditChange creditChange = new CreditChange();
+        creditChange.setUserId(1);
+        creditChange.setChangeNum(100.0);
+        creditChange.setCredit(100.0);
+        creditChange.setOrderId(2);
+        creditChange.setReason(CreditChangeReason.init.toString());
+        int row = accountService.updateUserCredit(creditChange);
+        Assert.assertTrue(1 == row);
     }
 }
