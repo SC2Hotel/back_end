@@ -47,6 +47,18 @@
         insert into Vip values (#{userId},#{type},#{message})
     </insert>
 
+    
+    <insert id="addCreditChange" parameterType="com.example.hotel.po.CreditChange">
+        insert into CreditChange (userId, reason, changeNum, orderId, credit, time)
+        values ( #{userId}, #{reason}, #{changeNum}, #{orderId}, #{credit}, #{time} )
+    </insert>
+    
+    <select id="getAllUserCreditChange" resultMap="CreditChange">
+        select * from CreditChange where userId = #{userId}
+    </select>
+    
+    
+
     <resultMap id="User" type="com.example.hotel.po.User">
         <id column="id" property="id"></id>
         <result column="email" property="email"></result>
@@ -61,5 +73,15 @@
         <id column="user_id" property="userId"></id>
         <result column="type" property="type"></result>
         <result column="message" property="message"></result>
+    </resultMap>
+    
+    <resultMap id="CreditChange" type="com.example.hotel.po.CreditChange">
+        <id column="id" property="id"></id>
+        <result column="userId" property="userId"></result>
+        <result column="reason" property="reason"></result>
+        <result column="changeNum" property="changeNum"></result>
+        <result column="orderId" property="orderId"></result>
+        <result column="credit" property="credit"></result>
+        <result column="time" property="time"></result>
     </resultMap>
 </mapper>

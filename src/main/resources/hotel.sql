@@ -103,3 +103,15 @@ CREATE TABLE `Comment`(
                           content varchar(255)
 );
 INSERT INTO Comment VALUES (4,4.5,'挺好的');
+
+drop table if exists `CreditChange`;
+create table `CreditChange`
+(
+    id        int primary key,
+    userId    int       default null,
+    reason    varchar(255) NOT NULL,
+    changeNum double    DEFAULT NULL,
+    orderId   int       default null,
+    credit    int       default not null,
+    time      TIMESTAMP default not null,
+)

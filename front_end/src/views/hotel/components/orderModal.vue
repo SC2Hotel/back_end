@@ -202,6 +202,9 @@
             cancelOrder() {
                 this.set_orderModalVisible(false)
                 this.form.resetFields();
+                this.totalPrice = ''
+                this.finalPrice = ''
+                this.orderMatchCouponList.length=0
             },
             changeDate(v) {
                 if(this.form.getFieldValue('roomNum')){

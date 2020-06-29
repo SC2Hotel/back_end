@@ -30,6 +30,9 @@
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
                     </span>
+                    <a-tag slot="userType" :color=" text === 'Client' ? 'blue': text === 'HotelManager' ? 'green': 'commonSeniorClient' === text ? 'gold':'red'  " slot-scope="text">
+                        {{ text }}
+                    </a-tag>
                     <span slot="action" slot-scope="record">
                         <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                         <a-button type="default" @click="reset(record)" style="margin-left: 10px">重置密码</a-button>
@@ -86,7 +89,8 @@ const columns = [
     },
     {
         title: '账号类型',
-        dataIndex: 'userType'
+        dataIndex: 'userType',
+        scopedSlots: {customRender: 'userType'}
     },
     {
       title: '操作',
