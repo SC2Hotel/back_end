@@ -8,7 +8,7 @@ import router from '../router'
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://106.15.248.13:8080': 'http://localhost:8080',
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://106.15.248.13:8080': 'http://njuse.njulzh.com',
   withCredentials: true
 })
 console.log(process.env.NODE_ENV)
