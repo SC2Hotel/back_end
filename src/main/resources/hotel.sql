@@ -108,14 +108,14 @@ INSERT INTO Comment VALUES (4,4.5,'挺好的');
 drop table if exists `CreditChange`;
 create table `CreditChange`
 (
-    id        int primary key,
+    id        int primary key AUTO_INCREMENT,
     userId    int       default null,
     reason    varchar(255) NOT NULL,
     changeNum double    DEFAULT NULL,
     orderId   int       default null,
     credit    double    default null,
     time      datetime default null
-)CHARSET=utf8;;
+)ENGINE=InnoDB CHARSET=utf8;
 
 insert into `CreditChange` values
 (1, 4, '初始化', 100, null, 100, '2020-05-30 09:07:03' ),

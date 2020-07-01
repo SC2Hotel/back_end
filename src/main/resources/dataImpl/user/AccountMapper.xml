@@ -48,7 +48,7 @@
     </insert>
 
     
-    <insert id="addCreditChange" parameterType="com.example.hotel.po.CreditChange">
+    <insert id="addCreditChange" parameterType="com.example.hotel.po.CreditChange" useGeneratedKeys="true" keyProperty="id">
         insert into CreditChange (userId, reason, changeNum, orderId, credit, time)
         values ( #{userId}, #{reason}, #{changeNum}, #{orderId}, #{credit}, #{time} )
     </insert>

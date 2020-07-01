@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
             accountMapper.addCreditChange(creditChange);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseVO.buildFailure(ACCOUNT_EXIST);
+            return ResponseVO.buildFailure("注册失败");
         }
         return ResponseVO.buildSuccess();
     }
