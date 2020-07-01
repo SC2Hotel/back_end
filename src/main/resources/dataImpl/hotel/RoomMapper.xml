@@ -34,7 +34,7 @@
     </resultMap>
 
     <update id="updateRoomNum">
-        UPDATE Room set total = #{roomNum} , curNum = curNum + #{roomNum} - total where id = #{roomId}
+        UPDATE Room set curNum = curNum + #{roomNum} - total, total = #{roomNum}  where id = #{roomId}
     </update>
 
     <select id="selectRoomsByRoomId" resultMap="room">

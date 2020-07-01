@@ -1,4 +1,4 @@
-﻿SET MODE MYSQL;
+SET MODE MYSQL;
 
 DROP TABLE IF EXISTS `Coupon`;
 CREATE TABLE `Coupon` (
@@ -57,8 +57,8 @@ CREATE TABLE `OrderList` (
                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
-INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(2,4,3,'桂圆酒店','2020-06-05','2020-06-06','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已撤销'),(3,4,3,'桂圆酒店','2020-06-07','2020-06-08','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','超过最迟延时入住期限'),(4,4,3,'桂圆酒店','2020-06-08','2020-06-09','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已评价'),(5,4,3,'桂圆酒店','2020-06-15','2020-06-25','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(6,4,3,'桂圆酒店','2020-07-02','2020-07-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
-INSERT INTO `OrderList` values (7,4,3,'桂圆酒店','2020-06-27','2020-07-01','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常');
+INSERT INTO `OrderList` VALUES (1,4,3,'桂圆酒店','2020-06-03','2020-06-04','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(2,4,3,'桂圆酒店','2020-06-05','2020-06-06','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订'),(3,4,3,'桂圆酒店','2020-06-07','2020-06-08','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常'),(4,4,3,'桂圆酒店','2020-06-08','2020-06-09','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已评价'),(5,4,3,'桂圆酒店','2020-06-09','2020-06-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已执行'),(6,4,3,'桂圆酒店','2020-06-27','2020-07-10','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','已预订');
+INSERT INTO `OrderList` values (7,4,3,'桂圆酒店','2020-06-27','2020-06-28','Family',1,1,0,'2020-05-24',399.0,'qin','15521232123','异常');
 
 DROP TABLE IF EXISTS `Room`;
 
@@ -87,9 +87,8 @@ CREATE TABLE `User` (
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
-INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',-99.5,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
+INSERT INTO `User` VALUES (4,'1012681@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试一号','12345678919',100,'commonSeniorClient'),(5,'123@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','测试二号','12345678911',100,'Client'),(6,'333@qq.com','4QrcOUm6Wau+VuBX8g+IPg==',NULL,NULL,NULL,'HotelManager'),(7,'admin@qq.com','4QrcOUm6Wau+VuBX8g+IPg==','admin',NULL,NULL,'Admin');
 
-DROP TABLE IF EXISTS `Vip`;
 CREATE TABLE `Vip` (
                        user_id int primary key,
                        type int COMMENT '类型 1 表示普通会员 2 表示企业会员',
@@ -102,7 +101,7 @@ CREATE TABLE `Comment`(
                           order_id int primary key,
                           score double,
                           content varchar(255)
-)CHARSET=utf8;
+);
 INSERT INTO Comment VALUES (4,4.5,'挺好的');
 
 drop table if exists `CreditChange`;

@@ -73,6 +73,6 @@ public class RoomMapperTest {
         roomMapper.updateRoomNum(100, 7);
         HotelRoom hotelRoom = roomMapper.selectRoomsByRoomId(7);
         Assert.assertEquals(100, hotelRoom.getTotal());
-        Assert.assertEquals(98, hotelRoom.getCurNum());
+        Assert.assertEquals(100, hotelRoom.getCurNum());
     }
 }
