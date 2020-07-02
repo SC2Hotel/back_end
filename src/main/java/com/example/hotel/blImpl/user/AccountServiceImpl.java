@@ -122,4 +122,20 @@ public class AccountServiceImpl implements AccountService {
     public ResponseVO creditChange(int id) {
         return ResponseVO.buildSuccess(accountMapper.getAllUserCreditChange(id));
     }
+
+    @Override
+    public ResponseVO addCredit(int id, double credit) {
+        if(credit<=0){
+            return ResponseVO.buildFailure("充值信用值需大于0");
+        }
+        CreditChange creditChange = new CreditChange();
+        creditChange.setChangeNum(credit);
+        User user = accountMapper.getAccountById(id);
+        creditChange.setCredit(user.getCredit()+credit);
+        creditChange.setOrderId(0);
+        creditChange.setUserId(id);
+        creditChange.setReason(CreditChangeReason.add.toString());
+        updateUserCredit(creditChange);
+        return ResponseVO.buildSuccess(true);
+    }
 }

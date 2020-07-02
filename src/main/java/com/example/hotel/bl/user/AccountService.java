@@ -53,4 +53,6 @@ public interface AccountService {
     int updateUserCredit(CreditChange creditChange);
 
     ResponseVO creditChange(int id);
+
+    ResponseVO addCredit(int id, double credit);
 }
