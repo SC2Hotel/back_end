@@ -11,7 +11,7 @@
             <a-form-item label="房型" v-bind="formItemLayout">
                 <a-select
                     v-decorator="[
-                    'roomType', 
+                    'roomType',
                     { rules: [{ required: true, message: '请选择房型' }] }]"
                 >
                   <a-select-option value="BigBed">大床房</a-select-option>
@@ -55,7 +55,8 @@ export default {
     computed: {
         ...mapGetters([
             'addRoomModalVisible',
-            'activeHotelId'
+            'activeHotelId',
+            'currentHotelId'
         ])
     },
     beforeCreate() {
@@ -70,7 +71,8 @@ export default {
             'set_addRoomParams'
         ]),
         ...mapActions([
-            'addRoom'
+            'addRoom',
+            'getHotelById'
         ]),
         cancel() {
             this.set_addRoomModalVisible(false)
@@ -88,6 +90,7 @@ export default {
                     }
                     this.set_addRoomParams(data)
                     this.addRoom()
+                    this.getHotelById(this.currentHotelId)
                 }
             });
         },

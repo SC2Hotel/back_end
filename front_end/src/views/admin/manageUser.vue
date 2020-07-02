@@ -25,6 +25,7 @@
                         style="margin-top: 10px"
                     :columns="columns"
                     :dataSource="showUserList"
+                        rowKey="id"
                     bordered
                 >
                     <span slot="price" slot-scope="text">
@@ -37,6 +38,7 @@
                         <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                         <a-button type="default" @click="reset(record)" style="margin-left: 10px">重置密码</a-button>
                         <a-button type="primary" @click="updateUserInfo(record)" style="margin-left: 10px">更新信息</a-button>
+                        <a-button type="primary" @click="toUpdateUserCredit(record)" style="margin-left: 10px">修改信用值</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -55,6 +57,10 @@
         </a-tabs>
         <AddManagerModal></AddManagerModal>
         <update-user-infomodal></update-user-infomodal>
+<!--        修改信用model-->
+        <a-modal v-model="creditModalVisible" title="修改信用" @ok="submitUpdateCredit">
+            <a-input-number id="inputNumber" v-model="updateCreditNum" :min="1" />
+        </a-modal>
     </div>
 </template>
 <script>
@@ -131,6 +137,9 @@ export default {
             searchContent: "",//搜索的内容
             showUserList:[],//展示的列表
             userState:"账号类型",//用户账号类型
+            creditModalVisible:false,
+            updateCreditNum:1,
+            userId:0,
         }
     },
     components: {
@@ -157,13 +166,14 @@ export default {
             'getAllUsersList',
             'delHotelManager',
             'resetPassword',
-            'getTargetUserInfo'
+            'getTargetUserInfo',
+            'updateUserCredit'
         ]),
         ...mapMutations([
             'set_addManagerModalVisible',
             'set_addHotelModalVisible',
             'set_updataUserInfoModalVisible',
-            'set_targetUserInfo'
+            'set_targetUserInfo',
         ]),
         addManager(){
             this.set_addManagerModalVisible(true);
@@ -182,6 +192,18 @@ export default {
         updateUserInfo(record){
             this.set_targetUserInfo(record.id)
             this.set_updataUserInfoModalVisible(true)
+        },
+        //修改用户信用值
+        toUpdateUserCredit(record){
+            this.userId = record.id
+            this.creditModalVisible=true
+        },
+        //提交修改信用值申请
+        async submitUpdateCredit(){
+            await this.updateUserCredit({id:this.userId,creditNum:this.updateCreditNum})
+            await this.getAllUsersList();
+            this.showUserList = this.userList.slice();
+            this.creditModalVisible=false
         },
         onSearch(){
             if (this.searchContent === "") {

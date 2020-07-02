@@ -3,7 +3,8 @@ import {
     addHotelAPI,
     delHotelAPI,
     getHotelByManagerAPI,
-    delRoomByIdAPI
+    delRoomByIdAPI,
+    updateRoomByIdAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -207,6 +208,12 @@ const hotelManager = {
             const res = await delRoomByIdAPI(data)
             if (res){
                 console.log("删除成功")
+            }
+        },
+        updateRoom:async ({commit,state},data)=>{
+            const res = await updateRoomByIdAPI(data)
+            if (res){
+                console.log("更新房间数量成功")
             }
         },
     }

@@ -63,4 +63,12 @@
         <result column="credit" property="credit"></result>
         <result column="usertype" property="userType"></result>
     </resultMap>
+
+    <update id="updateUserCredit">
+        update User
+        <set>
+            <if test="creditNum!=null">credit=#{creditNum}</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

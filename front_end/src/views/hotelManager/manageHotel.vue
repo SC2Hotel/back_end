@@ -78,7 +78,9 @@
                         <span>￥{{ text }}</span>
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="danger" @click="delRoom(record)">删除房间</a-button>
+                        <a-button type="primary" @click="showUpdateModal(record)">修改房间</a-button>
+                        <a-divider type="vertical"/>
+                         <a-button type="danger" @click="delRoom(record)">删除房间</a-button>
                     </span>
                 </a-table>
                 <!--end-->
@@ -110,7 +112,7 @@
                         <span>￥{{ text }}</span>
                     </span>
                     <span slot="roomType" slot-scope="text">
-                        <span v-if="text == 'BigBed'">大床房</span>
+                        <span v-if="text === 'BigBed'">大床房</span>
                         <span v-if="text == 'DoubleBed'">双床房</span>
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
@@ -143,6 +145,10 @@
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <order-detail></order-detail>
+        <!--修改酒店房间数model-->
+        <a-modal v-model="updateRoomModalVisible" title="修改房间数" @ok="submitUpdateRoom">
+            <a-input-number id="inputNumber" v-model="updateRoomNum" :min="0" />
+        </a-modal>
     </div>
 </template>
 <script>
@@ -284,6 +290,9 @@
                 searchContent: "",//搜索的内容
                 showOrderList: [],//筛选后的订单列表
                 orderState:'',//要筛选出的订单状态
+                updateRoomModalVisible:false,//修改房间数modal
+                updateRoomNum:1,//修改的酒店房间数
+                roomId:0,
             }
         },
         components: {
@@ -342,6 +351,7 @@
                 'getHotelComment',
                 'getOrderComment',
                 'delRoomById',
+                'updateRoom',
             ]),
             addHotel() {
                 this.set_addHotelModalVisible(true)
@@ -399,6 +409,16 @@
             async delRoom(record) {
                 await this.delRoomById(record.id)
                 await this.getHotelById(this.hotelList.id)
+            },
+            showUpdateModal(record){
+                this.updateRoomModalVisible=true;
+                this.updateRoomNum = record.total;this.roomId=record.id
+            },
+            //提交房间修改申请
+            submitUpdateRoom(){
+                this.updateRoom({roomId:this.roomId,newRoomNum:this.updateRoomNum})
+                this.updateRoomModalVisible=false;
+                this.getHotelById(this.hotelList.id)
             },
             //搜索框输入内容
             onSearch() {

@@ -33,4 +33,6 @@ public interface AdminMapper {
     void delAccountById(Integer userId);
 
     List<User> selectAllUsers();
+
+    void updateUserCredit(Integer id,Integer creditNum);
 }

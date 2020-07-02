@@ -52,7 +52,7 @@ public interface AdminService {
     int updateUserInformation(User user);
 
     /**
-     * @description: 更改用户信息
+     * @description: 删除用户
      * @param: userId
      * @return: 操作结果
      * @author: lzh
@@ -79,4 +79,9 @@ public interface AdminService {
       * @date: 2020/6/26
       */
     List<User> getAllUsers();
+
+    /**
+     * 更新用户信用值
+     */
+    ResponseVO updateUserCredit(Integer id,Integer creditNum);
 }

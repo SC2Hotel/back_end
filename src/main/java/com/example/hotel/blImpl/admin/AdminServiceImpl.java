@@ -117,4 +117,14 @@ public class AdminServiceImpl implements AdminService {
         return users;
     }
 
+    @Override
+    public ResponseVO updateUserCredit(Integer id,Integer creditNum) {
+        try{
+            adminMapper.updateUserCredit(id, creditNum);
+            return ResponseVO.buildSuccess("修改成功");
+        }catch (Exception e){
+            return ResponseVO.buildFailure("修改失败");
+        }
+    }
+
 }

@@ -4,7 +4,8 @@ import {
     delHotelManagerAPI,
     resetPasswordAPI,
     getAllUsersListAPI,
-    updateAccountAPI
+    updateAccountAPI,
+    updateCreditAPI
 } from '@/api/admin'
 import {
     addHotelAPI
@@ -45,7 +46,7 @@ const admin = {
         },
         set_targetUserInfo: function (state,data) {
             state.targetUserInfo = data
-        }
+        },
     },
     actions: {
         getManagerList: async({ commit }) => {
@@ -105,6 +106,13 @@ const admin = {
                 message.success('更新成功')
             }
             commit('set_updataUserInfoModalVisible',false)
+        },
+        //更新用户信用值
+        updateUserCredit: async ({commit,state},data)=>{
+            const res = await updateCreditAPI(data)
+            if (res){
+                message.success('更新成功')
+            }
         }
     }
 }

@@ -59,6 +59,9 @@
                     <a-tab-pane tab="我的订单" key="4">
                         <a-table
                                 :columns="columns1" :data-source="userOrderList" bordered>
+                            <a-tag slot="orderState" :color=" text === '已预订' ? 'blue': text === '异常' ? 'red' : text === '已执行' ? 'green' : text === '已撤销' ? 'orange' : text==='超过最迟延时入住期限' ? 'grey':'' " slot-scope="text">
+                                {{ text }}
+                            </a-tag>
                         </a-table>
                     </a-tab-pane>
                 </a-tabs>
@@ -85,6 +88,13 @@
         {
             title:"离店时间",
             dataIndex:"checkOutDate"
+        },
+        {
+            title: '订单状态',
+            filters: [{text: '已预订', value: '已预订'}, {text: '已撤销', value: '已撤销'}, {text: '已执行', value: '已执行'},{text:'异常',value:'异常'},{text:'超过最迟延时入住期限',value:'超过最迟延时入住期限'}],
+            onFilter: (value, record) => record.orderState.includes(value),
+            dataIndex: 'orderState',
+            scopedSlots: {customRender: 'orderState'}
         },
         {
             title:"预定房间数",

@@ -75,6 +75,16 @@ public class AdminController {
         }
     }
 
+    @ApiOperation("修改用户信用")
+    @PostMapping("/updateUserCredit/{id}/{creditNum}")
+    public ResponseVO updateUserInfo(@PathVariable Integer id, @PathVariable Integer creditNum){
+        try{
+            return adminService.updateUserCredit(id,creditNum);
+        }catch (Exception e){
+            return ResponseVO.buildFailure(e.getMessage());
+        }
+    }
+
     @ApiOperation("删除管理员并更新酒店信息")
     @PostMapping("/delUser/{userId}")
     public ResponseVO delUser(@PathVariable Integer userId){

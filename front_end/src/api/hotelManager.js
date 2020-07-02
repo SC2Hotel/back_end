@@ -35,4 +35,10 @@ export function delRoomByIdAPI(data) {
         method: 'POST'
     })
 }
+export function updateRoomByIdAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/${data.roomId}/${data.newRoomNum}/updateRoomInfo`,
+        method: 'POST'
+    })
+}
 

@@ -35,6 +35,7 @@ const hotel = {
         orderMatchCouponList: [],
         bizRegions:[],
         hotelCommentList:[],
+        updateRoomModalVisible:false,
     },
     mutations: {
         set_hotelList: function (state, data) {
@@ -51,6 +52,9 @@ const hotel = {
         },
         set_currentHotelId: function (state, data) {
             state.currentHotelId = data
+        },
+        set_updateRoomModalVisible: function (state, data) {
+            state.updateRoomModalVisible = data
         },
         set_currentHotelInfo: function (state, data) {
             state.currentHotelInfo = {
