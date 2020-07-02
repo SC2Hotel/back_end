@@ -11,7 +11,8 @@ public enum  CreditChangeReason {
     executeOrder("执行订单"),
     annulOrder("撤销订单"),
     unCheckIn("未按时入住"),
-    delayCheckIn("延时入住");
+    delayCheckIn("延时入住"),
+    add("充值");
 
     private String value;
 

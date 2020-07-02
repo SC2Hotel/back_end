@@ -80,6 +80,12 @@ public class AccountController {
         return accountService.registerSenior(id,type,message);
     }
 
+    @ApiOperation("充值用户信用值")
+    @PostMapping("/{id}/addCredit")
+    public ResponseVO addCredit(@PathVariable int id,@RequestParam double credit){
+        return accountService.addCredit(id,credit);
+    }
+
     @ApiOperation("获取某个用户信用值变化记录")
     @PostMapping("/{id}/creditChange")
     public ResponseVO creditChange(@PathVariable int id){
