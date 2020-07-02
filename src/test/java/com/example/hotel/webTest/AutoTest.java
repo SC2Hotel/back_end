@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 public class AutoTest {
 
     private static ChromeDriver browser;
@@ -94,7 +93,7 @@ public class AutoTest {
     public void Test01BookHotel() throws InterruptedException {
         browser.get(url);
         loginAsSenior();
-        browser.findElement(By.xpath("//*[@id=\"layout\"]/div[2]/section/main/div[2]/div/div/div/div[1]")).click();
+        browser.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div[2]/div/div/div/div[1]")).click();
         browser.findElement(By.xpath("//*[@id=\"layout\"]/section/main/div/div[3]/div[3]/div[1]/div[2]/div[2]/div/div/div/div/div/div/table/tbody/tr[1]/td[6]/span/button")).click();
         browser.findElement(By.xpath("//*[@id=\"orderModal_clientName\"]")).sendKeys(name);
         browser.findElement(By.xpath("//*[@id=\"orderModal_phoneNumber\"]")).sendKeys(phoneNumber);
