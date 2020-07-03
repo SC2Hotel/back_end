@@ -45,3 +45,11 @@ export function getCreditLogAPI(data) {
         method: 'Post'
     })
 }
+
+export function updateCreditAPI(data) {
+    return axios({
+        url: `${api.userPre}/`+data.id+'/addCredit',
+        method: 'Post',
+        params: {credit:data.creditNum}
+    })
+}

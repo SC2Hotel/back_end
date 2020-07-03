@@ -38,7 +38,7 @@
                         <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                         <a-button type="default" @click="reset(record)" style="margin-left: 10px">重置密码</a-button>
                         <a-button type="primary" @click="updateUserInfo(record)" style="margin-left: 10px">更新信息</a-button>
-                        <a-button type="primary" @click="toUpdateUserCredit(record)" style="margin-left: 10px">修改信用值</a-button>
+                        <a-button type="primary" @click="toUpdateUserCredit(record)" style="margin-left: 10px">增加信用值</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -58,7 +58,7 @@
         <AddManagerModal></AddManagerModal>
         <update-user-infomodal></update-user-infomodal>
 <!--        修改信用model-->
-        <a-modal v-model="creditModalVisible" title="修改信用" @ok="submitUpdateCredit">
+        <a-modal v-model="creditModalVisible" title="增加信用" @ok="submitUpdateCredit">
             <a-input-number id="inputNumber" v-model="updateCreditNum" :min="1" />
         </a-modal>
     </div>

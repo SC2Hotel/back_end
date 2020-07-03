@@ -44,10 +44,4 @@ export function updateAccountAPI(data) {
     })
 }
 
-export function updateCreditAPI(data) {
-    return axios({
-        url: `${api.adminPre}/updateUserCredit/`+data.id+'/'+data.creditNum,
-        method: 'Post',
-        data
-    })
-}
+

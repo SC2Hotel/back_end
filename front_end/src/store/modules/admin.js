@@ -5,8 +5,10 @@ import {
     resetPasswordAPI,
     getAllUsersListAPI,
     updateAccountAPI,
-    updateCreditAPI
-} from '@/api/admin'
+} from '@/api/admin';
+import {
+    updateCreditAPI,
+} from '@/api/user'
 import {
     addHotelAPI
 } from '@/api/hotelManager'
