@@ -38,7 +38,7 @@
     </update>
 
     <select id="selectRoomsByRoomId" resultMap="room">
-        select * from room where id = #{roomId}
+        select * from Room where id = #{roomId}
     </select>
 
 
