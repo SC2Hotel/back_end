@@ -18,7 +18,7 @@ public class Coupon {
     private Integer hotelId;
 
     /**
-     * 优惠券类型 1生日特惠 2多间特惠 3满减优惠 4限时优惠 5VIP优惠
+     * 优惠券类型 1生日特惠 2多间特惠 3满减优惠 4限时优惠 5VIP优惠 6打折优惠
      */
     private Integer couponType;
     /**

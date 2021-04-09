@@ -8,6 +8,7 @@ import com.example.hotel.po.CreditChange;
 import com.example.hotel.po.User;
 import com.example.hotel.po.Vip;
 import com.example.hotel.util.MD5Encryption;
+import com.example.hotel.util.RedisUtil;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserVO;
@@ -27,6 +28,9 @@ public class AccountServiceImpl implements AccountService {
     private static final Integer VIP_CREDIT = 600;
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public ResponseVO registerAccount(UserVO userVO) {
@@ -66,9 +70,18 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User getUserInfo(int id) {
-        User user = accountMapper.getAccountById(id);
+        //todo totest
+        User user;
+        if(redisUtil.hasKey(RedisUtil.USER_INFO_PREFIX+id)){
+            user = (User) redisUtil.get(RedisUtil.USER_INFO_PREFIX+id);
+            return user;
+        }
+        user = accountMapper.getAccountById(id);
         if (user == null) {
             return null;
+        }
+        else {
+            redisUtil.set(RedisUtil.USER_INFO_PREFIX+id, user);
         }
         return user;
     }

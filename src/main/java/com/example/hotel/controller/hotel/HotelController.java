@@ -30,8 +30,14 @@ public class HotelController {
         return ResponseVO.buildSuccess(true);
     }
 
+    @ApiOperation("分页返回酒店")
+    @GetMapping("/all/{pageNum}")
+    public ResponseVO retrieveAllHotelsByPage(@PathVariable Integer pageNum){
+        return ResponseVO.buildSuccess(hotelService.retrieveHotelsByPage(pageNum*20)); // 每页 20
+    }
+
     @ApiOperation("返回所有的酒店")
-    @GetMapping("/all")
+    @GetMapping("/all/}")
     public ResponseVO retrieveAllHotels(){
         return ResponseVO.buildSuccess(hotelService.retrieveHotels());
     }

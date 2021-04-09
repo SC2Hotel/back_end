@@ -16,18 +16,18 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //    @Autowired
 //    JwtInterceptor jwtInterceptor;
 
-    @Bean
-    public JwtInterceptor authInterceptor(){
-        return new JwtInterceptor();
-    }
+//    @Bean
+//    public JwtInterceptor authInterceptor(){
+//        return new JwtInterceptor();
+//    }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor())
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/user/login")
-                .excludePathPatterns("/api/user/register");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(authInterceptor())
+//                .addPathPatterns("/api/**")
+//                .excludePathPatterns("/api/user/login")
+//                .excludePathPatterns("/api/user/register");
+//    }
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**").exposedHeaders("nju-token");

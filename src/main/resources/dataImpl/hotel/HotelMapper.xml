@@ -10,6 +10,7 @@
     <select id="selectAllHotel" resultMap="Hotel">
         select * from Hotel
     </select>
+
     <select id="selectById" resultMap="Hotel">
         select * from Hotel where id=#{id}
     </select>
@@ -72,5 +73,9 @@
     <update id="clearManager">
         update Hotel set manager_id = null where manager_id = #{userId}
     </update>
+
+    <select id="selectHotelByPage" resultMap="Hotel">
+        select * from Hotel limit #{startNum},20;
+    </select>
 
 </mapper>

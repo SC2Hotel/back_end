@@ -36,8 +36,8 @@ public class AccountController {
         UserWithTokenVO userWithToken = new UserWithTokenVO();
         BeanUtils.copyProperties(user,userWithToken);
         //短token时长20min 长token时长60min
-        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),shortTokenTime));
-        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),longTokenTime));
+//        userWithToken.setNjuToken(JwtUtil.createToken(user.getId(),shortTokenTime));
+//        userWithToken.setNjuLongToken(JwtUtil.createToken(user.getId(),longTokenTime));
         return ResponseVO.buildSuccess(userWithToken);
     }
 
@@ -51,11 +51,11 @@ public class AccountController {
     @ApiOperation("获取某个用户信息")
     @GetMapping("/{id}/getUserInfo")
     public ResponseVO getUserInfo(@PathVariable int id, HttpServletRequest request) {
-        String token = request.getHeader(JwtUtil.TOKEN_NAME);
-        Integer userId = JwtUtil.verifyTokenAndGetUserId(token);
-        if(userId==null || id!=userId){
-            return ResponseVO.buildFailure("用户id错误");
-        }
+//        String token = request.getHeader(JwtUtil.TOKEN_NAME);
+//        Integer userId = JwtUtil.verifyTokenAndGetUserId(token);
+//        if(userId==null || id!=userId){
+//            return ResponseVO.buildFailure("用户id错误");
+//        }
         User user = accountService.getUserInfo(id);
         if(user==null){
             return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);

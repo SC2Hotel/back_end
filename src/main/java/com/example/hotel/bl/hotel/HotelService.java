@@ -89,4 +89,5 @@ public interface HotelService {
      */
     int deleteHotel(Integer hotelId);
 
+    List<HotelVO> retrieveHotelsByPage(Integer startNum);
 }

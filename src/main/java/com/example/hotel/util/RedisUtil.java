@@ -25,6 +25,8 @@ public class RedisUtil {
 
     public static final String COUPON_KEY_NAME_PREFIX = "hotel:coupon:";
 
+    public static final String USER_INFO_PREFIX = "hotel:user:";
+
     @Autowired
     RedisTemplate redisTemplate;
 

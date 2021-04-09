@@ -177,4 +177,9 @@ public class HotelServiceImpl implements HotelService {
         }
         return hotelMapper.deleteHotel(hotelId);
     }
+
+    @Override
+    public List<HotelVO> retrieveHotelsByPage(Integer startNum) {
+        return hotelMapper.selectHotelByPage(startNum);
+    }
 }

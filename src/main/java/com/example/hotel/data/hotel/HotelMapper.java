@@ -34,4 +34,6 @@ public interface HotelMapper {
     void clearManager(Integer userId);
 
     int updateManager(Integer userId, Integer hotelId);
+
+    List<HotelVO> selectHotelByPage(Integer startNum );
 }
