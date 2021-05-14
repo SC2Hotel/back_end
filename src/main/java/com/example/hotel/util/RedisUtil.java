@@ -19,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class RedisUtil {
+
+    public static final String HOTEL_PAGE_PREFIX = "hotel:hotel_page:";
+
     public static final String HOTEL_KEY_NAME_PREFIX = "hotel:hotel:";
 
     public static final String ROOM_KEY_NAME_PREFIX = "hotel:room:";

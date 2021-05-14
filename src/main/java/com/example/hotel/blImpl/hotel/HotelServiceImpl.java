@@ -23,8 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.example.hotel.util.RedisUtil.HOTEL_KEY_NAME_PREFIX;
-import static com.example.hotel.util.RedisUtil.ROOM_KEY_NAME_PREFIX;
+import static com.example.hotel.util.RedisUtil.*;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -180,6 +179,13 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotelsByPage(Integer startNum) {
-        return hotelMapper.selectHotelByPage(startNum);
+        List<HotelVO> hotelVOS;
+//        if(redisUtil.hasKey(HOTEL_PAGE_PREFIX + startNum)){
+//            hotelVOS = (List<HotelVO>)redisUtil.get(HOTEL_PAGE_PREFIX + startNum);
+//            return hotelVOS;
+//        }
+        hotelVOS = hotelMapper.selectHotelByPage(startNum);
+//        redisUtil.set(HOTEL_PAGE_PREFIX + startNum, hotelVOS);
+        return hotelVOS;
     }
 }

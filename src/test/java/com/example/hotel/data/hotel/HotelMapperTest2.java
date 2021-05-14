@@ -3,6 +3,7 @@ package com.example.hotel.data.hotel;
 import com.example.hotel.enums.BizRegion;
 import com.example.hotel.enums.HotelStar;
 import com.example.hotel.po.Hotel;
+import com.github.javafaker.Address;
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,8 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.*;
 
 /**
  * @author qin
@@ -57,20 +60,40 @@ public class HotelMapperTest2 {
     public void insertHotel() {
 //        SqlSession sqlSession = getSqlSession();
 //        zh-CN
-        int insertNum = 0;
-        Faker faker = new Faker(new Locale("zh-CN"));
-        for (int i = 0; i < insertNum; i++) {
-            Hotel hotel = new Hotel();
-            hotel.setHotelName(faker.address().streetName()+"酒店");
-            hotel.setDescription("欢迎您入住");
-            hotel.setAddress(faker.address().fullAddress());
-            hotel.setBizRegion(nextBizRegion());
-            hotel.setHotelStar(nextHotelStar());
-            hotel.setPhoneNum(faker.phoneNumber().cellPhone());
-            hotel.setRate(nextDouble(1,5));
-            hotel.setManagerId(6);
-            int row = hotelMapper.insertHotel(hotel);
+        ExecutorService executorService = Executors.newFixedThreadPool(600);
+        ArrayList<Insertor> insertors = new ArrayList<>();
+        ArrayList<Future<Integer>> futures = new ArrayList<>();
+        for (int i = 0; i < 300; i++) {
+            insertors.add(new Insertor());
+            Future<Integer> integerFuture = executorService.submit(insertors.get(0));
+            futures.add(integerFuture);
         }
+        for (int i = 0; i < 300; i++) {
+            try {
+                Integer insRes = futures.get(i).get();
+                System.out.println(insRes);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        int insertNum = 10000;
+        Faker faker = new Faker(new Locale("zh-CN"));
+//        for (int i = 0; i < insertNum; i++) {
+//            Hotel hotel = new Hotel();
+//            Address address = faker.address();
+//            hotel.setHotelName(address.streetName()+"酒店");
+//            hotel.setDescription("欢迎您入住");
+//            hotel.setAddress(address.fullAddress());
+//            hotel.setBizRegion(nextBizRegion());
+//            hotel.setHotelStar(nextHotelStar());
+//            hotel.setPhoneNum(faker.phoneNumber().cellPhone());
+//            hotel.setRate(nextDouble(1,5));
+//            hotel.setManagerId(6);
+//            int row = hotelMapper.insertHotel(hotel);
+//        }
         Hotel hotel = new Hotel();
         hotel.setHotelName(faker.address().streetName()+"酒店");
         hotel.setDescription("欢迎您入住");
@@ -83,5 +106,28 @@ public class HotelMapperTest2 {
         int row = hotelMapper.insertHotel(hotel);
 //        Assert.assertEquals(1, row);
     }
+    class Insertor implements Callable<Integer> {
 
+        @Override
+        public Integer call() {
+            int insertNum = 300;
+            Faker faker = new Faker(new Locale("zh-CN"));
+            for (int i = 0; i < insertNum; i++) {
+                Hotel hotel = new Hotel();
+                Address address = faker.address();
+                hotel.setHotelName(address.streetName()+"酒店");
+                hotel.setDescription("欢迎您入住");
+                hotel.setAddress(address.fullAddress());
+                hotel.setBizRegion(HotelMapperTest2.nextBizRegion());
+                hotel.setHotelStar(HotelMapperTest2.nextHotelStar());
+                hotel.setPhoneNum(faker.phoneNumber().cellPhone());
+                hotel.setRate(HotelMapperTest2.nextDouble(1,5));
+                hotel.setManagerId(6);
+                int row = hotelMapper.insertHotel(hotel);
+            }
+//                System.out.println("finish");
+            return 1;
+        }
+    }
 }
+

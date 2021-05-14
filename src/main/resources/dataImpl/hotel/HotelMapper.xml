@@ -2,37 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.hotel.data.hotel.HotelMapper">
     <insert id="insertHotel" parameterType="com.example.hotel.po.Hotel"
-    useGeneratedKeys="true" keyProperty="id">
-        insert into Hotel(address,bizRegion,hotelDescription,hotelStar,hotelName,phoneNum,rate,manager_id)
-        values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId})
+            useGeneratedKeys="true" keyProperty="id">
+        insert into Hotel(address, bizRegion, hotelDescription, hotelStar, hotelName, phoneNum, rate, manager_id)
+        values (#{address}, #{bizRegion}, #{description}, #{hotelStar}, #{hotelName}, #{phoneNum}, #{rate},
+                #{managerId})
     </insert>
 
     <select id="selectAllHotel" resultMap="Hotel">
-        select * from Hotel
+        select *
+        from Hotel
     </select>
 
     <select id="selectById" resultMap="Hotel">
-        select * from Hotel where id=#{id}
+        select *
+        from Hotel
+        where id = #{id}
     </select>
 
     <select id="selectHotelByBizAndAdd" resultMap="Hotel">
-        select * from Hotel where bizRegion=#{bizRegion} and address like CONCAT('%',#{address},'%')
+        select *
+        from Hotel
+        where bizRegion = #{bizRegion}
+          and address like CONCAT('%', #{address}, '%')
     </select>
 
     <select id="retrieveHotelsByHotelAndRoomVO" resultMap="Hotel">
-        select * from Hotel where id in (
+        select *
+        from Hotel
+        where id in (
             select distinct hotel_id
-            from Room where roomType=#{roomType}
-                and price between #{loPrice} and #{hiPrice}
-                and hotel_id in (
-                    select id from Hotel
-                    where bizRegion=#{bizRegionEnum}
-                    and address like concat('%',#{address},'%')
-                    and hotelName like concat('%',#{name},'%')
-                    and rate>=#{rate}
-                    and hotelStar=#{hotelStar}
-                    )
+            from Room
+            where roomType = #{roomType}
+              and price between #{loPrice} and #{hiPrice}
+              and hotel_id in (
+                select id
+                from Hotel
+                where rate >= #{rate}
+                  and bizRegion = #{bizRegionEnum}
+                  and hotelStar = #{hotelStar}
+                  and address like concat('%', #{address}, '%')
+                  and hotelName like concat('%', #{name}, '%')
             )
+        )
     </select>
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
@@ -59,23 +70,33 @@
     </update>
 
     <delete id="deleteHotel">
-        DELETE from Hotel where id = #{hotelId}
+        DELETE
+        from Hotel
+        where id = #{hotelId}
     </delete>
 
     <select id="selectByHotelManagerId" resultMap="Hotel">
-        select * from Hotel where manager_id = #{id}
+        select *
+        from Hotel
+        where manager_id = #{id}
     </select>
 
     <update id="updateManager">
-        update Hotel set manager_id = #{userId} where id = #{hotelId}
+        update Hotel
+        set manager_id = #{userId}
+        where id = #{hotelId}
     </update>
 
     <update id="clearManager">
-        update Hotel set manager_id = null where manager_id = #{userId}
+        update Hotel
+        set manager_id = null
+        where manager_id = #{userId}
     </update>
 
     <select id="selectHotelByPage" resultMap="Hotel">
-        select * from Hotel limit #{startNum},20;
+        select SQL_NO_CACHE *
+        from Hotel
+        limit #{startNum},20;
     </select>
 
 </mapper>
